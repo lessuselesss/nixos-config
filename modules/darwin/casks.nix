@@ -5,6 +5,7 @@ _:
   "claude"
   "chatgpt"
   "lm-studio"
+  "ollama"
 
   # Development Tools
   "homebrew/cask/docker"

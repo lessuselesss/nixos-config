@@ -4,11 +4,12 @@ _:
   # AI 
   "claude"
   "chatgpt"
-  "orbstack"
+  "lm-studio"
 
   # Development Tools
   "homebrew/cask/docker"
   "visual-studio-code"
+  "orbstack"
 
   # Communication Tools
   "discord"

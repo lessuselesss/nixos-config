@@ -4,6 +4,7 @@ _:
   # AI 
   "claude"
   "chatgpt"
+  "orbstack"
 
   # Development Tools
   "homebrew/cask/docker"

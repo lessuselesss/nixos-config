@@ -51,9 +51,11 @@ _:
   "obsidian"
 
   # Browsers
+  "brave-browser"
+  "duckduckgo"
+  "firefox"
   "google-chrome"
   "orion"
-  "duckduckgo"
   
   # Security Tools
   "silentknight"

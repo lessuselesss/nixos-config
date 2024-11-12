@@ -20,6 +20,9 @@ _:
   "zoom"
   "beeper"
 
+  # Crypto Tools
+  "ledger-live"
+
   # Utility Tools
   "syncthing"
   #"1password@nightly"

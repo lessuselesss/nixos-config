@@ -13,6 +13,13 @@ let user = "lessuseless"; in
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  jankyborders = {
+  enable = true;
+  blur_radius = 5.0;
+  hidpi = true;
+  active_color = "0xAAB279A7";
+  inactive_color = "0x33867A74";
+};
 
   # Setup user, packages, programs
   nix = {

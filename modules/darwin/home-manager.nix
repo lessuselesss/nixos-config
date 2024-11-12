@@ -15,7 +15,7 @@ in
    ./dock
   ];
 
-  # It me
+  # Itza mee
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
@@ -27,9 +27,7 @@ in
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
-
-    taps = pkgs.callPackage.taps.nix {}
-
+  
     # These app IDs are from using the mas CLI app
     # mas = mac app store
     # https://github.com/mas-cli/mas

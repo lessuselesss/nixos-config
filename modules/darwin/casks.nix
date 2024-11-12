@@ -17,6 +17,7 @@ _:
   "slack"
   "telegram"
   "zoom"
+  "beeper"
 
   # Utility Tools
   "syncthing"

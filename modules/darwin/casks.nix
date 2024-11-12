@@ -53,6 +53,7 @@ _:
 
   # Virtualization
   "utm"
+  "crystalfetch"
 
   # Networking
   "tailscale"

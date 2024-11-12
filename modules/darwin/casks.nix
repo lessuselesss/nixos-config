@@ -48,6 +48,7 @@ _:
 
   # Productivity Tools
   "raycast"
+  "obsidian"
 
   # Browsers
   "google-chrome"

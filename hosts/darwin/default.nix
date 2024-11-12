@@ -45,8 +45,8 @@ services = {
     };
 
     tailscale = {
-      enable = false; # Using App Store application for the moment
-      overrideLocalDns = false;
+      enable = true; # false = Using App Store application for the moment
+      overrideLocalDns = true;
     };
   };
 

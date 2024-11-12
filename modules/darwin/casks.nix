@@ -20,7 +20,8 @@ _:
   # Utility Tools
   "syncthing"
   #"1password@nightly"
-  
+  "spacedrive"
+
   # Entertainment Tools
   "vlc"
 

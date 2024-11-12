@@ -12,14 +12,37 @@ let user = "lessuseless"; in
   ];
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  jankyborders = {
-  enable = true;
-  blur_radius = 5.0;
-  hidpi = true;
-  active_color = "0xAAB279A7";
-  inactive_color = "0x33867A74";
-};
+services = {
+    nix-daemon.enable = true;
+    yabai = {
+      enable = true;
+      config = {
+        layout = "bsp";
+        mouse_modifier = "ctrl";
+        mouse_drop_action = "stack";
+        window_shadow = "float";
+        window_gap = "20";
+      };
+      extraConfig = ''
+        yabai -m signal --add event=display_added action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' display=east" active=yes
+        yabai -m signal --add event=display_removed action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' native-fullscreen=on" active=yes
+        yabai -m rule --add app='OBS' display=east
+        yabai -m rule --add app='Spotify' display=east
+
+        yabai -m rule --add app='Cardhop' manage=off
+        yabai -m rule --add app='Pop' manage=off
+        yabai -m rule --add app='System Settings' manage=off
+        yabai -m rule --add app='Timery' manage=off
+      '';
+    };
+    jankyborders = {
+      enable = true;
+      blur_radius = 5.0;
+      hidpi = true;
+      active_color = "0xAAB279A7";
+      inactive_color = "0x33867A74";
+    };
+  };
 
   # Setup user, packages, programs
   nix = {

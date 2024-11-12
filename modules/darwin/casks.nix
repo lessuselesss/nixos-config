@@ -11,6 +11,9 @@ _:
   "hammerspoon"
   "kit"
 
+  # Document Tools
+  "adobe-acrobat-reader"
+
   # Development Tools
   "homebrew/cask/docker"
   "visual-studio-code"
@@ -19,6 +22,7 @@ _:
   "talon"
   "qflipper"
   "warp"
+  "sonic-pi"
 
   # Communication Tools
   "discord"
@@ -41,6 +45,7 @@ _:
   "hiddenbar"
   "karabiner-elements"
   "keycastr"
+  "disk-inventory-x"
 
   # Entertainment Tools
   "vlc"

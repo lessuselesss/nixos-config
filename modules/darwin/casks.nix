@@ -54,7 +54,7 @@ _:
   
   # Security Tools
   "silentknight"
-
+  "xprocheck"
   # Virtualization
   "utm"
   "crystalfetch"

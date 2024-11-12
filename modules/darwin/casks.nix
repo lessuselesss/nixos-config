@@ -34,6 +34,7 @@ _:
   "bazecor"
   "homerow"
   "sdformatter"
+  "hiddenbar"
 
   # Entertainment Tools
   "vlc"

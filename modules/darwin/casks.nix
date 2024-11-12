@@ -40,6 +40,7 @@ _:
   "sdformatter"
   "hiddenbar"
   "karabiner-elements"
+  "keycastr"
 
   # Entertainment Tools
   "vlc"

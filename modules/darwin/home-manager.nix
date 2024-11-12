@@ -15,13 +15,57 @@ in
    ./dock
   ];
 
-  # Itza mee
-  users.users.${user} = {
-    name = "${user}";
-    home = "/Users/${user}";
-    isHidden = false;
-    shell = pkgs.zsh;
+
+
+  # # Define the "admin" user with root-like privileges
+  users.users.admin = {
+    isNormalUser = true;
+    home = "/home/admin";
+    extraGroups = [ "wheel" ]; # wheel group allows sudo access
+    hashedPassword = "<hashed-password>"; # You can set a hashed password here or use `passwordFile` or `password` directly for simplicity
+    shell = pkgs.bashInteractive; # You can specify any shell here
   };
+
+  # # Define a less privileged user, "standard"
+  # users.users.standard = {
+  #   isNormalUser = true;
+  #   home = "/home/standard";
+  #   hashedPassword = "<hashed-password>";
+  #   shell = pkgs.bashInteractive;
+  # };
+  # ... Itza meee!
+  users.users.standard = { 
+    name = "standard";
+    home = "/Users/standard";
+    hashedPassword = "$6$ewILqVwo85fq2Dtq$BXkOTy2hcBdgZ5gu7tOwd1Ns35oYHcUz/962YIF0FeDsbBTKQL8Xs73PAxMaF6nWHEJZVXhPKf.n/K7F.iGRx0";
+    isHidden = false;
+    shell = pkgs.bashInteractive; #pkgs.zsh;
+  };
+
+  # # Ensure sudo privileges for members of the "wheel" group
+  # security.sudo = {
+  #   enable = true;
+  #   wheelNeedsPassword = true; # Members of the wheel group must provide a password for sudo
+  # };
+
+  # # Setup user packages, programs, and nix settings
+  # nix = {
+  #   package = pkgs.nix;
+  #   configureBuildUsers = true;
+
+  #   settings = {
+  #     trusted-users = [ "@admin" "root" "standard" ];
+  #     substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+  #     trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+  #   };
+
+  #   gc = {
+  #     user = "root";
+  #     automatic = true;
+  #     interval = { Weekday = 0; Hour = 2; Minute = 0; };
+  #     options = "--delete-older-than 30d";
+  #   };
+
 
   homebrew = {
     enable = true;

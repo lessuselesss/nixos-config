@@ -13,6 +13,7 @@ _:
   "cursor"
   "orbstack"
   "talon"
+  "qflipper"
 
   # Communication Tools
   "discord"

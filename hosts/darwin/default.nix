@@ -21,7 +21,7 @@ services = {
         mouse_modifier = "ctrl";
         mouse_drop_action = "stack";
         window_shadow = "float";
-        window_gap = "20";
+        window_gap = "2";
       };
       extraConfig = ''
         yabai -m signal --add event=display_added action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' display=east" active=yes

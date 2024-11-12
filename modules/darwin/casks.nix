@@ -23,7 +23,7 @@ _:
   "syncthing"
   #"1password@nightly"
   "spacedrive"
-  "bazecore"
+  "bazecor"
 
   # Entertainment Tools
   "vlc"

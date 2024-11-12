@@ -1,6 +1,9 @@
 _:
 
 [
+  # AI 
+  "claude"
+
   # Development Tools
   "homebrew/cask/docker"
   "visual-studio-code"

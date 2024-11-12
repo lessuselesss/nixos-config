@@ -3,7 +3,7 @@ _:
 [
   # AI 
   "claude"
-  "chagtpt"
+  "chatgpt"
 
   # Development Tools
   "homebrew/cask/docker"

@@ -52,4 +52,7 @@ _:
 
   # Virtualization
   "utm"
+
+  # Networking
+  "tailscale"
 ]

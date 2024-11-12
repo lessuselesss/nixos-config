@@ -15,6 +15,7 @@ with pkgs; [
   sqlite
   wget
   zip
+  direnv
 
   # Encryption and security tools
   age

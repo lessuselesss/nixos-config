@@ -12,6 +12,7 @@ _:
   "visual-studio-code"
   "cursor"
   "orbstack"
+  "talon"
 
   # Communication Tools
   "discord"

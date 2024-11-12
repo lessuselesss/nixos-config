@@ -15,16 +15,31 @@ in
    ./dock
   ];
 
+  #####################
+  # Single User Setup #
+  #####################
 
-
-  # # Define the "admin" user with root-like privileges
-  users.users.admin = {
-    isNormalUser = true;
-    home = "/home/admin";
-    extraGroups = [ "wheel" ]; # wheel group allows sudo access
-    hashedPassword = "<hashed-password>"; # You can set a hashed password here or use `passwordFile` or `password` directly for simplicity
-    shell = pkgs.bashInteractive; # You can specify any shell here
+  # ... Itza meee!
+  users.users.${user} = { 
+    name = "${user}";
+    home = "/Users/${user}";
+  #  hashedPassword = "$6$ewILqVwo85fq2Dtq$BXkOTy2hcBdgZ5gu7tOwd1Ns35oYHcUz/962YIF0FeDsbBTKQL8Xs73PAxMaF6nWHEJZVXhPKf.n/K7F.iGRx0";
+    isHidden = false;
+    shell = pkgs.zsh; # | pkgs.bashInteractive; 
   };
+
+  ################################
+  # Admin /w Standard User Setup #
+  ################################
+  
+  # # Define the "admin" user with root-like privileges
+  #users.users.admin = {
+  #  isNormalUser = true;
+  #  home = "/home/admin";
+  #  extraGroups = [ "wheel" ]; # wheel group allows sudo access
+  #  hashedPassword = "<hashed-password>"; # You can set a hashed password here or use `passwordFile` or `password` directly for simplicity
+  #  shell = pkgs.bashInteractive; # You can specify any shell here
+  #};
 
   # # Define a less privileged user, "standard"
   # users.users.standard = {
@@ -33,14 +48,7 @@ in
   #   hashedPassword = "<hashed-password>";
   #   shell = pkgs.bashInteractive;
   # };
-  # ... Itza meee!
-  users.users.standard = { 
-    name = "standard";
-    home = "/Users/standard";
-    hashedPassword = "$6$ewILqVwo85fq2Dtq$BXkOTy2hcBdgZ5gu7tOwd1Ns35oYHcUz/962YIF0FeDsbBTKQL8Xs73PAxMaF6nWHEJZVXhPKf.n/K7F.iGRx0";
-    isHidden = false;
-    shell = pkgs.bashInteractive; #pkgs.zsh;
-  };
+
 
   # # Ensure sudo privileges for members of the "wheel" group
   # security.sudo = {
@@ -71,18 +79,6 @@ in
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
-  };
-  
-    # These app IDs are from using the mas CLI app
-    # mas = mac app store
-    # https://github.com/mas-cli/mas
-    #
-    # $ nix shell nixpkgs#mas
-    # $ mas search <app name>
-    #
-    # If you have previously added these apps to your Mac App Store profile (but not installed them on this system),
-    # you may receive an error message "Redownload Unavailable with This Apple ID".
-    # This message is safe to ignore. (https://github.com/dustinlyons/nixos-config/issues/83)
 
     masApps = {
       #"1password" = 1333542190;
@@ -93,7 +89,7 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:{
+    users.${user} = { pkgs, config, lib, ... }: {
       home = {
         enableNixpkgsReleaseCheck = false;
         packages = pkgs.callPackage ./packages.nix {};
@@ -102,7 +98,6 @@ in
           additionalFiles
           { "emacs-launcher.command".source = myEmacsLauncher; }
         ];
-
         stateVersion = "24.05";
       };
       programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
@@ -116,12 +111,6 @@ in
   # Fully declarative dock using the latest from Nix Store
   local = { 
     dock = {
-      #enable = true;
-      #autohide = true;
-      #orientation = "left";
-      #show-process-indicators = false;
-      #show-recents = false;
-      #static-only = true;
       entries = [
         { path = "/Applications/Slack.app/"; }
         { path = "/System/Applications/Messages.app/"; }

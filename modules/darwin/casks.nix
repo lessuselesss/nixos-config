@@ -33,6 +33,7 @@ _:
   "spacedrive"
   "bazecor"
   "homerow"
+  "sdformatter"
 
   # Entertainment Tools
   "vlc"

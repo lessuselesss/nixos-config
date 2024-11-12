@@ -2,35 +2,35 @@ _:
 
 [
   # AI Tools 
-  "claude"
-  "chatgpt"
-  "lm-studio"
-  "ollama"
+  # "claude"
+  # "chatgpt"
+  # "lm-studio"
+  # "ollama"
   
   # Automation Tools
-  "hammerspoon"
-  "kit"
+  # "hammerspoon"
+  # "kit"
 
   # Document Tools
-  "adobe-acrobat-reader"
+  # "adobe-acrobat-reader"
 
   # Development Tools
-  "homebrew/cask/docker"
-  "visual-studio-code"
+  # "homebrew/cask/docker"
+  # "visual-studio-code"
   "cursor"
-  "orbstack"
-  "talon"
-  "qflipper"
+  # "orbstack"
+  # "talon"
+  # "qflipper"
   "warp"
-  "sonic-pi"
+  # "sonic-pi"
 
   # Communication Tools
-  "discord"
-  "notion"
-  "slack"
-  "telegram"
-  "zoom"
-  "beeper"
+  # "discord"
+  # "notion"
+  # "slack"
+  # "telegram"
+  # "zoom"
+  # "beeper"
 
   # Crypto Tools
   "ledger-live"
@@ -38,39 +38,38 @@ _:
   # Utility Tools
   "syncthing"
   #"1password@nightly"
-  "spacedrive"
-  "bazecor"
-  "homerow"
-  "sdformatter"
-  "hiddenbar"
-  "karabiner-elements"
-  "keycastr"
-  "disk-inventory-x"
+  # "spacedrive"
+  # "bazecor"
+  # "homerow"
+  # "sdformatter"
+  # "hiddenbar"
+  # "karabiner-elements"
+  # "keycastr"
+  # "disk-inventory-x"
 
   # Entertainment Tools
-  "vlc"
-  "transmission"
+  # "vlc"
+  # "transmission"
 
   # Productivity Tools
-  "raycast"
-  "obsidian"
-  "sketch"
+  # "raycast"
+  # "obsidian"
 
   # Browsers
-  "brave-browser"
-  "duckduckgo"
-  "firefox"
-  "google-chrome"
-  "orion"
+  # "brave-browser"
+  # "duckduckgo"
+  # "firefox"
+  # "google-chrome"
+  # "orion"
   
   # Security Tools
-  "silentknight"
-  "xprocheck"
-  "secretive"
+  # "silentknight"
+  # "xprocheck"
+  # "secretive"
   
   # Virtualization
-  "utm"
-  "crystalfetch"
+  # "utm"
+  # "crystalfetch"
 
   # Networking
   "tailscale"

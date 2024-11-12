@@ -9,6 +9,7 @@ _:
   
   # Automation Tools
   "hammerspoon"
+  "kit"
 
   # Development Tools
   "homebrew/cask/docker"

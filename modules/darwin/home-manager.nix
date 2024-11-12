@@ -30,7 +30,7 @@ in
 
     taps = [
       FelixKratz/formulae
-    ]
+    ];
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store

@@ -46,4 +46,7 @@ _:
   "google-chrome"
   "orion"
   "duckduckgo"
+  
+  # Security Tools
+  "silentknight"
 ]

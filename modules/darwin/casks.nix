@@ -44,4 +44,5 @@ _:
   # Browsers
   "google-chrome"
   "orion"
+  "duckduckgo"
 ]

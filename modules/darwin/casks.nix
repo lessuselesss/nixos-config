@@ -24,6 +24,7 @@ _:
   #"1password@nightly"
   "spacedrive"
   "bazecor"
+  "homerow"
 
   # Entertainment Tools
   "vlc"

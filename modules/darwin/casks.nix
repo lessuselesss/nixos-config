@@ -1,11 +1,14 @@
 _:
 
 [
-  # AI 
+  # AI Tools 
   "claude"
   "chatgpt"
   "lm-studio"
   "ollama"
+  
+  # Automation Tools
+  "hammerspoon"
 
   # Development Tools
   "homebrew/cask/docker"

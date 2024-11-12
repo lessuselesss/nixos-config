@@ -71,12 +71,12 @@ in
   # Fully declarative dock using the latest from Nix Store
   local = { 
     dock = {
-      enable = true;
-        autohide = true;
-        orientation = "left";
-        show-process-indicators = false;
-        show-recents = false;
-        static-only = true;
+      #enable = true;
+      #autohide = true;
+      #orientation = "left";
+      #show-process-indicators = false;
+      #show-recents = false;
+      #static-only = true;
       entries = [
         { path = "/Applications/Slack.app/"; }
         { path = "/System/Applications/Messages.app/"; }

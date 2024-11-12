@@ -14,6 +14,7 @@ _:
   "orbstack"
   "talon"
   "qflipper"
+  "warp"
 
   # Communication Tools
   "discord"

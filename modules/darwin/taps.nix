@@ -1,6 +1,0 @@
-_:
-
-[   
-    #Sketchybar
-    FelixKratz/formulae
-]

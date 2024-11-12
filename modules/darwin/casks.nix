@@ -39,6 +39,7 @@ _:
   "homerow"
   "sdformatter"
   "hiddenbar"
+  "karabiner-elements"
 
   # Entertainment Tools
   "vlc"
@@ -55,6 +56,7 @@ _:
   # Security Tools
   "silentknight"
   "xprocheck"
+  
   # Virtualization
   "utm"
   "crystalfetch"

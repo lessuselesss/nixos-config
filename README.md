@@ -1,4 +1,4 @@
-# nixos-config
+ # nixos-config
 nixOS/nix-darwin(macOS) Flakes
 
 ### 0 - Add (GH Associated) ssh keys

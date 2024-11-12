@@ -49,6 +49,7 @@ _:
   # Productivity Tools
   "raycast"
   "obsidian"
+  "sketch"
 
   # Browsers
   "brave-browser"
@@ -60,6 +61,7 @@ _:
   # Security Tools
   "silentknight"
   "xprocheck"
+  "secretive"
   
   # Virtualization
   "utm"

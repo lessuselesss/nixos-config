@@ -1,7 +1,8 @@
  # nixos-config
 nixOS/nix-darwin(macOS) Flakes 
 
-setup_script.sh will attempt to run all of the below, otherwise you can go through each step manually.
+setup_script.sh will attempt to run all of the below, otherwise you can go through each step manually, otherwise in the macOS terminal run:
+`chmod +x setup_script.sh`
 
 # Steps
 ___

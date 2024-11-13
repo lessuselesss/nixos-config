@@ -19,8 +19,9 @@ ___
 
 ### 3. Change first User Account to a standard user account
 
-`sudo dscl . -create /Users/$(whoami) UserShell /bin/bash
-sudo dscl . -create /Users/$(whoami) UserType Standard`
+`sudo dscl . -create /Users/$(whoami) UserShell /bin/bash`
+
+`sudo dscl . -create /Users/$(whoami) UserType Standard`
 
 ### 4. Login to standard user account via GUI
 

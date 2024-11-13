@@ -1,6 +1,8 @@
  # nixos-config
 nixOS/nix-darwin(macOS) Flakes 
 
+setup_script.sh will attempt to run all of the below, otherwise you can go through each step manually.
+
 # Steps
 ___
 ### 1. Create first User Account (Admin by default) account in macOS  

@@ -78,5 +78,5 @@ _:
   # VScode/Cursor
 
   # Extensions
-  "rnix-lsp" # For the Nix Language Server
+
 ]

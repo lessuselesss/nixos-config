@@ -6,7 +6,6 @@ check_command() {
         echo "Error: $1"
         exit 1
     }
-}
 
 # Step 1: Create First User Account (Admin by default)
 echo "Creating first user account (Admin)..."

@@ -15,16 +15,17 @@ in
    ./dock
   ];
 
-  #####################
-  # Single User Setup #
-  #####################
-
-  # First, set up the admin user
-  users.users.admin = {
-    name = "admin";
-    home = "/Users/admin";
-    shell = pkgs.zsh;  # or pkgs.bashInteractive if you prefer
-  };
+########################
+#  # Single User Setup #
+#  #####################
+#
+#  # First, set up the admin user
+#  users.users.admin = {
+#    name = "admin";
+#    home = "/Users/admin";
+#    shell = pkgs.zsh;  # or pkgs.bashInteractive if you prefer
+#  
+########################
 
   # Then set up your standard user
   users.users.${user} = { 

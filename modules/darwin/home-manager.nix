@@ -24,6 +24,7 @@ in
      name = "admin";
      home = "/Users/admin";
      shell = pkgs.zsh;  # or pkgs.bashInteractive if you prefer
+   };
    
   #######################
 

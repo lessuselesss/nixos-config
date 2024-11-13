@@ -10,8 +10,9 @@ check_command() {
 
 # Step 1: Create First User Account (Admin by default)
 echo "Creating first user account (Admin)..."
-# Replace <username> with the actual username or create it interactively
-read -p "Enter the username for the first account: " username
+# Assuming the first user's username is the current user
+username=$(whoami)
+# Create the user if it doesn't already exist (optional, depending on your requirements)
 sudo sysadminctl -addUser "$username"
 check_command "Failed to create first user account."
 
@@ -73,7 +74,7 @@ check_command "Failed to set up Git credentials."
 echo "Fetching Flake from Git..."
 read -p "Enter the repository URL: " repo_url
 git clone "$repo_url"
-cd "$(basename "$repo_url" .git) || exit"
+cd "$(basename "$repo_url" .git) || exit
 check_command "Failed to clone repository."
 
 # Step 13: Make Apps executable

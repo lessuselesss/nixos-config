@@ -56,6 +56,11 @@ with pkgs; [
   unzip
   zsh-powerlevel10k
   gh
+  
+  # VScode/Cursor
+
+  # Extensions
+  rnix-lsp # For the Nix Language Server
 
   # Python packages
   #python39

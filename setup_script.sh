@@ -23,14 +23,14 @@ check_command "Failed to create admin account."
 
 # Step 3: Change First User Account to a Standard User Account
 echo "Changing first user account to standard user..."
-sudo dscl . -create /Users/"$username" UserShell /bin/bash
+sudo dscl . -create /Users/"$(whoami)" UserShell /bin/bash
 check_command "Failed to set user shell."
-sudo dscl . -create /Users/"$username" UserType Standard
+sudo dscl . -create /Users/"$(whoami)" UserType Standard
 check_command "Failed to change user type."
 
-# Step 4: Prompt to log in to the standard user account
-echo "Please log in to the standard user account now."
-read -p "Press [Enter] once you are logged in..."
+# # Step 4: Prompt to log in to the standard user account
+# echo "Please log in to the standard user account now."
+# read -p "Press [Enter] once you are logged in..."
 
 # Step 5: Login to the Admin Account via Terminal
 echo "Logging in to the admin account..."
@@ -39,7 +39,7 @@ su - admin
 # Step 6: Copy keys to "admin"
 echo "Copying keys to admin account..."
 read -p "Enter the path to backup keys: " backup_path
-sudo mv "$backup_path"/* /Users/admin/.ssh/
+sudo cp -rf "$backup_path"/* /Users/admin/.ssh/
 check_command "Failed to copy keys."
 
 # Step 7: Change ownership of keys

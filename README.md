@@ -57,7 +57,7 @@ cd <repository-directory>`
 ### 15. Build Systems
 `nix run .#build`
 
-### 16. - Apply Build, Switch
+### 16. Apply Build, Switch
 `nix run .#build-switch`
 
 

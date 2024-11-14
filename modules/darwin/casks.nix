@@ -18,6 +18,7 @@ _:
   # "homebrew/cask/docker"
   # "visual-studio-code"
   "cursor"
+  "gh"
   # "orbstack" # pre-install/login required
   # "talon"
   # "qflipper"

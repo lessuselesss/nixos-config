@@ -17,11 +17,11 @@ _:
   # Development Tools
   # "homebrew/cask/docker"
   # "visual-studio-code"
-  "cursor"
-  # "orbstack"
+  # "cursor"
+  # "orbstack" # pre-install/login required
   # "talon"
   # "qflipper"
-  "warp"
+  # "warp"
   # "sonic-pi"
 
   # Communication Tools
@@ -30,13 +30,13 @@ _:
   # "slack"
   # "telegram"
   # "zoom"
-  # "beeper"
+  # "beeper" # pre-install/login required
 
   # Crypto Tools
-  "ledger-live"
+  # "ledger-live"
 
   # Utility Tools
-  "syncthing"
+  # "syncthing"
   #"1password@nightly"
   # "spacedrive"
   # "bazecor"
@@ -72,8 +72,8 @@ _:
   # "crystalfetch"
 
   # Networking
-  "tailscale"
-  "wireshark"
+  # "tailscale"
+  # "wireshark"
 
   # VScode/Cursor
 

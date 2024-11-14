@@ -97,12 +97,15 @@ in
         { path = "/System/Applications/Facetime.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
         { path = "${pkgs.emacs}/Applications/Emacs.app/"; }
-        { path = "/System/Applications/Music.app/"; }
-        { path = "/System/Applications/News.app/"; }
-        { path = "/System/Applications/Photos.app/"; }
-        { path = "/System/Applications/Photo Booth.app/"; }
-        { path = "/System/Applications/TV.app/"; }
-        { path = "/System/Applications/Home.app/"; }
+        # { path = "${pkgs.beeper}/Applications/Beeper.app/"; }
+        
+        # Default Apps
+        # { path = "/System/Applications/Music.app/"; }
+        # { path = "/System/Applications/News.app/"; }
+        # { path = "/System/Applications/Photos.app/"; }
+        # { path = "/System/Applications/Photo Booth.app/"; }
+        # { path = "/System/Applications/TV.app/"; }
+        # { path = "/System/Applications/Home.app/"; }
         {
           path = toString myEmacsLauncher;
           section = "others";

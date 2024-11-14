@@ -19,12 +19,12 @@ in
   #  Single User Setup  #
   #######################
    
-   # First, set up the admin user
-   users.users.admin = {
-     name = "admin";
-     home = "/Users/admin";
-     shell = pkgs.zsh;  # or pkgs.bashInteractive if you prefer
-   };
+  # # First, set up the admin user
+  # users.users.admin = {
+  #   name = "admin";
+  #   home = "/Users/admin";
+  #   shell = pkgs.zsh;  # or pkgs.bashInteractive if you prefer
+  # };
    
   #######################
 
@@ -39,7 +39,7 @@ in
   # Configure home-manager for both users
   home-manager = {
     useGlobalPkgs = true;
-    users.admin = { pkgs, config, lib, ... }: {
+    users.${user} = { pkgs, config, lib, ... }: {
       home = {
         enableNixpkgsReleaseCheck = false;
         packages = pkgs.callPackage ./packages.nix {};

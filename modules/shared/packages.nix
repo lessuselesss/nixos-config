@@ -55,7 +55,6 @@ with pkgs; [
   unrar
   unzip
   zsh-powerlevel10k
-  gh
 
   # Python packages
   #python39

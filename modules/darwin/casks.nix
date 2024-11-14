@@ -2,8 +2,8 @@ _:
 
 [
   # AI Tools 
-  # "claude"
-  # "chatgpt"
+  "claude"
+  "chatgpt"
   # "lm-studio"
   # "ollama"
   
@@ -18,63 +18,63 @@ _:
   # "homebrew/cask/docker"
   # "visual-studio-code"
   "cursor"
-  "gh"
+
   # "orbstack" # pre-install/login required
-  # "talon"
-  # "qflipper"
-  # "warp"
-  # "sonic-pi"
+  "talon"
+  "qflipper"
+  "warp"
+  "sonic-pi"
 
   # Communication Tools
   # "discord"
   # "notion"
   # "slack"
-  # "telegram"
-  # "zoom"
-  # "beeper" # pre-install/login required
+  #"telegram"
+  "zoom"
+  "beeper" # pre-install/login required
 
   # Crypto Tools
-  # "ledger-live"
+  "ledger-live"
 
   # Utility Tools
-  # "syncthing"
-  #"1password@nightly"
-  # "spacedrive"
-  # "bazecor"
-  # "homerow"
-  # "sdformatter"
-  # "hiddenbar"
-  # "karabiner-elements"
-  # "keycastr"
-  # "disk-inventory-x"
+  "syncthing"
+  "1password@nightly"
+  "spacedrive"
+  "bazecor"
+  "homerow"
+  "sdformatter"
+  "hiddenbar"
+  "karabiner-elements"
+  "keycastr"
+  "disk-inventory-x"
 
   # Entertainment Tools
-  # "vlc"
-  # "transmission"
+  "vlc"
+  "transmission"
 
   # Productivity Tools
-  # "raycast"
-  # "obsidian"
+  "raycast"
+  "obsidian"
 
   # Browsers
-  # "brave-browser"
-  # "duckduckgo"
-  # "firefox"
-  # "google-chrome"
-  # "orion"
+  "brave-browser"
+  "duckduckgo"
+  "firefox"
+  "google-chrome"
+  "orion"
   
   # Security Tools
-  # "silentknight"
-  # "xprocheck"
-  # "secretive"
+  "silentknight"
+  "xprocheck"
+  "secretive"
   
   # Virtualization
-  # "utm"
-  # "crystalfetch"
+  "utm"
+  "crystalfetch"
 
   # Networking
-  # "tailscale"
-  # "wireshark"
+  "tailscale"
+  "wireshark"
 
   # VScode/Cursor
 

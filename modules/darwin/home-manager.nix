@@ -56,7 +56,10 @@ in
         file = lib.mkMerge [
           sharedFiles
           additionalFiles
-          { "emacs-launcher.command".source = myEmacsLauncher; }
+          { 
+            "emacs-launcher.command".source = myEmacsLauncher;
+            "Downloads".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/downloads";
+          }
         ];
         stateVersion = "24.05";
       };
@@ -89,10 +92,11 @@ in
   local = { 
     dock = {
       entries = [
-        { path = "/Applications/Slack.app/"; }
+        #{ path = "/Applications/Slack.app/"; }
         { path = "/System/Applications/Messages.app/"; }
         { path = "/System/Applications/Facetime.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+        { path = "${pkgs.emacs}/Applications/Emacs.app/"; }
         { path = "/System/Applications/Music.app/"; }
         { path = "/System/Applications/News.app/"; }
         { path = "/System/Applications/Photos.app/"; }

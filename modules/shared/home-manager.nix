@@ -220,7 +220,9 @@ let name = "Ashley Barr";
     enable = true;
     settings = {
       cursor = {
-        style = "Block";
+        style = {
+          shape = "Block";
+        };
       };
 
       window = {
@@ -229,6 +231,13 @@ let name = "Ashley Barr";
           x = 24;
           y = 24;
         };
+        decorations = "full";
+        title = "Terminal";
+      };
+
+      window.class = {
+        instance = "Alacritty";
+        general = "Alacritty";
       };
 
       font = {
@@ -240,14 +249,6 @@ let name = "Ashley Barr";
           (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
           (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
         ];
-      };
-
-      dynamic_padding = true;
-      decorations = "full";
-      title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
       };
 
       colors = {

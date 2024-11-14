@@ -38,10 +38,12 @@ services = {
     
     jankyborders = {
       enable = true;
-      blur_radius = 5.0;
+      blur_radius = 10.0;
       hidpi = true;
       active_color = "0xAAB279A7";
+      # background_color = "0xAAB279A7";
       inactive_color = "0x33867A74";
+      # width = "5.0";
     };
 
     tailscale = {
@@ -113,7 +115,7 @@ services = {
       };
 
       dock = {
-        autohide = false;
+        autohide = true;
         show-recents = false;
         launchanim = true;
         orientation = "bottom";

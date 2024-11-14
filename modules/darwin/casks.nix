@@ -17,7 +17,7 @@ _:
   # Development Tools
   # "homebrew/cask/docker"
   # "visual-studio-code"
-  # "cursor"
+  "cursor"
   # "orbstack" # pre-install/login required
   # "talon"
   # "qflipper"

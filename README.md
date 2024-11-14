@@ -41,7 +41,7 @@ ___
 `xcode-select --install`
 
 ### 8. Install nix via the determinate installer
-`curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm --nix-build-group-id 4000`
+`curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm --nix-build-group-id 3000`
 
 ### 9. Login via gh
 `nix-shell -p gh git`

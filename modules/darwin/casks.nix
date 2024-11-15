@@ -47,7 +47,9 @@ _:
   "karabiner-elements"
   "keycastr"
   "disk-inventory-x"
-
+  "raspberry-pi-imager"
+  "bettertouchtool"
+  
   # Entertainment Tools
   "vlc"
   "transmission"

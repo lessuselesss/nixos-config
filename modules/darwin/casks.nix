@@ -6,6 +6,7 @@ _:
   "chatgpt"
   # "lm-studio"
   # "ollama"
+
   
   # Automation Tools
   # "hammerspoon"
@@ -75,7 +76,7 @@ _:
   "crystalfetch"
 
   # Networking
-  #"tailscale" # pre-install/login required
+  "tailscale" # pre-install/login required
   "wireshark"
 
   # VScode/Cursor

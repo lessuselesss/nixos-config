@@ -20,6 +20,7 @@ with pkgs; [
   wget
   zip
   direnv
+  devenv    
 
   # Encryption and security tools
   age
@@ -42,11 +43,6 @@ with pkgs; [
   noto-fonts-emoji
   meslo-lgs-nf
 
-  # Node.js development tools
-  nodePackages.npm # globally install npm
-  nodePackages.prettier
-  nodejs
-
   # Text and terminal utilities
   htop
   hunspell
@@ -60,10 +56,8 @@ with pkgs; [
   unzip
   zsh-powerlevel10k
 
-  # Python packages 
-  # USE DEVENV 
-  #python312
-  #python313Packages.virtualenv # globally install virtualenv
+  # Python Developement Tools 
+
   (python313.withPackages (ps: with ps; [
       time-machine
       virtualenv
@@ -71,9 +65,21 @@ with pkgs; [
       #mlx
       pip
       # other Python packages...
+
+      # USE DEVENV FOR PROJECT-SPECIFIC ENVS 
     ]))
 
-    devenv
+  # Node.js Developement Tools
+  # fzf
+  # nodePackages.live-server
+  # nodePackages.nodemon
+  # nodePackages.prettier
+  # nodePackages.npm
+  # nodejs
+
+# ...
+
+# Python
 ##############################################################
 #   !!!! Use Devenv for project specific python shells !!!! ##
 #  ###########################################################
@@ -92,6 +98,33 @@ with pkgs; [
 #  enterShell = ''
 #    python -c "import PySide2" && echo "No errors!"
 #  '';
+#  }
+##############################################################
+
+# nodejs
+##############################################################
+#   !!!! Use Devenv for project specific node shells !!!!   ##
+#  ###########################################################
+#  # devenv.nix
+#  { pkgs, lib, config, inputs, ... }:
+#
+#  {
+#    languages.nodejs = {
+#      enable = true;
+#      version = "20";  # Specify Node.js version
+#      package = pkgs.nodejs_20;
+#      # Add global npm packages
+#      packages = {
+#        typescript = "latest";
+#        "@types/node" = "latest";
+#        eslint = "latest";
+#        prettier = "latest";
+#      };
+#    };
+#
+#    enterShell = ''
+#      node --version && npm --version && echo "Node.js environment ready!"
+#    '';
 #  }
 ##############################################################
 ]

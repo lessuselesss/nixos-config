@@ -113,23 +113,169 @@ services = {
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
+        
+        # Auto hide the menubar
+        _HIHideMenuBar = true;
+
+        # Enable full keyboard access for all controls
+        #AppleKeyboardUIMode = 3;
+
+        # Enable press-and-hold repeating
+        #ApplePressAndHoldEnabled = false;
+        #InitialKeyRepeat = 10;
+        #KeyRepeat = 1;
+
+        # Disable "Natural" scrolling
+        "com.apple.swipescrolldirection" = false;
+
+        # Disable smart dash/period/quote substitutions
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+
+        # Disable automatic capitalization
+        NSAutomaticCapitalizationEnabled = false;
+
+        # Using expanded "save panel" by default
+        NSNavPanelExpandedStateForSaveMode = true;
+        NSNavPanelExpandedStateForSaveMode2 = true;
+
+        # Increase window resize speed for Cocoa applications
+        NSWindowResizeTime = 0.001;
+
+        # Save to disk (not to iCloud) by default
+        NSDocumentSaveNewDocumentsToCloud = true;
       };
 
       dock = {
-        autohide = true;
-        show-recents = false;
+
+        # Set icon size, dock orientation and launch animation
         launchanim = true;
-        orientation = "bottom";
         tilesize = 48;
+        orientation = "left";
+
+        # Set dock to auto-hide, and transparentize icons of hidden apps (⌘H)
+        autohide = true;
+        showhidden = true;
+
+        # Disable to show recents, and light-dot of running apps
+        show-recents = false;
+        show-process-indicators = false;
       };
 
       finder = {
+
         _FXShowPosixPathInTitle = false;
+
+        # Allow quitting via ⌘Q
+        QuitMenuItem = true;
+
+        # Disable warning when changing a file extension
+        FXEnableExtensionChangeWarning = false;
+
+        # Show all files and their extensions
+        AppleShowAllExtensions = true;
+        AppleShowAllFiles = true;
+
+        # Show path bar, and layout as multi-column
+        ShowPathbar = true;
+        FXPreferredViewStyle = "clmv";
+
+        # Search in current folder by default
+        FXDefaultSearchScope = "SCcf";
       };
 
       trackpad = {
+        # Enable trackpad tap to click
         Clicking = true;
+
+        # Enable 3-finger drag
         TrackpadThreeFingerDrag = true;
+      };
+
+      ActivityMonitor = {
+        # Sort by CPU usage
+        SortColumn = "CPUUsage";
+        SortDirection = 0;
+      };
+
+      LaunchServices = {
+        # Disable quarantine for downloaded apps
+        LSQuarantine = false;
+      };
+
+      CustomSystemPreferences = {
+        NSGlobalDomain = {
+          # Set the system accent color, TODO: https://github.com/LnL7/nix-darwin/pull/230
+          AppleAccentColor = 6;
+          # Jump to the spot that's clicked on the scroll bar, TODO: https://github.com/LnL7/nix-darwin/pull/672
+          AppleScrollerPagingBehavior = true;
+          # Prefer tabs when opening documents, TODO: https://github.com/LnL7/nix-darwin/pull/673
+          AppleWindowTabbingMode = "always";
+        };
+        "com.apple.finder" = {
+          # Keep the desktop clean
+          ShowHardDrivesOnDesktop = false;
+          ShowRemovableMediaOnDesktop = false;
+          ShowExternalHardDrivesOnDesktop = false;
+          ShowMountedServersOnDesktop = false;
+
+          # Show directories first
+          _FXSortFoldersFirst = true; # TODO: https://github.com/LnL7/nix-darwin/pull/594
+
+          # New window use the $HOME path
+          NewWindowTarget = "PfHm";
+          NewWindowTargetPath = "file://$HOME/";
+
+          # Allow text selection in Quick Look
+          QLEnableTextSelection = true;
+        };
+        "com.apple.Safari" = {
+          # For better privacy
+          UniversalSearchEnabled = false;
+          SuppressSearchSuggestions = true;
+          SendDoNotTrackHTTPHeader = true;
+
+          # Disable auto open safe downloads
+          AutoOpenSafeDownloads = false;
+
+          # Enable Develop Menu, Web Inspector
+          IncludeDevelopMenu = true;
+          IncludeInternalDebugMenu = true;
+          WebKitDeveloperExtras = true;
+          WebKitDeveloperExtrasEnabledPreferenceKey = true;
+          "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
+        };
+        "com.apple.universalaccess" = {
+          # Set the cursor size, TODO: https://github.com/LnL7/nix-darwin/pull/671
+          mouseDriverCursorSize = 1.5;
+        };
+        "com.apple.screencapture" = {
+          # Set the filename which screencaptures should be written, TODO: https://github.com/LnL7/nix-darwin/pull/670
+          name = "screenshot";
+          include-date = false;
+        };
+        "com.apple.desktopservices" = {
+          # Avoid creating .DS_Store files on USB or network volumes
+          DSDontWriteUSBStores = true;
+          DSDontWriteNetworkStores = true;
+        };
+        "com.apple.frameworks.diskimages" = {
+          # Disable disk image verification
+          skip-verify = true;
+          skip-verify-locked = true;
+          skip-verify-remote = true;
+        };
+        "com.apple.CrashReporter" = {
+          # Disable crash reporter
+          DialogType = "none";
+        };
+        "com.apple.AdLib" = {
+          # Disable personalized advertising
+          forceLimitAdTracking = true;
+          allowApplePersonalizedAdvertising = false;
+          allowIdentifierForAdvertising = false;
+        };
       };
     };
   };

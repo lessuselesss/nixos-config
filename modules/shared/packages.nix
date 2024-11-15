@@ -1,6 +1,9 @@
 { pkgs }:
 
 with pkgs; [
+  # Automation
+  fabric-ai
+  
   # General packages for development and system management
   alacritty
   aspell

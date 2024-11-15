@@ -12,14 +12,14 @@ _:
   # "kit"
 
   # Document Tools
-  # "adobe-acrobat-reader"
+  "adobe-acrobat-reader"
 
   # Development Tools
   # "homebrew/cask/docker"
   # "visual-studio-code"
   "cursor"
 
-  # "orbstack" # pre-install/login required
+  "orbstack" # pre-install/login required
   "talon"
   "qflipper"
   "warp"

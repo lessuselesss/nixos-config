@@ -8,12 +8,17 @@ let user = "lessuseless"; in
     ../../modules/darwin/secrets.nix
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
+    # ./nextdns.nix
      agenix.darwinModules.default
   ];
 
   # Auto upgrade nix package and the daemon service.
 services = {
     nix-daemon.enable = true;
+    # nextdns = {
+    #   enable = true;
+    #   configId = "4f55c4"; # Replace with your NextDNS configuration ID
+    # };
     yabai = {
       enable = true;
       config = {
@@ -57,7 +62,6 @@ services = {
         # mouse_action1 = "move";
         # mouse_action2 = "resize";
         # mouse_drop_action = "swap";
-
       };
       
       extraConfig = ''

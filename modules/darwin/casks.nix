@@ -75,7 +75,7 @@ _:
   "crystalfetch"
 
   # Networking
-  "tailscale"
+  #"tailscale" # pre-install/login required
   "wireshark"
 
   # VScode/Cursor

@@ -3,6 +3,7 @@
 with pkgs; [
   # Automation
   fabric-ai
+  #exo
   
   # General packages for development and system management
   alacritty
@@ -59,12 +60,38 @@ with pkgs; [
   unzip
   zsh-powerlevel10k
 
-  # Python packages
-  #python39
-  #python39Packages.virtualenv # globally install virtualenv
-  (python312.withPackages (ps: with ps; [
+  # Python packages 
+  # USE DEVENV 
+  #python312
+  #python313Packages.virtualenv # globally install virtualenv
+  (python313.withPackages (ps: with ps; [
       time-machine
       virtualenv
+      #pyobjc
+      #mlx
+      pip
       # other Python packages...
     ]))
+
+    devenv
+##############################################################
+#   !!!! Use Devenv for project specific python shells !!!! ##
+#  ###########################################################
+#  # devenv.nix
+#  { pkgs, lib, config, inputs, ... }:
+#
+#  {
+#    languages.python = {
+#      enable = true;
+#      venv.enable = true;
+#      venv.requirements = ''
+#        pyside2
+#      '';
+#  };
+#
+#  enterShell = ''
+#    python -c "import PySide2" && echo "No errors!"
+#  '';
+#  }
+##############################################################
 ]

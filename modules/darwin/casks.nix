@@ -78,6 +78,7 @@ _:
   # Networking
   "tailscale" # pre-install/login required
   "wireshark"
+  # "yabai"
 
   # VScode/Cursor
 

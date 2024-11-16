@@ -36,11 +36,11 @@ services = {
         # auto_balance = false;
 
         # # Window Spacing
-        # top_padding = 12;
-        # bottom_padding = 12;
-        # left_padding = 12;
-        # right_padding = 12;
-        # window_gap = 6;
+        top_padding = "3";
+        bottom_padding = "3";
+        left_padding = "3";
+        right_padding = "3";
+        window_gap = "3";
 
         # # Window Properties
         # window_origin_display = "default";
@@ -54,7 +54,7 @@ services = {
         # normal_window_opacity = 0.90;
         # window_opacity = false;
         window_shadow = "float";
-        window_gap = "10";
+
         
         # # Mouse Properties
         mouse_modifier = "ctrl"; 

@@ -1,12 +1,23 @@
 { pkgs, config, ... }:
 
 # let
-#  githubPublicKey = "ssh-ed25519 AAAA...";
+#   githubPublicKey = "ssh-ed25519 ...";
+#   githubPublicSigningKey = ''
+#     -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+#     ...
+#     -----END PGP PUBLIC KEY BLOCK-----
+#   '';
 # in
+
 {
 
   # ".ssh/id_github.pub" = {
   #   text = githubPublicKey;
+  # };
+
+  # ".ssh/pgp_github.pub" = {
+  #   text = githubPublicSigningKey;
   # };
 
   # Initializes Emacs with org-mode so we can tangle the main config

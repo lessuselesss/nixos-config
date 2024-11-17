@@ -28,6 +28,11 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
+    
+    # If shell gives compinit errors and completions
+    # or shell elements are broken, 
+    # imparitively run:
+    # `brew upgrade && brew cleanup && brew completions link`
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store

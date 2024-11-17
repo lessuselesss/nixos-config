@@ -4,8 +4,8 @@ _:
   # AI Tools 
   "claude"
   "chatgpt"
-  # "lm-studio"
-  # "ollama"
+  "lm-studio"
+  "ollama"
 
   
   # Automation Tools

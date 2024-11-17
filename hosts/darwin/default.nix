@@ -77,6 +77,14 @@ services = {
       '';
     };
     
+    sketchybar = {
+      enable = true;
+      extraPackages = with pkgs; [
+        jankyborders
+        nushell
+      ];
+    };
+    
     jankyborders = {
       enable = true;
       blur_radius = 5.0;
@@ -290,6 +298,7 @@ services = {
         "com.apple.universalaccess" = {
           # Set the cursor size, TODO: https://github.com/LnL7/nix-darwin/pull/671
           mouseDriverCursorSize = 1.5;
+          reduceMotion = false; # Fast Space Switching
         };
         "com.apple.screencapture" = {
           # Set the filename which screencaptures should be written, TODO: https://github.com/LnL7/nix-darwin/pull/670

@@ -8,6 +8,7 @@ let name = "Ashley Barr";
   zsh = {
     enable = true;
     autocd = false;
+    enableCompletion = true;
     cdpath = [ "~/.local/share/src" ];
     plugins = [
       {

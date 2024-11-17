@@ -7,4 +7,5 @@ shared-packages ++ [
   gh
   pinentry_mac
   # yabai
+  mods
 ]

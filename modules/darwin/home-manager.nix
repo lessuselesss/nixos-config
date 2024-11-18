@@ -12,6 +12,7 @@ let
 in
 {
   imports = [
+  #  ./config
    ./dock
   ];
 

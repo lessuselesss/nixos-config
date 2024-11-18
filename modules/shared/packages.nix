@@ -20,7 +20,7 @@ with pkgs; [
   wget
   zip
   direnv
-  devenv    
+  devenv
 
   # Encryption and security tools
   age

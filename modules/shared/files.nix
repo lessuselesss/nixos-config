@@ -24,12 +24,4 @@
   ".emacs.d/init.el" = {
     text = builtins.readFile ../shared/config/emacs/init.el;
   };
-  
-  # Initialize Karabiner-Elements
-  ".config/karabiner/karabiner.json" = {
-    text = builtins.readFile ../darwin/config/karabiner/karabiner.json;
-  };
-  # ".config/karabiner/assets/complex_modifications/karabiner.json" = {
-  #   text = builtins.readFile ../darwin/config/karabiner/assets/complex_modifications/karabiner.json;
-  # };
 }

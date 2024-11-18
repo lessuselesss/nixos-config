@@ -26,61 +26,63 @@ services = {
 ##################################################
 # ┌┬┬  move config to home-manager modules ← ← ← #
 # ↓↓↓ ############################################
-      config = {
-          layout = "bsp";
+      # config = {
+      #     layout = "bsp";
 
-          external_bar = "off:40:0";
-          menubar_opacity = "1.0";
-          mouse_follows_focus = "off";
-          focus_follows_mouse = "off";
-          display_arrangement_order = [ "default" ];
+      #     external_bar = "off:40:0";
+      #     menubar_opacity = "1.0";
+      #     mouse_follows_focus = "off";
+      #     focus_follows_mouse = "off";
+      #     display_arrangement_order = [ "default" ];
       
-          insert_feedback_color = "0xffd75f5f";
-          split_ratio = 0.50;
-          split_type = "auto";
-          auto_balance = false;
+      #     insert_feedback_color = "0xffd75f5f";
+      #     split_ratio = 0.50;
+      #     split_type = "auto";
+      #     auto_balance = false;
 
-          # Window Spacing
-          top_padding = "3";
-          bottom_padding = "3";
-          left_padding = "3";
-          right_padding = "3";
-          window_gap = "3";
+      #     # Window Spacing
+      #     top_padding = "3";
+      #     bottom_padding = "3";
+      #     left_padding = "3";
+      #     right_padding = "3";
+      #     window_gap = "3";
 
-          # Window Properties
-          window_origin_display = "default";
-          window_placement = "second_child";
-          window_zoom_persist = true;
-          window_shadow = true;
-          window_animation_duration = 0.0;
-          window_animation_easing = "ease_out_circ";
-          window_opacity_duration = 0.0;
-          active_window_opacity = 1.0;
-          normal_window_opacity = 0.90;
+      #     # Window Properties
+      #     window_origin_display = "default";
+      #     window_placement = "second_child";
+      #     window_zoom_persist = true;
+      #     window_shadow = true;
+      #     window_animation_duration = 0.0;
+      #     window_animation_easing = "ease_out_circ";
+      #     window_opacity_duration = 0.0;
+      #     active_window_opacity = 1.0;
+      #     normal_window_opacity = 0.90;
         
-          # window_opacity = false;
-          # window_shadow = "float";
+      #     # window_opacity = false;
+      #     # window_shadow = "float";
 
         
-          # Mouse Properties
-          mouse_modifier = "ctrl"; 
-          mouse_drop_action = "stack";     
-          mouse_action1 = "move";
+      #     # Mouse Properties
+      #     mouse_modifier = "ctrl"; 
+      #     mouse_drop_action = "stack";     
+      #     mouse_action1 = "move";
           # mouse_action2 = "resize";
           # mouse_drop_action = "swap";
-      };
+      # };
       
-      extraConfig = ''
-        yabai -m signal --add event=display_added action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' display=east" active=yes
-        yabai -m signal --add event=display_removed action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' native-fullscreen=on" active=yes
-        yabai -m rule --add app='OBS' display=east
-        yabai -m rule --add app='Spotify' display=east
+      # extraConfig = ''
+      #   yabai -m rule   --add app='OBS'             display=east
+      #   yabai -m rule   --add app='Spotify'         display=east
 
-        yabai -m rule --add app='Cardhop' manage=off
-        yabai -m rule --add app='Pop' manage=off
-        yabai -m rule --add app='System Settings' manage=off
-        yabai -m rule --add app='Timery' manage=off
-      '';
+      #   # Unmanaged Apps
+      #   yabai -m rule   --add app='System Settings' manage=off
+      #   yabai -m rule   --add app='Calculator'      manage=off
+      #   yabai -m rule   --add app='ChatGpt.app'     manage=off
+      #   yabai -m rule   --add app='Alacritty'       manage=off
+        
+      #   yabai -m signal --add event=display_added   action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' display=east"         active=yes
+      #   yabai -m signal --add event=display_removed action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' native-fullscreen=on" active=yes
+      # '';
   ##################################################
       };
  

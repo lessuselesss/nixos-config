@@ -12,7 +12,8 @@ let
 in
 {
   imports = [
-  #  ./config
+  #  ../darwin/config/karabiner/karabiner.json
+  #  ../darwin/config/yabai/yabairc
    ./dock
   ];
 

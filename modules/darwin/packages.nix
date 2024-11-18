@@ -6,6 +6,6 @@ shared-packages ++ [
   dockutil
   gh
   pinentry_mac
-  # yabai
   mods
+  yabai
 ]

@@ -16,10 +16,10 @@
 #         # focus_follows_mouse = "off";
 #         # display_arrangement_order = [ "default" ];
         
-#         # insert_feedback_color = "0xffd75f5f";
-#         # split_ratio = 0.50;
-#         # split_type = "auto";
-#         # auto_balance = false;
+#         insert_feedback_color = "0xffd75f5f";
+#         split_ratio = 0.50;
+#         split_type = "auto";
+#         auto_balance = false;
 
 #         # # Window Spacing
 #         top_padding = "3";

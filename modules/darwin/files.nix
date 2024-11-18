@@ -31,7 +31,15 @@ let
       fi
     '';
   };
+  # Initialize Karabiner-Elements
+  "${xdg_configHome}/karabiner/karabiner.json" = {
+    text = builtins.readFile ../darwin/config/karabiner/karabiner.json;
+  };
 
+  # Initialize Yabai
+  "${xdg_configHome}/yabai/.yabairc" = {
+    text = builtins.readFile ../darwin/config/yabai/yabairc;
+  };
 ##################################################
 # ┌┬┬  move config to home-manager modules ← ← ← #
 # ↓↓↓ ############################################

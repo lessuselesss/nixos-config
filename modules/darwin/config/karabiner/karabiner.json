@@ -508,7 +508,7 @@
             ]
         },
         {
-            "description": "YABAI SPACE: layout [fn + {b,f,}]",
+            "description": "YABAI SPACE: layout [fn] +  { b, f }",
             "manipulators": [
                 {
                     "from": {
@@ -529,5 +529,7 @@
             ]
         }
     ],
+    "selected": true,
+    "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" },
     "title": "lessuseless Karabiner Configuration"
 }

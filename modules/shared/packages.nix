@@ -21,6 +21,7 @@ with pkgs; [
   zip
   direnv
   devenv
+  warp-terminal
 
   # Encryption and security tools
   age

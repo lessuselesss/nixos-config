@@ -257,35 +257,35 @@
 #   '';
 # }
 
-{ config, pkgs, ... }:
+# { config, pkgs, ... }:
 
-{
-  services.karabiner = {
-    enable = true;
+# {
+#   services.karabiner-elements = {
+#     enable = true;
 
-    # Define your custom Karabiner configuration
-    config = ''
-      {
-        "title": "Custom Karabiner Configuration",
-        "rules": [
-          {
-            "description": "Example: Map Caps Lock to Control",
-            "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "caps_lock"
-                },
-                "to": [
-                  {
-                    "key_code": "left_control"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    '';
-  };
-}
+#     # Define your custom Karabiner configuration
+#     config = ''
+#       {
+#         "title": "Custom Karabiner Configuration",
+#         "rules": [
+#           {
+#             "description": "Example: Map Caps Lock to Control",
+#             "manipulators": [
+#               {
+#                 "type": "basic",
+#                 "from": {
+#                   "key_code": "caps_lock"
+#                 },
+#                 "to": [
+#                   {
+#                     "key_code": "left_control"
+#                   }
+#                 ]
+#               }
+#             ]
+#           }
+#         ]
+#       }
+#     '';
+#   };
+# }

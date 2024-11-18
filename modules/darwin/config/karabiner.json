@@ -4,7 +4,54 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "YABAI WINDOW: FOCUS              |    [⌥] option    +  { ⏴j, ⏶k, ⏷l, ⏵; }",
+                        "description": "YABAI SPACE: Move Window",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --space next" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --space prev" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "YABAI WINDOW: Toggle Fullscreen      |   shift    +   [⌘] option + f",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "m",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle zoom-fullscreen" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "YABAI WINDOW: Toggle Float      |    [⌥] option    +   [⌘] command + f",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "f",
+                                    "modifiers": { "mandatory": ["option", "command"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --toggle float --grid 4:4:1:1:2:2" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "YABAI WINDOW: FOCUS              |    [⌥] option    +   { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -41,7 +88,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SIZE (UP)          |    [⇧] shift       +   [⌘] command  +  { ⏴j, ⏶k, ⏷l, ⏵; }",
+                        "description": "YABAI WINDOW: SIZE (⏶)          |    [⇧] shift       +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -78,36 +125,36 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SIZE (DOWN)    |    [⇧] shift      +   [⌘] command   +  [⌃] control +  { ⏴j, ⏶k, ⏷l, ⏵; }",
+                        "description": "YABAI WINDOW: SIZE (⏷)    |    [⌃] control   +   [⌘] command   +  [⇧] shift  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "h",
-                                    "modifiers": { "mandatory": ["fn", "shift", "control"] }
+                                    "key_code": "j",
+                                    "modifiers": { "mandatory": ["control", "shift", "command"] }
                                 },
                                 "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --resize bottom_right:-100:0" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
-                                    "key_code": "j",
-                                    "modifiers": { "mandatory": ["fn", "shift", "control"] }
+                                    "key_code": "k",
+                                    "modifiers": { "mandatory": ["control", "shift", "command"] }
                                 },
                                 "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --resize top_right:0:100" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
-                                    "key_code": "k",
-                                    "modifiers": { "mandatory": ["fn", "shift", "control"] }
+                                    "key_code": "l",
+                                    "modifiers": { "mandatory": ["control", "shift", "command"] }
                                 },
                                 "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --resize bottom_right:0:-100" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
-                                    "key_code": "l",
-                                    "modifiers": { "mandatory": ["fn", "shift", "control"] }
+                                    "key_code": "semicolon",
+                                    "modifiers": { "mandatory": ["control", "shift", "command"] }
                                 },
                                 "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m window --resize bottom_left:100:0" }],
                                 "type": "basic"
@@ -115,7 +162,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SWAP                |    [⌥] option    +   [⌘] command  +  { ⏴j, ⏶k, ⏷l, ⏵; }",
+                        "description": "YABAI WINDOW: SWAP                |    [⌥] option    +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -152,7 +199,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: WARP                |    [⌃] control   +   [⌘] command  +  { ⏴j, ⏶k, ⏷l, ⏵; }",
+                        "description": "YABAI WINDOW: Move+Split                |    [⌃] control   +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -189,6 +236,48 @@
                         ]
                     },
                     {
+                        "description": "YABAI SPACE: ROTATE                 |    [⇧] shift       +   [⌥] option +  { ⏴j  ;⏵ }",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "semicolon",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m space --rotate 270" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m space --rotate 90" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "YABAI SPACE: Mirror     |    [⌥] option    +   [⌘] command + f",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "x",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m space --mirror x-axis " }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "y",
+                                    "modifiers": { "mandatory": ["shift", "option"] }
+                                },
+                                "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m space --mirror y-axis " }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "YABAI SPACE: Modify layout",
                         "manipulators": [
                             {
@@ -197,24 +286,6 @@
                                     "modifiers": { "mandatory": ["fn"] }
                                 },
                                 "to": [{ "shell_command": "/run/current-system/sw/bin/yabai -m space --rotate 90" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Change caps_lock to hyper_key (command+control+option+shift.)",
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "left_shift",
-                                        "modifiers": ["left_command", "left_control", "left_option"]
-                                    }
-                                ],
                                 "type": "basic"
                             }
                         ]

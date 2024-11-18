@@ -38,7 +38,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: Toggle Float      |    [⌥] option    +   [⌘] command + f",
+                        "description": "YABAI WINDOW: Toggle Float           |    [⌥] option    +   [⌘] command + f",
                         "manipulators": [
                             {
                                 "from": {
@@ -51,7 +51,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: FOCUS              |    [⌥] option    +   { ⏴j ⏶k l⏷ ;⏵ }",
+                        "description": "YABAI WINDOW: FOCUS                  |    [⌥] option    +   { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -88,7 +88,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SIZE (⏶)          |    [⇧] shift       +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
+                        "description": "YABAI WINDOW: SIZE (⏶)               |    [⇧] shift       +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -125,7 +125,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SIZE (⏷)    |    [⌃] control   +   [⌘] command   +  [⇧] shift  +  { ⏴j ⏶k l⏷ ;⏵ }",
+                        "description": "YABAI WINDOW: SIZE (⏷)               |    [⌃] control   +   [⌘] command   +  [⇧] shift  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -162,7 +162,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: SWAP                |    [⌥] option    +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
+                        "description": "YABAI WINDOW: SWAP                   |    [⌥] option    +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -199,7 +199,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI WINDOW: Move+Split                |    [⌃] control   +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
+                        "description": "YABAI WINDOW: Move+Split             |    [⌃] control   +   [⌘] command  +  { ⏴j ⏶k l⏷ ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -236,7 +236,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI SPACE: ROTATE                 |    [⇧] shift       +   [⌥] option +  { ⏴j  ;⏵ }",
+                        "description": "YABAI SPACE: ROTATE                  |    [⇧] shift       +   [⌥] option +  { ⏴j  ;⏵ }",
                         "manipulators": [
                             {
                                 "from": {
@@ -257,7 +257,7 @@
                         ]
                     },
                     {
-                        "description": "YABAI SPACE: Mirror     |    [⌥] option    +   [⌘] command + f",
+                        "description": "YABAI SPACE: Mirror                  |    [⌥] option    +   [⌘] command + f",
                         "manipulators": [
                             {
                                 "from": {
@@ -295,7 +295,7 @@
             "name": "Default profile",
             "rules": [
                 {
-                    "description": "YABAI FOCUS WINDOW[ fn + {j,k,l,;} ]",
+                    "description": "YABAI FOCUS WINDOW[ fn + { ⏴j ⏶k l⏷ ;⏵ } ]",
                     "manipulators": [
                         {
                             "from": {

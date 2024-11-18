@@ -23,7 +23,7 @@ _:
   "orbstack" # pre-install/login required
   "talon"
   "qflipper"
-  "warp"
+  # "warp"
   "sonic-pi"
 
   # Communication Tools

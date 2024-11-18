@@ -7,6 +7,7 @@ let user = "lessuseless"; in
   imports = [
     ../../modules/darwin/secrets.nix
     ../../modules/darwin/home-manager.nix
+    # ../../modules/darwin/config/karabiner/karabiner.nix
     ../../modules/shared
     # ./nextdns.nix
      agenix.darwinModules.default
@@ -95,6 +96,33 @@ services = {
       inactive_color = "0x33867A74";
       # width = "5.0";
     };
+
+    # karabiner-elements = {
+    #   enable = true;
+      # config = ''
+      # {
+      #   "title": "Custom Karabiner Configuration",
+      #   "rules": [
+      #     {
+      #       "description": "Example: Map Caps Lock to Control",
+      #       "manipulators": [
+      #         {
+      #           "type": "basic",
+      #           "from": {
+      #             "key_code": "caps_lock"
+      #           },
+      #           "to": [
+      #             {
+      #               "key_code": "left_control"
+      #             }
+      #           ]
+      #         }
+      #       ]
+      #     }
+      #   ]
+      # }
+      # '';
+    # };
 
     tailscale = {
       enable = true; # false = Using App Store application

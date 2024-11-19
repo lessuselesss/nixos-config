@@ -302,5 +302,5 @@ let user = "lessuseless";
     inetutils
   ];
 
-  system.stateVersion = "21.05"; # Don't change this
+  system.stateVersion = "24.11""; # Don't change this
 }

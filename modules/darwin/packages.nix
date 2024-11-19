@@ -8,4 +8,5 @@ shared-packages ++ [
   pinentry_mac
   # yabai
   mods
+  mas
 ]

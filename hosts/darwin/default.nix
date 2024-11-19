@@ -17,73 +17,8 @@ let user = "lessuseless"; in
   # Auto upgrade nix package and the daemon service.
 services = {
     nix-daemon.enable = true;
-    # nextdns = {
-    #   enable = true;
-    #   configId = "4f55c4"; # Replace with your NextDNS configuration ID
-    # };
     yabai = {
       enable = true;
-##################################################
-# ┌┬┬  move config to home-manager modules ← ← ← #
-# ↓↓↓ ############################################
-      # config = {
-      #     layout = "bsp";
-
-      #     external_bar = "off:40:0";
-      #     menubar_opacity = "1.0";
-      #     mouse_follows_focus = "off";
-      #     focus_follows_mouse = "off";
-      #     display_arrangement_order = [ "default" ];
-      
-      #     insert_feedback_color = "0xffd75f5f";
-      #     split_ratio = 0.50;
-      #     split_type = "auto";
-      #     auto_balance = false;
-
-      #     # Window Spacing
-      #     top_padding = "3";
-      #     bottom_padding = "3";
-      #     left_padding = "3";
-      #     right_padding = "3";
-      #     window_gap = "3";
-
-      #     # Window Properties
-      #     window_origin_display = "default";
-      #     window_placement = "second_child";
-      #     window_zoom_persist = true;
-      #     window_shadow = true;
-      #     window_animation_duration = 0.0;
-      #     window_animation_easing = "ease_out_circ";
-      #     window_opacity_duration = 0.0;
-      #     active_window_opacity = 1.0;
-      #     normal_window_opacity = 0.90;
-        
-      #     # window_opacity = false;
-      #     # window_shadow = "float";
-
-        
-      #     # Mouse Properties
-      #     mouse_modifier = "ctrl"; 
-      #     mouse_drop_action = "stack";     
-      #     mouse_action1 = "move";
-          # mouse_action2 = "resize";
-          # mouse_drop_action = "swap";
-      # };
-      
-      # extraConfig = ''
-      #   yabai -m rule   --add app='OBS'             display=east
-      #   yabai -m rule   --add app='Spotify'         display=east
-
-      #   # Unmanaged Apps
-      #   yabai -m rule   --add app='System Settings' manage=off
-      #   yabai -m rule   --add app='Calculator'      manage=off
-      #   yabai -m rule   --add app='ChatGpt.app'     manage=off
-      #   yabai -m rule   --add app='Alacritty'       manage=off
-        
-      #   yabai -m signal --add event=display_added   action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' display=east"         active=yes
-      #   yabai -m signal --add event=display_removed action="yabai -m rule --remove label=calendar && yabai -m rule --add app='Fantastical' label='calendar' native-fullscreen=on" active=yes
-      # '';
-  ##################################################
       };
  
     sketchybar = {
@@ -105,33 +40,6 @@ services = {
       # width = "5.0";
     };
 
-    # karabiner-elements = {
-    #   enable = true;
-      # config = ''
-      # {
-      #   "title": "Custom Karabiner Configuration",
-      #   "rules": [
-      #     {
-      #       "description": "Example: Map Caps Lock to Control",
-      #       "manipulators": [
-      #         {
-      #           "type": "basic",
-      #           "from": {
-      #             "key_code": "caps_lock"
-      #           },
-      #           "to": [
-      #             {
-      #               "key_code": "left_control"
-      #             }
-      #           ]
-      #         }
-      #       ]
-      #     }
-      #   ]
-      # }
-      # '';
-      #};
-
     tailscale = {
       enable = true; # false = Using App Store application
       overrideLocalDns = true;
@@ -143,9 +51,12 @@ services = {
     package = pkgs.nix;
     settings = {
       trusted-users = [ "@admin" "${user}" ];
-      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
-      # trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ] 
+      substituters = [ "lessuseless.cachix.org" "https://nix-community.cachix.org" "https://cache.nixos.org"  ];
+      trusted-public-keys = [ 
+        "lessuselesss.cachix.org-1:nwRzA1J+Ze2nJAcioAfp77ifk8sncUi963WW2RExOwA="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        ];
     };
 
     gc = {
@@ -187,6 +98,8 @@ services = {
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
+
+        # Enable press-and-hold repeating
         ApplePressAndHoldEnabled = false;
 
         # 120, 90, 60, 30, 12, 6, 2
@@ -204,11 +117,6 @@ services = {
 
         # Enable full keyboard access for all controls
         #AppleKeyboardUIMode = 3;
-
-        # Enable press-and-hold repeating
-        #ApplePressAndHoldEnabled = false;
-        #InitialKeyRepeat = 10;
-        #KeyRepeat = 1;
 
         # Disable "Natural" scrolling
         "com.apple.swipescrolldirection" = false;

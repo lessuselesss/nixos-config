@@ -43,12 +43,20 @@ in
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #
-    #masApps = {
+    masApps = {
     #  "1password" = 1333542190;
     #  "hidden-bar" = 1452453066;
     #  "wireguard" = 1451685025;
-    #};
+      "gordian seed tool" = 1545088229;
+    };
   };
+
+  networking.knownNetworkServices = [
+    "Wi-Fi" 
+    "USB 10/100/1000 LAN" 
+    "Bluetooth PAN" 
+    "Thunderbolt Bridge" 
+    ];
 
   # Enable home-manager
   home-manager = {

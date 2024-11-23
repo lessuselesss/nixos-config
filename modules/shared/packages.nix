@@ -57,10 +57,11 @@ with pkgs; [
   unrar
   unzip
   zsh-powerlevel10k
-
+  micromamba
   # Python Developement Tools 
-
-  (python313.withPackages (ps: with ps; [
+  
+  (python312.withPackages (ps: with ps; [
+      # conda
       time-machine
       virtualenv
       #pyobjc

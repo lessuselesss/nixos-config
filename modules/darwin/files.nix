@@ -37,9 +37,9 @@ let
   };
 
   # Initialize Yabai
-  "${xdg_configHome}/yabai/yabairc" = {
-    text = builtins.readFile ../darwin/config/yabai/yabairc;
-  };
+  # "${xdg_configHome}/yabai/yabairc" = {
+  #   text = builtins.readFile ../darwin/config/yabai/yabairc;
+  # };
 ##################################################
 # ┌┬┬  move config to home-manager modules ← ← ← #
 # ↓↓↓ ############################################

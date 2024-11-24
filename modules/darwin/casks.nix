@@ -79,9 +79,10 @@ _:
   "tailscale" # pre-install/login required
   "wireshark"
   # "yabai"
-
+  
   # VScode/Cursor
 
   # Extensions
+
 
 ]

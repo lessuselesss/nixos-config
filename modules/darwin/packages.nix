@@ -9,4 +9,5 @@ shared-packages ++ [
   # yabai
   mods
   mas
+  iina
 ]

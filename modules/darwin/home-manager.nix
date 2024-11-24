@@ -42,7 +42,7 @@ in
     #
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
-    #
+    #:
     masApps = {
     #  "1password" = 1333542190;
     #  "hidden-bar" = 1452453066;
@@ -90,8 +90,8 @@ in
   local = {
     dock.enable = true;
     dock.entries = [
-      { path = "/System/Applications/Messages.app/"; }
-      { path = "/System/Applications/Facetime.app/"; }
+      # { path = "${pkgs.warp}/Applications/Warp.app/"; }
+      # { path = "/System/Applications/Facetime.app/"; }
       { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
       { path = "${pkgs.emacs}/Applications/Emacs.app/"; }
       

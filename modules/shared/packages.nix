@@ -60,7 +60,7 @@ with pkgs; [
   micromamba
   # Python Developement Tools 
   
-  (python312.withPackages (ps: with ps; [
+  (python310.withPackages (ps: with ps; [
       # conda
       time-machine
       virtualenv

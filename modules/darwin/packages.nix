@@ -10,4 +10,6 @@ shared-packages ++ [
   mods
   mas
   iina
+  # heimdall
+  # heimdall-gui
 ]

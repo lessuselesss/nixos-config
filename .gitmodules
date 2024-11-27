@@ -1,0 +1,3 @@
+[submodule "hosts/qubes-templatevm"]
+	path = hosts/qubes-templatevm
+	url = https://github.com/evq/qubes-nixos-template

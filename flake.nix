@@ -45,7 +45,7 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell = system: let 
+            devShell = system: let 
         pkgs = nixpkgs.legacyPackages.${system};
         mkPreCommitHook = {
           pre-commit-check = pre-commit-hooks.lib.${system}.run {
@@ -66,7 +66,6 @@
         };
       in {
         default = with pkgs; mkShell {
-          inherit (mkPreCommitHook) shellHook;
           nativeBuildInputs = with pkgs; [ 
             bashInteractive 
             git 
@@ -75,7 +74,8 @@
             nodejs
             nodePackages.npm
           ];
-          shellHook = with pkgs; ''
+          shellHook = ''
+            ${mkPreCommitHook.pre-commit-check.shellHook}
             export EDITOR=vim
           '';
         };

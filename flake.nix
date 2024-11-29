@@ -86,24 +86,26 @@
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
+          
+          # Detect if we're on Android
+          if [[ -n "$TERMUX_VERSION" ]]; then
+            exec ${self}/apps/aarch64-android/${scriptName}
+          else
+            exec ${self}/apps/${system}/${scriptName}
+          fi
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
         "build-switch" = mkApp "build-switch" system;
-      } // (if system == "aarch64-android" then {
-        # Android-specific apps
-        "aarch64-android/build-switch" = mkApp "build-switch" system;
-        "aarch64-android/apply" = mkApp "apply" system;
-      } else {
+      } // (if system != "aarch64-android" then {
         # Other Linux-specific apps
         "copy-keys" = mkApp "copy-keys" system;
         "create-keys" = mkApp "create-keys" system;
         "check-keys" = mkApp "check-keys" system;
         "install" = mkApp "install" system;
         "install-with-secrets" = mkApp "install-with-secrets" system;
-      });
+      } else {});
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;

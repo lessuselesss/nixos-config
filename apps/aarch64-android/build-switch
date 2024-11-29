@@ -7,21 +7,9 @@ RED='\033[1;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-SYSTEM=$(uname -m)
-
-case "$SYSTEM" in
-  aarch64)
-    FLAKE_TARGET="nixosConfigurations.aarch64-android.config.system.build.toplevel"
-    ;;
-  *)
-    echo -e "${RED}Unsupported architecture: $SYSTEM${NC}"
-    exit 1
-    ;;
-esac
-
 echo -e "${YELLOW}Starting...${NC}"
 
-# Use nix directly since we're in the nix-on-droid environment
-nix-on-droid build .#$FLAKE_TARGET $@
+# Use nix-on-droid specific command
+nix-on-droid switch .#
 
 echo -e "${GREEN}Build complete!${NC}"

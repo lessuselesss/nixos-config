@@ -21,11 +21,7 @@ esac
 
 echo -e "${YELLOW}Starting...${NC}"
 
-# We pass SSH from user to root so root can download secrets from our private Github
-
-/run/current-system/sw/bin/nix build .#$FLAKE_TARGET $@
-
-# removed the below because it was causing issues with the build (nix-on-droid has a different environment)
-# sudo SSH_AUTH_SOCK=$SSH_AUTH_SOCK /run/current-system/sw/bin/nix build .#$FLAKE_TARGET $@ 
+# Use nix directly since we're in the nix-on-droid environment
+nix build .#$FLAKE_TARGET $@
 
 echo -e "${GREEN}Build complete!${NC}"

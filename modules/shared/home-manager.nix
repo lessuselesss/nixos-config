@@ -1,25 +1,29 @@
-{ config, pkgs, lib, ... }:
-
-let name = "Ashley Barr";
-    user = "lessuseless";
-    email = "lessuseless@duck.com"; in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  name = "Ashley Barr";
+  user = "lessuseless";
+  email = "lessuseless@duck.com";
+in {
   # Shared shell configuration
   zsh = {
     enable = true;
     autocd = false;
     enableCompletion = true;
-    cdpath = [ "~/.local/share/src" ];
+    cdpath = ["~/.local/share/src"];
     plugins = [
       {
-          name = "powerlevel10k";
-          src = pkgs.zsh-powerlevel10k;
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
       {
-          name = "powerlevel10k-config";
-          src = lib.cleanSource ./config;
-          file = "p10k.zsh";
+        name = "powerlevel10k-config";
+        src = lib.cleanSource ./config;
+        file = "p10k.zsh";
       }
     ];
     initExtraFirst = ''
@@ -62,20 +66,20 @@ let name = "Ashley Barr";
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
-      
+
       #############
       # Fabric AI #
       #############
 
       ## Loop through all files in the ~/.config/fabric/patterns directory
       for pattern_file in $HOME/.config/fabric/patterns/*; do
-      
+
       ## Get the base name of the file (i.e., remove the directory path)
       pattern_name=$(basename "$pattern_file")
-  
+
       ## Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
       alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
-  
+
       ## Evaluate the alias command to add it to the current shell
       eval "$alias_command"
       done
@@ -89,7 +93,7 @@ let name = "Ashley Barr";
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
+    ignores = ["*.swp"];
     userName = name;
     userEmail = email;
     lfs = {
@@ -98,7 +102,7 @@ let name = "Ashley Barr";
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-	    editor = "vim";
+        editor = "vim";
         autocrlf = "input";
       };
       commit.gpgsign = true;
@@ -109,8 +113,8 @@ let name = "Ashley Barr";
 
   vim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes vim-startify vim-tmux-navigator ];
-    settings = { ignorecase = true; };
+    plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes vim-startify vim-tmux-navigator];
+    settings = {ignorecase = true;};
     extraConfig = ''
       "" General
       set number
@@ -214,8 +218,8 @@ let name = "Ashley Barr";
 
       let g:airline_theme='bubblegum'
       let g:airline_powerline_fonts = 1
-      '';
-     };
+    '';
+  };
 
   alacritty = {
     enable = true;
@@ -286,10 +290,12 @@ let name = "Ashley Barr";
   ssh = {
     enable = true;
     includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
+      (
+        lib.mkIf pkgs.stdenv.hostPlatform.isLinux
         "/home/${user}/.ssh/config_external"
       )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
+      (
+        lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
         "/Users/${user}/.ssh/config_external"
       )
     ];
@@ -297,10 +303,12 @@ let name = "Ashley Barr";
       "github.com" = {
         identitiesOnly = true;
         identityFile = [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
+          (
+            lib.mkIf pkgs.stdenv.hostPlatform.isLinux
             "/home/${user}/.ssh/id_github"
           )
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
+          (
+            lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
             "/Users/${user}/.ssh/id_github"
           )
         ];
@@ -318,7 +326,7 @@ let name = "Ashley Barr";
       {
         plugin = power-theme;
         extraConfig = ''
-           set -g @tmux_power_theme 'gold'
+          set -g @tmux_power_theme 'gold'
         '';
       }
       {
@@ -389,6 +397,6 @@ let name = "Ashley Barr";
       bind-key -T copy-mode-vi 'C-k' select-pane -U
       bind-key -T copy-mode-vi 'C-l' select-pane -R
       bind-key -T copy-mode-vi 'C-\' select-pane -l
-      '';
-    };
+    '';
+  };
 }

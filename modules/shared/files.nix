@@ -1,17 +1,17 @@
-{ pkgs, config, ... }:
-
+{
+  pkgs,
+  config,
+  ...
+}:
 # let
 #   githubPublicKey = "ssh-ed25519 ...";
 #   githubPublicSigningKey = ''
 #     -----BEGIN PGP PUBLIC KEY BLOCK-----
-
 #     ...
 #     -----END PGP PUBLIC KEY BLOCK-----
 #   '';
 # in
-
 {
-
   # ".ssh/id_github.pub" = {
   #   text = githubPublicKey;
   # };

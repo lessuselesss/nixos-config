@@ -1,13 +1,10 @@
-_:
-
-[
-  # AI Tools 
+_: [
+  # AI Tools
   "claude"
   "chatgpt"
   "lm-studio"
   "ollama"
 
-  
   # Automation Tools
   # "hammerspoon"
   # "kit"
@@ -23,7 +20,7 @@ _:
   "orbstack" # pre-install/login required
   "talon"
   "qflipper"
-  # "warp"
+  "warp"
   "sonic-pi"
 
   # Communication Tools
@@ -50,7 +47,7 @@ _:
   "disk-inventory-x"
   "raspberry-pi-imager"
   "bettertouchtool"
-  
+
   # Entertainment Tools
   "vlc"
   "transmission"
@@ -65,12 +62,12 @@ _:
   "firefox"
   "google-chrome"
   "orion"
-  
+
   # Security Tools
   "silentknight"
   "xprocheck"
   "secretive"
-  
+
   # Virtualization
   "utm"
   "crystalfetch"
@@ -79,10 +76,8 @@ _:
   "tailscale" # pre-install/login required
   "wireshark"
   # "yabai"
-  
+
   # VScode/Cursor
 
   # Extensions
-
-
 ]

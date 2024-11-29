@@ -1,9 +1,11 @@
-{ agenix, config, pkgs, ... }:
-
-let user = "lessuseless"; in
-
 {
-
+  agenix,
+  config,
+  pkgs,
+  ...
+}: let
+  user = "lessuseless";
+in {
   imports = [
     ../../modules/darwin/home-manager.nix
     # ../../../modules/darwin/config/sketchybar.nix
@@ -15,7 +17,7 @@ let user = "lessuseless"; in
   ];
 
   # Auto upgrade nix package and the daemon service.
-services = {
+  services = {
     nix-daemon.enable = true;
     yabai = {
       enable = true;
@@ -26,7 +28,7 @@ services = {
         # mouse_follows_focus = "off";
         # focus_follows_mouse = "off";
         # display_arrangement_order = [ "default" ];
-        
+
         insert_feedback_color = "0xffd75f5f";
         split_ratio = 0.50;
         split_type = "auto";
@@ -53,7 +55,7 @@ services = {
         window_shadow = "float";
       };
     };
- 
+
     sketchybar = {
       enable = true;
       extraPackages = with pkgs; [
@@ -61,7 +63,7 @@ services = {
         nushell
       ];
     };
-    
+
     jankyborders = {
       enable = true;
       blur_radius = 5.0;
@@ -83,23 +85,27 @@ services = {
   nix = {
     package = pkgs.nix;
     settings = {
-      trusted-users = [ "@admin" "${user}" ];
-      substituters = [ 
+      trusted-users = ["@admin" "${user}"];
+      substituters = [
         # "lessuseless.cachix.org"
-        "https://nix-community.cachix.org" 
-        "https://cache.nixos.org"  
-        ];
-      trusted-public-keys = [ 
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [
         # "lessuselesss.cachix.org-1:nwRzA1J+Ze2nJAcioAfp77ifk8sncUi963WW2RExOwA="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        ];
+      ];
     };
 
     gc = {
       user = "root";
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 30d";
     };
 
@@ -112,12 +118,14 @@ services = {
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; [
-    emacs-unstable
-    agenix.packages."${pkgs.system}".default
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages = with pkgs;
+    [
+      emacs-unstable
+      agenix.packages."${pkgs.system}".default
+    ]
+    ++ (import ../../modules/shared/packages.nix {inherit pkgs;});
 
-  launchd.user.agents.emacs.path = [ config.environment.systemPath ];
+  launchd.user.agents.emacs.path = [config.environment.systemPath];
   launchd.user.agents.emacs.serviceConfig = {
     KeepAlive = true;
     ProgramArguments = [
@@ -148,7 +156,7 @@ services = {
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
-        
+
         # Auto hide the menubar
         _HIHideMenuBar = true;
 
@@ -178,7 +186,6 @@ services = {
       };
 
       dock = {
-
         # Set icon size, dock orientation and launch animation
         launchanim = true;
         tilesize = 48;
@@ -194,7 +201,6 @@ services = {
       };
 
       finder = {
-
         _FXShowPosixPathInTitle = false;
 
         # Allow quitting via ⌘Q

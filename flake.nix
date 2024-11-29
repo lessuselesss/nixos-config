@@ -48,7 +48,8 @@
       user = "lessuseless";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-android" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+      mobileSystems = [ "aarch64-linux" ];
+      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems ++ mobileSystems) f;
             devShell = system: let 
         pkgs = nixpkgs.legacyPackages.${system};
         mkPreCommitHook = {

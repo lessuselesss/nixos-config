@@ -42,7 +42,7 @@
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-services, home-manager, nixpkgs, nixpkgs-stable, disko, agenix, secrets, pre-commit-hooks } @inputs:
     let
       user = "lessuseless";
-      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+      linuxSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-android" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
             devShell = system: let 
@@ -92,12 +92,18 @@
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
         "build-switch" = mkApp "build-switch" system;
+      } // (if system == "aarch64-android" then {
+        # Android-specific apps
+        "aarch64-android/build-switch" = mkApp "build-switch" system;
+        "aarch64-android/apply" = mkApp "apply" system;
+      } else {
+        # Other Linux-specific apps
         "copy-keys" = mkApp "copy-keys" system;
         "create-keys" = mkApp "create-keys" system;
         "check-keys" = mkApp "check-keys" system;
         "install" = mkApp "install" system;
         "install-with-secrets" = mkApp "install-with-secrets" system;
-      };
+      });
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;

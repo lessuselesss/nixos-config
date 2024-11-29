@@ -1,0 +1,1 @@
+# This is to see if the pre-commit hook works, it should be added repomix-output.txt in the root directory.

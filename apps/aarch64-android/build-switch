@@ -1,15 +1,22 @@
 #!/bin/sh -e
 
-VERSION=1.0
-
 GREEN='\033[1;32m'
-RED='\033[1;31m'
 YELLOW='\033[1;33m'
+RED='\033[1;31m'
 NC='\033[0m'
 
-echo -e "${YELLOW}Starting...${NC}"
+SYSTEM_TYPE="aarch64-linux"
+FLAKE_SYSTEM="nixOnDroidConfigurations.${SYSTEM_TYPE}.system"
 
-# Use nix-on-droid specific command
-nix-on-droid switch .#
+export NIXPKGS_ALLOW_UNFREE=1
 
-echo -e "${GREEN}Build complete!${NC}"
+echo "${YELLOW}Starting build...${NC}"
+nix --extra-experimental-features 'nix-command flakes' build .#$FLAKE_SYSTEM $@
+
+echo "${YELLOW}Switching to new generation...${NC}"
+./data/data/com.termux.nix/files/home/.nix-profile/bin/nix-on-droidswitch --flake .#${SYSTEM_TYPE} $@
+
+echo "${YELLOW}Cleaning up...${NC}"
+unlink ./result
+
+echo "${GREEN}Switch to new generation complete!${NC}"

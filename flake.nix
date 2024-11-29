@@ -81,6 +81,13 @@
               files = ".*";
               pass_filenames = false;
             };
+            alejandra-lint = {
+              enable = true;
+              name = "alejandra-lint";
+              entry = "${pkgs.alejandra}/bin/alejandra .";
+              files = ".*";
+              pass_filenames = false;
+            };
           };
         };
       };

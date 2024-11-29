@@ -1,10 +1,9 @@
-{ pkgs }:
-
+{pkgs}:
 with pkgs; [
   # Automation
   fabric-ai
   #exo
-  
+
   # General packages for development and system management
   alacritty
   aspell
@@ -21,7 +20,7 @@ with pkgs; [
   zip
   direnv
   devenv
-  warp-terminal
+  # warp-terminal
 
   # Encryption and security tools
   age
@@ -59,9 +58,10 @@ with pkgs; [
   zsh-powerlevel10k
   micromamba
   lazydocker
-  # Python Developement Tools 
-  
-  (python310.withPackages (ps: with ps; [
+  # Python Developement Tools
+
+  (python310.withPackages (ps:
+    with ps; [
       # conda
       time-machine
       virtualenv
@@ -70,7 +70,7 @@ with pkgs; [
       pip
       # other Python packages...
 
-      # USE DEVENV FOR PROJECT-SPECIFIC ENVS 
+      # USE DEVENV FOR PROJECT-SPECIFIC ENVS
     ]))
 
   # Node.js Developement Tools
@@ -81,54 +81,54 @@ with pkgs; [
   # nodePackages.npm
   # nodejs
 
-# ...
+  # ...
 
-# Python
-##############################################################
-#   !!!! Use Devenv for project specific python shells !!!! ##
-#  ###########################################################
-#  # devenv.nix
-#  { pkgs, lib, config, inputs, ... }:
-#
-#  {
-#    languages.python = {
-#      enable = true;
-#      venv.enable = true;
-#      venv.requirements = ''
-#        pyside2
-#      '';
-#  };
-#
-#  enterShell = ''
-#    python -c "import PySide2" && echo "No errors!"
-#  '';
-#  }
-##############################################################
+  # Python
+  ##############################################################
+  #   !!!! Use Devenv for project specific python shells !!!! ##
+  #  ###########################################################
+  #  # devenv.nix
+  #  { pkgs, lib, config, inputs, ... }:
+  #
+  #  {
+  #    languages.python = {
+  #      enable = true;
+  #      venv.enable = true;
+  #      venv.requirements = ''
+  #        pyside2
+  #      '';
+  #  };
+  #
+  #  enterShell = ''
+  #    python -c "import PySide2" && echo "No errors!"
+  #  '';
+  #  }
+  ##############################################################
 
-# nodejs
-##############################################################
-#   !!!! Use Devenv for project specific node shells !!!!   ##
-#  ###########################################################
-#  # devenv.nix
-#  { pkgs, lib, config, inputs, ... }:
-#
-#  {
-#    languages.nodejs = {
-#      enable = true;
-#      version = "20";  # Specify Node.js version
-#      package = pkgs.nodejs_20;
-#      # Add global npm packages
-#      packages = {
-#        typescript = "latest";
-#        "@types/node" = "latest";
-#        eslint = "latest";
-#        prettier = "latest";
-#      };
-#    };
-#
-#    enterShell = ''
-#      node --version && npm --version && echo "Node.js environment ready!"
-#    '';
-#  }
-##############################################################
+  # nodejs
+  ##############################################################
+  #   !!!! Use Devenv for project specific node shells !!!!   ##
+  #  ###########################################################
+  #  # devenv.nix
+  #  { pkgs, lib, config, inputs, ... }:
+  #
+  #  {
+  #    languages.nodejs = {
+  #      enable = true;
+  #      version = "20";  # Specify Node.js version
+  #      package = pkgs.nodejs_20;
+  #      # Add global npm packages
+  #      packages = {
+  #        typescript = "latest";
+  #        "@types/node" = "latest";
+  #        eslint = "latest";
+  #        prettier = "latest";
+  #      };
+  #    };
+  #
+  #    enterShell = ''
+  #      node --version && npm --version && echo "Node.js environment ready!"
+  #    '';
+  #  }
+  ##############################################################
 ]

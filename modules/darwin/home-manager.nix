@@ -1,20 +1,23 @@
-{ config, pkgs, lib, home-manager, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  home-manager,
+  ...
+}: let
   user = "lessuseless";
   # Define the content of your file as a derivation
   myEmacsLauncher = pkgs.writeScript "emacs-launcher.command" ''
     #!/bin/sh
       emacsclient -c -n &
   '';
-  sharedFiles = import ../shared/files.nix { inherit config pkgs; };
-  additionalFiles = import ./files.nix { inherit user config pkgs; };
-in
-{
+  sharedFiles = import ../shared/files.nix {inherit config pkgs;};
+  additionalFiles = import ./files.nix {inherit user config pkgs;};
+in {
   imports = [
-  #  ../darwin/config/karabiner/karabiner.json
-  #  ../darwin/config/yabai/yabairc
-   ./dock
+    #  ../darwin/config/karabiner/karabiner.json
+    #  ../darwin/config/yabai/yabairc
+    ./dock
   ];
 
   # It me
@@ -30,9 +33,9 @@ in
     # Homebrew is *installed* via the flake input nix-homebrew
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
-    
+
     # If shell gives compinit errors and completions
-    # or shell elements are broken, 
+    # or shell elements are broken,
     # imparitively run:
     # `brew upgrade && brew cleanup && brew completions link`
 
@@ -44,41 +47,45 @@ in
     # $ mas search <app name>
     #:
     masApps = {
-    #  "1password" = 1333542190;
-    #  "hidden-bar" = 1452453066;
-    #  "wireguard" = 1451685025;
+      #  "1password" = 1333542190;
+      #  "hidden-bar" = 1452453066;
+      #  "wireguard" = 1451685025;
       "gordian seed tool" = 1545088229;
     };
   };
 
   networking.knownNetworkServices = [
-    "Wi-Fi" 
-    "USB 10/100/1000 LAN" 
-    "Bluetooth PAN" 
-    "Thunderbolt Bridge" 
-    ];
+    "Wi-Fi"
+    "USB 10/100/1000 LAN"
+    "Bluetooth PAN"
+    "Thunderbolt Bridge"
+  ];
 
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:{
+    users.${user} = {
+      pkgs,
+      config,
+      lib,
+      ...
+    }: {
       home = {
         enableNixpkgsReleaseCheck = false;
         packages = pkgs.callPackage ./packages.nix {};
         file = lib.mkMerge [
           sharedFiles
           additionalFiles
-          { 
-          "emacs-launcher.command".source = myEmacsLauncher; 
-          "Downloads".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/downloads";
+          {
+            "emacs-launcher.command".source = myEmacsLauncher;
+            "Downloads".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.local/share/downloads";
           }
-            
         ];
 
         stateVersion = "24.11";
       };
 
-      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = {} // import ../shared/home-manager.nix {inherit config pkgs lib;};
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
@@ -92,9 +99,9 @@ in
     dock.entries = [
       # { path = "${pkgs.warp}/Applications/Warp.app/"; }
       # { path = "/System/Applications/Facetime.app/"; }
-      { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-      { path = "${pkgs.emacs}/Applications/Emacs.app/"; }
-      
+      {path = "${pkgs.alacritty}/Applications/Alacritty.app/";}
+      {path = "${pkgs.emacs}/Applications/Emacs.app/";}
+
       #{ path = "/Applications/Slack.app/"; }
       #{ path = "/System/Applications/Messages.app/"; }
       #{ path = "/System/Applications/Facetime.app/"; }
@@ -110,7 +117,7 @@ in
       #{ path = "/Applications/Asana.app/"; }
       #{ path = "/Applications/Drafts.app/"; }
       #{ path = "/System/Applications/Home.app/"; }
-      { path = "/Applications/iPhone Mirroring.app/"; }
+      {path = "/Applications/iPhone Mirroring.app/";}
       {
         path = toString myEmacsLauncher;
         section = "others";

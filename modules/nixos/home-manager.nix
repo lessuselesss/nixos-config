@@ -1,17 +1,20 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   user = "lessuseless";
-  xdg_configHome  = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
-  shared-files = import ../shared/files.nix { inherit config pkgs; };
-  
+  xdg_configHome = "/home/${user}/.config";
+  shared-programs = import ../shared/home-manager.nix {inherit config pkgs lib;};
+  shared-files = import ../shared/files.nix {inherit config pkgs;};
+
   zsh = {
     initExtraFirst = ''
-    export SSH_AUTH_SOCK=/Users/lessuseless/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+      export SSH_AUTH_SOCK=/Users/lessuseless/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
     '';
   };
-  
+
   polybar-user_modules = builtins.readFile (pkgs.substituteAll {
     src = ./config/polybar/user_modules.ini;
     packages = "${xdg_configHome}/polybar/bin/check-nixos-updates.sh";
@@ -30,15 +33,13 @@ let
   polybar-modules = builtins.readFile ./config/polybar/modules.ini;
   polybar-bars = builtins.readFile ./config/polybar/bars.ini;
   polybar-colors = builtins.readFile ./config/polybar/colors.ini;
-
-in
-{
+in {
   home = {
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix {};
-    file = shared-files // import ./files.nix { inherit user; };
+    file = shared-files // import ./files.nix {inherit user;};
     stateVersion = "21.05";
   };
 
@@ -120,6 +121,5 @@ in
     };
   };
 
-  programs = shared-programs // { gpg.enable = true; };
-
+  programs = shared-programs // {gpg.enable = true;};
 }

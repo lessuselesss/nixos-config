@@ -22,6 +22,6 @@ esac
 echo -e "${YELLOW}Starting...${NC}"
 
 # Use nix directly since we're in the nix-on-droid environment
-nix build .#$FLAKE_TARGET $@
+nix-on-droid build .#$FLAKE_TARGET $@
 
 echo -e "${GREEN}Build complete!${NC}"

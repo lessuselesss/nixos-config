@@ -103,7 +103,7 @@ nix run .#build-switch
 │   └── qubes-templatevm/   # QubesOS template configurations
 ├── modules/                # Shared configuration modules
 ├── flake.nix               # Main flake configuration
-└── flake.lock            # Locked dependencies
+└── flake.lock              # Locked dependencies
 ```
 
 ## Secrets Management

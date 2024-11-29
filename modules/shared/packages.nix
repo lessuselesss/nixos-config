@@ -21,6 +21,7 @@ with pkgs; [
   direnv
   devenv
   # warp-terminal
+  nil
 
   # Encryption and security tools
   age

@@ -34,16 +34,47 @@
       url = "git+ssh://git@github.com/lessuselesss/nix-secrets.git?ref=main";
       flake = false;
     };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-services, home-manager, nixpkgs, nixpkgs-stable, disko, agenix, secrets } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-services, home-manager, nixpkgs, nixpkgs-stable, disko, agenix, secrets, pre-commit-hooks } @inputs:
     let
       user = "lessuseless";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
+      devShell = system: let 
+        pkgs = nixpkgs.legacyPackages.${system};
+        mkPreCommitHook = {
+          pre-commit-check = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              repomix-generator = {
+                enable = true;
+                name = "repomix-generator";
+                entry = "${pkgs.writeShellScript "generate-repomix" ''
+                  ${pkgs.nodejs}/bin/node ${pkgs.nodePackages.npm}/bin/npx repomix .
+                  git add repomix-output.txt
+                ''}";
+                files = ".*";
+                pass_filenames = false;
+              };
+            };
+          };
+        };
+      in {
         default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
+          inherit (mkPreCommitHook) shellHook;
+          nativeBuildInputs = with pkgs; [ 
+            bashInteractive 
+            git 
+            age 
+            age-plugin-yubikey 
+            nodejs
+            nodePackages.npm
+          ];
           shellHook = with pkgs; ''
             export EDITOR=vim
           '';
@@ -80,6 +111,26 @@
     {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+
+      checks = forAllSystems (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            repomix-generator = {
+              enable = true;
+              name = "repomix-generator";
+              entry = "${pkgs.writeShellScript "generate-repomix" ''
+                ${pkgs.nodejs}/bin/node ${pkgs.nodePackages.npm}/bin/npx repomix .
+                git add repomix-output.txt
+              ''}";
+              files = ".*";
+              pass_filenames = false;
+            };
+          };
+        };
+      });
 
       darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
         darwin.lib.darwinSystem {

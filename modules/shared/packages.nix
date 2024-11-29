@@ -58,6 +58,7 @@ with pkgs; [
   unzip
   zsh-powerlevel10k
   micromamba
+  lazydocker
   # Python Developement Tools 
   
   (python310.withPackages (ps: with ps; [

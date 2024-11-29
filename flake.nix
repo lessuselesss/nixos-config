@@ -38,8 +38,12 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-services, home-manager, nixpkgs, nixpkgs-stable, disko, agenix, secrets, pre-commit-hooks } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, homebrew-services, home-manager, nixpkgs, nixpkgs-stable, disko, agenix, secrets, pre-commit-hooks, nix-on-droid } @inputs:
     let
       user = "lessuseless";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-android" ];
@@ -181,5 +185,13 @@
           ./hosts/nixos
         ];
      });
+
+      nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+        modules = [ ./hosts/nix-on-droid/default.nix ];
+        pkgs = nixpkgs.legacyPackages.aarch64-linux;
+        extraSpecialArgs = {
+          inherit inputs;
+        };
+      };
   };
 }

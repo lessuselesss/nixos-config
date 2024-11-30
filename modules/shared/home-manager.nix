@@ -399,4 +399,9 @@ in {
       bind-key -T copy-mode-vi 'C-\' select-pane -l
     '';
   };
+
+  direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 }

@@ -19,6 +19,7 @@ with pkgs; [
   wget
   zip
   direnv
+  nix-direnv
   devenv
   # warp-terminal
   nil

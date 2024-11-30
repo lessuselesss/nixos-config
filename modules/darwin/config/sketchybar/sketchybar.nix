@@ -1,13 +1,10 @@
-{ 
-  config, 
-  #lib, 
-  pkgs, 
-  ... 
-  }:
-
-with lib;
-
-let
+{
+  config,
+  #lib,
+  pkgs,
+  ...
+}:
+with lib; let
   cfg = config.heywoodlh.darwin.sketchybar;
   space-sh = pkgs.writeShellScriptBin "space.sh" ''
     if [ "$SELECTED" = "true" ]
@@ -140,7 +137,6 @@ let
     fi
   '';
 in {
-
   options = {
     heywoodlh.darwin.sketchybar.enable = mkOption {
       default = false;

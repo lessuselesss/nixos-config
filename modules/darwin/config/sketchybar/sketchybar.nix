@@ -1,6 +1,6 @@
 {
   config,
-  #lib,
+  lib,
   pkgs,
   ...
 }:
@@ -210,6 +210,8 @@ in {
             --set web background.height=21 \
             --set web background.padding_left=12 \
             --set web click_script="open -a Firefox.app" \
+            --set web script="${space-sh}/bin/space.sh" \
+            --subscribe web space_change mouse.clicked \
 
           # SPACE 2: CODE ICON
           sketchybar -m --add space code left \
@@ -224,6 +226,8 @@ in {
             --set code background.height=21 \
             --set code background.padding_left=7 \
             --set code click_script="$HOME/.nix-profile/bin/wezterm" \
+            --set code script="${space-sh}/bin/space.sh" \
+            --subscribe code space_change mouse.clicked \
 
           # SPACE 3: MUSIC ICON
           #sketchybar -m --add space music left \
@@ -339,6 +343,10 @@ in {
 
         ###################### CENTER ITEMS ###################
 
+        # Add under CENTER ITEMS section
+        sketchybar -m --add item window_title center \
+          --set window_title script="${window-title-sh}/bin/window_title.sh" \
+          --subscribe window_title window_focus window_title
 
         ############## FINALIZING THE SETUP ##############
         sketchybar -m --update

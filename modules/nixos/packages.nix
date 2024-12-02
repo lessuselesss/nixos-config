@@ -59,7 +59,6 @@ in
     yad # yad-calendar is used with polybar
     xdotool
     google-chrome
-    alejandra
 
     # PDF viewer
     zathura

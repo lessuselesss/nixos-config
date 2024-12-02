@@ -33,10 +33,11 @@ in {
       fi
     '';
   };
+
   # Initialize Karabiner-Elements
-  "${xdg_configHome}/karabiner/karabiner.json" = {
-    text = builtins.readFile ../darwin/config/karabiner/karabiner.json;
-  };
+  # "${xdg_configHome}/karabiner/karabiner.json" = {
+  #   text = builtins.readFile ../darwin/config/karabiner/karabiner.json;
+  # };
 
   # Initialize Yabai
   # "${xdg_configHome}/yabai/yabairc" = {

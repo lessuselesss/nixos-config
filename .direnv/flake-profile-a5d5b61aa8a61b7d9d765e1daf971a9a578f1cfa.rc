@@ -168,7 +168,7 @@ name='nix-shell-env'
 export name
 nativeBuildInputs='/nix/store/srhl4n3r13f5jqm3jhb66py03ka8qsig-bash-interactive-5.2p37-dev /nix/store/w5rggkxjd7z2cjk4fia9za7gb485pydw-git-2.47.0 /nix/store/q69p0frymxagv5qkld2ld07kll29mll9-age-1.2.0 /nix/store/2f9bzgz4ai7y71mdspfikqnkkcbz9dgf-age-plugin-yubikey-0.5.0-unstable-2024-11-02 /nix/store/9grahx8677nlgbx3yfiggibw335lkgfr-nodejs-20.18.0 /nix/store/9grahx8677nlgbx3yfiggibw335lkgfr-nodejs-20.18.0'
 export nativeBuildInputs
-out='/Users/lessuseless/10_Projects/11.Automation/nixos-config-backup-from-github-zip/outputs/out'
+out='/Users/lessuseless/10_Projects/11.Automation/nixos-config/outputs/out'
 export out
 outputBin='out'
 outputDev='out'
@@ -199,7 +199,7 @@ preConfigurePhases=' updateAutotoolsGnuConfigScriptsPhase'
 declare -a preFixupHooks=('_moveToShare' '_multioutDocs' '_multioutDevs' )
 preferLocalBuild='1'
 export preferLocalBuild
-prefix='/Users/lessuseless/10_Projects/11.Automation/nixos-config-backup-from-github-zip/outputs/out'
+prefix='/Users/lessuseless/10_Projects/11.Automation/nixos-config/outputs/out'
 declare -a propagatedBuildDepFiles=('propagated-build-build-deps' 'propagated-native-build-inputs' 'propagated-build-target-deps' )
 propagatedBuildInputs=''
 export propagatedBuildInputs

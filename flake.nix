@@ -179,6 +179,23 @@
             files = ".*";
             pass_filenames = false;
           };
+          alejandra-lint = {
+            enable = true;
+            name = "alejandra-lint";
+            entry = "${pkgs.alejandra}/bin/alejandra .";
+            files = ".*";
+            pass_filenames = false;
+          };
+          build-check = {
+            enable = true;
+            name = "build-check";
+            entry = "${pkgs.writeShellScript "verify-build" ''
+              echo "Verifying build..."
+              nix run .#build
+            ''}";
+            files = ".*";
+            pass_filenames = false;
+          };
         };
       };
     });

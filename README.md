@@ -132,3 +132,63 @@ If you encounter issues:
 2. Verify you're in a `nix develop` shell when making changes
 3. Check system logs: `darwin-rebuild changelog` (macOS) or `journalctl` (NixOS)
 4. For rollback on macOS: `nix run .#rollback`
+
+## Pre-commit Hooks
+
+This repository uses pre-commit hooks to ensure code quality and consistency. The following hooks are configured:
+
+- `repomix-generator`: Generates repository documentation
+- `alejandra-lint`: Formats Nix code
+- `build-check`: Verifies the build
+
+### Setup
+
+1. Enter the development shell:
+```bash
+nix develop
+```
+
+2. Install the pre-commit hooks:
+
+```bash
+pre-commit install
+```
+
+### Manual Usage
+
+You can manually run specific hooks:
+
+```bash
+pre-commit run alejandra-lint
+pre-commit run build-check
+pre-commit run repomix-generator
+```
+
+Or run all hooks on all files:
+
+```bash
+pre-commit run --all-files
+```
+
+### Troubleshooting
+
+If the hooks aren't working:
+
+1. Verify the hooks are installed:
+
+```bash
+pre-commit run --all-files
+```
+
+2. Reset the hooks if needed:
+
+```bash
+pre-commit clean
+pre-commit install
+```
+
+3. Check that the git hooks directory exists:
+
+```bash
+ls -la .git/hooks/
+```

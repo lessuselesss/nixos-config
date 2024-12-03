@@ -154,22 +154,6 @@ nix develop
 pre-commit install
 ```
 
-### Manual Usage
-
-You can manually run specific hooks:
-
-```bash
-pre-commit run alejandra-lint
-pre-commit run build-check
-pre-commit run repomix-generator
-```
-
-Or run all hooks on all files:
-
-```bash
-pre-commit run --all-files
-```
-
 ### Troubleshooting
 
 If the hooks aren't working:
@@ -192,3 +176,21 @@ pre-commit install
 ```bash
 ls -la .git/hooks/
 ```
+
+### Manual Usage
+
+You can manually run specific hooks:
+
+```bash
+pre-commit run alejandra-lint
+pre-commit run build-check
+pre-commit run repomix-generator
+```
+
+Or run all hooks on all files:
+
+```bash
+pre-commit run --all-files
+```
+
+This section provides clear instructions for setting up and troubleshooting the pre-commit hooks. Feel free to adjust the wording or add more specific details about your setup if needed!

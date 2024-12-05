@@ -8,7 +8,8 @@
 in {
   imports = [
     ../../modules/darwin/home-manager.nix
-    ../../modules/darwin/config/
+    ../../modules/darwin/config
+    ../../modules/darwin/secrets.nix
     ../../modules/shared
     agenix.darwinModules.default
   ];
@@ -38,6 +39,10 @@ in {
     tailscale = {
       enable = true; # false = Using App Store application
       overrideLocalDns = true;
+    };
+
+    karabiner-elements = {
+      enable = true;
     };
   };
 

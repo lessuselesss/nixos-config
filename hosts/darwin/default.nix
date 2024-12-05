@@ -8,8 +8,7 @@
 in {
   imports = [
     ../../modules/darwin/home-manager.nix
-    ../../modules/darwin/config/yabai/yabai.nix
-    ../../modules/darwin/secrets.nix
+    ../../modules/darwin/config/
     ../../modules/shared
     agenix.darwinModules.default
   ];

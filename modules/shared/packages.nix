@@ -80,8 +80,9 @@ with pkgs; [
   # nodePackages.live-server
   # nodePackages.nodemon
   # nodePackages.prettier
-  # nodePackages.npm
-  # nodejs
+  nodejs
+  nodePackages.npm
+  nodePackages."@modelcontextprotocol/server-github"
 
   # ...
 

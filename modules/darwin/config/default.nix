@@ -1,6 +1,6 @@
 {
   imports = [
-    ./karabiner.nix
+    ./karabiner.json
     ./sketchybar.nix
     ./yabai.nix
   ];

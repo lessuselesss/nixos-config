@@ -42,7 +42,7 @@ _: [
   "homerow"
   "sdformatter"
   "hiddenbar"
-  "karabiner-elements"
+  # "karabiner-elements"
   "keycastr"
   "disk-inventory-x"
   "raspberry-pi-imager"

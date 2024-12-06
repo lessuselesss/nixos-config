@@ -41,9 +41,9 @@ in {
       overrideLocalDns = true;
     };
 
-    karabiner-elements = {
-      enable = true;
-    };
+    # karabiner-elements = {
+    #   enable = true;
+    # };
   };
 
   # Setup user, packages, programs

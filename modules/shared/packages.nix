@@ -18,7 +18,6 @@ with pkgs; [
   sqlite
   wget
   zip
-  direnv
   nix-direnv
   devenv
   # warp-terminal

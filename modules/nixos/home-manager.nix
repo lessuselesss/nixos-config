@@ -9,12 +9,6 @@
   shared-programs = import ../shared/home-manager.nix {inherit config pkgs lib;};
   shared-files = import ../shared/files.nix {inherit config pkgs;};
 
-  zsh = {
-    initExtraFirst = ''
-      export SSH_AUTH_SOCK=/Users/lessuseless/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-    '';
-  };
-
   polybar-user_modules = builtins.readFile (pkgs.substituteAll {
     src = ./config/polybar/user_modules.ini;
     packages = "${xdg_configHome}/polybar/bin/check-nixos-updates.sh";

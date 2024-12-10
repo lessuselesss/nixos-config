@@ -15,8 +15,6 @@
   additionalFiles = import ./files.nix {inherit user config pkgs;};
 in {
   imports = [
-    #  ../darwin/config/karabiner/karabiner.json
-    #  ../darwin/config/yabai/yabairc
     ./dock
   ];
 
@@ -79,43 +77,26 @@ in {
           {
             "emacs-launcher.command".source = myEmacsLauncher;
           }
-          (let
-            mkNumberedDirs = {
-              basePath,
-              prefix ? "",
-              padWidth ? 2,
-              start ? 0,
-              end ? 90,
-              step ? 10,
-            }: let
-              # Create area directories
-              areaDirs = builtins.listToAttrs (
-                builtins.map (n: {
-                  name = "${basePath}/${prefix}${lib.fixedWidthString padWidth "0" (toString n)}-${lib.fixedWidthString padWidth "0" (toString (n + 9))}/.keep";
-                  value = {text = "";};
-                }) (builtins.genList (n: start + n * step) ((end - start) / step + 1))
-              );
-
-              # Create individual category directories for each area
-              categoryDirs = builtins.listToAttrs (
-                builtins.concatMap (
-                  areaNum:
-                    builtins.map (catNum: {
-                      name = "${basePath}/${prefix}${lib.fixedWidthString padWidth "0" (toString areaNum)}-${lib.fixedWidthString padWidth "0" (toString (areaNum + 9))}/Category${lib.fixedWidthString padWidth "0" (toString (areaNum + catNum))}/.keep";
-                      value = {text = "";};
-                    }) (builtins.genList (n: n) 10)
-                ) (builtins.genList (n: start + n * step) ((end - start) / step + 1))
-              );
-            in
-              areaDirs // categoryDirs;
-          in
-            mkNumberedDirs {
-              basePath = ".local/share/documents";
-              prefix = "Area";
-              start = 0;
-              end = 90;
-              step = 10;
-            })
+          # Comment out the previous implementation
+          # (let
+          #   mkNumberedDirs = {
+          #     basePath,
+          #     prefix ? "",
+          #     padWidth ? 2,
+          #     start ? 0,
+          #     end ? 90,
+          #     step ? 10,
+          #   }: let
+          #     ... previous implementation ...
+          #   };
+          # in
+          #   mkNumberedDirs {
+          #     basePath = ".local/share/documents";
+          #     prefix = "Area";
+          #     start = 0;
+          #     end = 90;
+          #     step = 10;
+          #   })
         ];
 
         stateVersion = "24.11";

@@ -400,6 +400,21 @@
                       "30-39" = {
                         name = "_Resources_";
                         categories = {
+                          "30" = {
+                            name = "[Devenv_Repos]";
+                            items = {
+                              "30.01" = {
+                                name = "RWKV-Runner";
+                                url = "https://github.com/lessuselesss/RWKV-Runner";
+                                ref = "main";
+                              };
+                              "30.02" = {
+                                name = "exo";
+                                url = "https://github.com/lessuselesss/exo";
+                                ref = "main";
+                              };
+                            };
+                          };
                           "31" = {
                             name = "[References]";
                             items = {

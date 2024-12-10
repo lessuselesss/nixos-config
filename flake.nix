@@ -250,15 +250,19 @@
                             name = "[Meta]";
                             items = {
                               "00.00" = {
-                                name = "nixos-config";
+                                name = "Nixos-config";
                                 url = "https://github.com/lessuselesss/nixos-config";
                                 ref = "main";
                               };
                               "00.01" = {
-                                name = "Placeholder";
+                                name = "Logs";
+                                target = "/var/log";
                               };
                               "00.02" = {
-                                name = "Placeholder";
+                                name = "Agents";
+                              };
+                              "00.03" = {
+                                name = "Workflows";
                               };
                             };
                           };

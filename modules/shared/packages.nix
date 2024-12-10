@@ -59,6 +59,8 @@ with pkgs; [
   zsh-powerlevel10k
   micromamba
   lazydocker
+  # pinentry
+
   # Python Developement Tools
 
   (python310.withPackages (ps:

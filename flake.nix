@@ -249,6 +249,11 @@
                           "00" = {
                             name = "[Meta]";
                             items = {
+                              "00.00" = {
+                                name = "nixos-config";
+                                url = "https://github.com/lessuselesss/nixos-config";
+                                ref = "main";
+                              };
                               "00.01" = {
                                 name = "Placeholder";
                               };
@@ -305,11 +310,19 @@
                           "02" = {
                             name = "[Cloud]";
                             items = {
+                              "02.00" = {
+                                name = "configs";
+                                target = "/Users/${user}/.config/rclone";
+                              };
                               "02.01" = {
                                 name = "Dropbox";
                               };
                               "02.02" = {
                                 name = "Google Drive";
+                              };
+                              "02.03" = {
+                                name = "iCloud";
+                                target = "/Users/${user}/Library/Mobile Documents/com~apple~CloudDocs";
                               };
                             };
                           };

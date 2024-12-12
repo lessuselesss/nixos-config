@@ -351,11 +351,14 @@
                               "11.02" = {
                                 name = "Forks";
                               };
-                            };
-                            items = {
                               "11.03" = {
                                 name = "Anki Sociology";
                                 url = "https://github.com/lessuselesss/anki-sociology100";
+                                ref = "main";
+                              };
+                              "11.04" = {
+                                name = "Anki Ori's Decks";
+                                url = "https://github.com/lessuselesss/anki-ori_decks";
                                 ref = "main";
                               };
                             };

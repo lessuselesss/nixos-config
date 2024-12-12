@@ -72,6 +72,7 @@ _: [
   # Virtualization
   "utm"
   "crystalfetch"
+  "viable"
 
   # Networking
   "tailscale" # pre-install/login required

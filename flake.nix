@@ -264,6 +264,9 @@
                               "00.03" = {
                                 name = "Workflows";
                               };
+                              "00.04" = {
+                                name = "VMs";
+                              };
                             };
                           };
                           "01" = {
@@ -349,12 +352,21 @@
                                 name = "Forks";
                               };
                             };
+                            items = {
+                              "11.03" = {
+                                name = "Anki Sociology";
+                                url = "https://github.com/lessuselesss/anki-sociology100";
+                                ref = "main";
+                              };
+                            };
                           };
                           "12" = {
-                            name = "[Pending]";
+                            name = "[Contributing]";
                             items = {
                               "12.01" = {
-                                name = "Waiting";
+                                name = "Screenpipe";
+                                url = "https://github.com/lessuselesss/screenpipe";
+                                ref = "main";
                               };
                               "12.02" = {
                                 name = "In Review";
@@ -387,6 +399,7 @@
                             items = {
                               "22.01" = {
                                 name = "Career";
+                                url = "https://github.com/lessuselesss/careerz";
                               };
                               "22.02" = {
                                 name = "Skills";
@@ -406,7 +419,7 @@
                               "30.01" = {
                                 name = "RWKV-Runner";
                                 url = "https://github.com/lessuselesss/RWKV-Runner";
-                                ref = "main";
+                                ref = "master";
                               };
                               "30.02" = {
                                 name = "exo";
@@ -463,6 +476,28 @@
                               };
                               "91.02" = {
                                 name = "Legacy Files";
+                              };
+                            };
+                          };
+                          "92" = {
+                            name = "[Models]";
+                            items = {
+                              "92.01" = {
+                                name = "Huggingface";
+                              };
+                              "92.02" = {
+                                name = "Ollama";
+                              };
+                            };
+                          };
+                          "93" = {
+                            name = "[Datasets]";
+                            items = {
+                              "93.01" = {
+                                name = "Kaggle";
+                              };
+                              "93.02" = {
+                                name = "x";
                               };
                             };
                           };

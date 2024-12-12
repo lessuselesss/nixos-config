@@ -59,7 +59,7 @@ with pkgs; [
   zsh-powerlevel10k
   micromamba
   lazydocker
-  # pinentry
+  aider-chat
 
   # Python Developement Tools
 

@@ -11,6 +11,7 @@ _: [
 
   # Document Tools
   "adobe-acrobat-reader"
+  "anki"
 
   # Development Tools
   # "homebrew/cask/docker"

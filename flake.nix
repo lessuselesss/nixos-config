@@ -372,7 +372,24 @@
                                 ref = "main";
                               };
                               "12.02" = {
-                                name = "In Review";
+                                name = "ai16z-main";
+                                url = "https://github.com/ai16z/eliza.git";
+                                ref = "main";
+                              };
+                              "12.03" = {
+                                name = "ai16z-develop";
+                                url = "https://github.com/ai16z/eliza.git";
+                                ref = "develop";
+                              };
+                              "12.04" = {
+                                name = "ai16z-fork";
+                                url = "https://github.com/lessuselesss/eliza.git";
+                                ref = "main";
+                              };
+                              "12.05" = {
+                                name = "ai16z-characterfile";
+                                url = "https://github.com/lessuselesss/characterfile.git";
+                                ref = "main";
                               };
                             };
                           };

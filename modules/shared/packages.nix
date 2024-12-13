@@ -11,6 +11,12 @@ with pkgs; [
   bash-completion
   bat
   btop
+
+  pkg-config
+  bun
+  cmake
+  cargo
+
   coreutils
   killall
   neofetch

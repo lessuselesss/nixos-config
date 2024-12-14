@@ -25,7 +25,7 @@ _: [
   "sonic-pi"
 
   # Communication Tools
-  # "discord"
+  "discord"
   # "notion"
   # "slack"
   #"telegram"

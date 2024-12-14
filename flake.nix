@@ -259,7 +259,9 @@
                                 target = "/var/log";
                               };
                               "00.02" = {
-                                name = "Agents";
+                                name = "QubesOS-config";
+                                url = "https://github.com/lessuselesss/qubesos-config";
+                                ref = "main";
                               };
                               "00.03" = {
                                 name = "Workflows";
@@ -361,6 +363,16 @@
                                 url = "https://github.com/lessuselesss/anki-ori_decks";
                                 ref = "main";
                               };
+                              "11.05" = {
+                                name = "Claude Desktop";
+                                url = "https://github.com/lessuselesss/claude_desktop";
+                                ref = "main";
+                              };
+                              "11.06" = {
+                                name = "Dygma Raise - Miryoku";
+                                url = "https://github.com/lessuselesss/dygma-raise-miryoku";
+                                ref = "main";
+                              };
                             };
                           };
                           "12" = {
@@ -389,6 +401,16 @@
                               "12.05" = {
                                 name = "ai16z-characterfile";
                                 url = "https://github.com/lessuselesss/characterfile.git";
+                                ref = "main";
+                              };
+                              "12.06" = {
+                                name = "Fabric";
+                                url = "https://github.com/lessuselesss/fabric";
+                                ref = "main";
+                              };
+                              "12.07" = {
+                                name = "Whisper Diarization";
+                                url = "https://github.com/lessuselesss/whisper-diarization";
                                 ref = "main";
                               };
                             };

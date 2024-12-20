@@ -114,7 +114,7 @@
             git
             age
             age-plugin-yubikey
-            nodejs
+            nodejs_23
             nodePackages.npm
           ];
           shellHook = ''
@@ -372,6 +372,16 @@
                                 name = "Dygma Raise - Miryoku";
                                 url = "https://github.com/lessuselesss/dygma-raise-miryoku";
                                 ref = "main";
+                              };
+                              "11.07" = {
+                                name = "Uber-FZ_SD-Files";
+                                url = "https://github.com/lessuselesss/Uber-FZ_SD-Files";
+                                ref = "main";
+                              };
+                              "11.08" = {
+                                name = "nix-node";
+                                url = "https://github.com/lessuselesss/nix-node";
+                                ref = "master";
                               };
                             };
                           };

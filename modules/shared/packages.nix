@@ -66,6 +66,8 @@ with pkgs; [
   micromamba
   lazydocker
   aider-chat
+  nurl
+  uv
 
   # Python Developement Tools
 

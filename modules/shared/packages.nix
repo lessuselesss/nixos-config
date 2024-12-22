@@ -71,7 +71,7 @@ with pkgs; [
 
   # Python Developement Tools
 
-  (python310.withPackages (ps:
+  (python312.withPackages (ps:
     with ps; [
       # conda
       time-machine
@@ -80,7 +80,6 @@ with pkgs; [
       #mlx
       pip
       # other Python packages...
-
       # USE DEVENV FOR PROJECT-SPECIFIC ENVS
     ]))
 

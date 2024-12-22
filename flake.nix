@@ -46,6 +46,10 @@
       url = "github:lessuselesss/johnny-mnemonix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    python-packages = {
+      url = "github:NixOS/nixpkgs";
+      follows = "nixpkgs";
+    };
   };
   outputs = {
     self,
@@ -64,6 +68,7 @@
     pre-commit-hooks,
     nix-on-droid,
     johnny-mnemonix,
+    python-packages,
   } @ inputs: let
     user = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux" "aarch64-android"];
@@ -421,6 +426,16 @@
                               "12.07" = {
                                 name = "Whisper Diarization";
                                 url = "https://github.com/lessuselesss/whisper-diarization";
+                                ref = "main";
+                              };
+                            };
+                          };
+                          "13" = {
+                            name = "[Using]";
+                            items = {
+                              "13.01" = {
+                                name = "Bon-Jailbreaking";
+                                url = "https://github.com/jplhughes/bon-jailbreaking";
                                 ref = "main";
                               };
                             };

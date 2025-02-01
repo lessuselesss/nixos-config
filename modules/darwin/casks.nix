@@ -36,8 +36,7 @@ _: [
   "ledger-live"
 
   # Utility Tools
-  "syncthing"
-  "1password@nightly"
+  "rclone"
   "spacedrive"
   "bazecor"
   "homerow"

@@ -2,7 +2,7 @@ _: [
   # AI Tools
   "claude"
   "chatgpt"
-  "lm-studio"
+  "mtsy"
   "ollama"
 
   # Automation Tools
@@ -10,8 +10,8 @@ _: [
   # "kit"
 
   # Document Tools
-  "adobe-acrobat-reader"
-  "anki"
+  # "adobe-acrobat-reader"
+  # "anki"
 
   # Development Tools
   # "homebrew/cask/docker"
@@ -42,14 +42,13 @@ _: [
   "homerow"
   "sdformatter"
   "hiddenbar"
-  # "karabiner-elements"
+  "karabiner-elements"
   "keycastr"
   "disk-inventory-x"
   "raspberry-pi-imager"
-  "bettertouchtool"
 
   # Entertainment Tools
-  "vlc"
+  "iina"
   "transmission"
 
   # Productivity Tools

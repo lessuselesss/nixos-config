@@ -2,6 +2,7 @@ _: [
   # AI Tools
   "claude"
   "chatgpt"
+<<<<<<< HEAD
   "mtsy"
   "ollama"
 
@@ -12,10 +13,10 @@ _: [
   # Document Tools
   # "adobe-acrobat-reader"
   # "anki"
+=======
+>>>>>>> 6be6d77 (remove apps)
 
   # Development Tools
-  # "homebrew/cask/docker"
-  # "visual-studio-code"
   "cursor"
 
   "orbstack" # pre-install/login required
@@ -29,7 +30,6 @@ _: [
   # "notion"
   # "slack"
   #"telegram"
-  "zoom"
   "beeper" # pre-install/login required
 
   # Crypto Tools
@@ -42,8 +42,12 @@ _: [
   "homerow"
   "sdformatter"
   "hiddenbar"
+<<<<<<< HEAD
   "karabiner-elements"
   "keycastr"
+=======
+  # "karabiner-elements"
+>>>>>>> 6be6d77 (remove apps)
   "disk-inventory-x"
   "raspberry-pi-imager"
 
@@ -77,7 +81,3 @@ _: [
   "wireshark"
   # "yabai"
 
-  # VScode/Cursor
-
-  # Extensions
-]

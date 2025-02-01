@@ -34,6 +34,7 @@ with pkgs; [
   age-plugin-yubikey
   gnupg
   libfido2
+  pass
 
   # Cloud-related tools and SDKs
   docker

@@ -32,7 +32,7 @@ in {
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # Define variables for directories
+      # Define variables for PATH directories
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH
@@ -66,6 +66,10 @@ in {
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
+
+      # ledger/trezor-agent (SSH)
+
+      key() { SSH_AUTH_SOCK="/tmp/ledger-ssh-agent.sock" GNUPGHOME=~/.gnupg/ledger/ "$@"; }
 
       #############
       # Fabric AI #

@@ -319,6 +319,30 @@
                                 name = "Templates";
                                 target = "/Users/${user}/Templates";
                               };
+                              "01.10" = {
+                                name = "Local Share";
+                                target = "/Users/${user}/.local/share";
+                              };
+                              "01.11" = {
+                                name = "Local Bin";
+                                target = "/Users/${user}/.local/bin";
+                              };
+                              "01.12" = {
+                                name = "Local Lib";
+                                target = "/Users/${user}/.local/lib";
+                              };
+                              "01.13" = {
+                                name = "Local Include";
+                                target = "/Users/${user}/.local/include";
+                              };
+                              "01.14" = {
+                                name = "Local State";
+                                target = "/Users/${user}/.local/state";
+                              };
+                              "01.15" = {
+                                name = "Local Cache";
+                                target = "/Users/${user}/.cache";
+                              };
                             };
                           };
                           "02" = {
@@ -358,11 +382,11 @@
                               "11.02" = {
                                 name = "Forks";
                               };
-                              "11.03" = {
-                                name = "Anki Sociology";
-                                url = "https://github.com/lessuselesss/anki-sociology100";
-                                ref = "main";
-                              };
+                              # "11.03" = {
+                              #   name = "Anki Sociology";
+                              #   url = "https://github.com/lessuselesss/anki-sociology100";
+                              #   ref = "main";
+                              # };
                               "11.04" = {
                                 name = "Anki Ori's Decks";
                                 url = "https://github.com/lessuselesss/anki-ori_decks";

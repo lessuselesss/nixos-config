@@ -1,6 +1,8 @@
 # nixos-config
 NixOS, nix-darwin (macOS), Nix-on-Droid (Android), and qubesos-template (QubesOS) configuration using Flakes
 
+# *** README HAS NOT BEEN UPDATED, VISIT https://github.com/dustinlyons/nixos-config IF YOU'RE LOOKING FOR A NIX SYSTEM STARTER/REFERENCE TEMPLATE ***
+
 ## Prerequisites
 
 - For macOS: A clean macOS installation

@@ -10010,16 +10010,43 @@ repomix-output.txt
 ================
 File: .envrc
 ================
+use flake #!/usr/bin/env bash
+set -euo pipefail
+
+# Use flake environment
 use flake
+
+nix flake show
+
+# Watch for changes in relevant files
+watch_file flake.nix
+watch_file flake.lock
+watch_file .pre-commit-config.yaml
+
+# Setup pre-commit hooks if not already installed
+if [ -f .pre-commit-config.yaml ]; then
+  if ! pre-commit hook-path >/dev/null 2>&1; then
+    echo "Installing pre-commit hooks..."
+    pre-commit install --install-hooks
+    pre-commit install --hook-type commit-msg
+  fi
+fi
+
+# Optional: Load local environment overrides (gitignored)
+if [[ -f .env.local ]]; then
+  source_env .env.local
+fi
 
 ================
 File: .gitignore
 ================
 .DS_Store
 /result
-.direnv
+.direnv*
 .devenv
-.aider.chat.history.md
+.aider*
+.env
+.env.local
 
 ================
 File: .gitmodules
@@ -11075,6 +11102,30 @@ File: flake.nix
                                 name = "Templates";
                                 target = "/Users/${user}/Templates";
                               };
+                              "01.10" = {
+                                name = "Local Share";
+                                target = "/Users/${user}/.local/share";
+                              };
+                              "01.11" = {
+                                name = "Local Bin";
+                                target = "/Users/${user}/.local/bin";
+                              };
+                              "01.12" = {
+                                name = "Local Lib";
+                                target = "/Users/${user}/.local/lib";
+                              };
+                              "01.13" = {
+                                name = "Local Include";
+                                target = "/Users/${user}/.local/include";
+                              };
+                              "01.14" = {
+                                name = "Local State";
+                                target = "/Users/${user}/.local/state";
+                              };
+                              "01.15" = {
+                                name = "Local Cache";
+                                target = "/Users/${user}/.cache";
+                              };
                             };
                           };
                           "02" = {
@@ -11114,11 +11165,11 @@ File: flake.nix
                               "11.02" = {
                                 name = "Forks";
                               };
-                              "11.03" = {
-                                name = "Anki Sociology";
-                                url = "https://github.com/lessuselesss/anki-sociology100";
-                                ref = "main";
-                              };
+                              # "11.03" = {
+                              #   name = "Anki Sociology";
+                              #   url = "https://github.com/lessuselesss/anki-sociology100";
+                              #   ref = "main";
+                              # };
                               "11.04" = {
                                 name = "Anki Ori's Decks";
                                 url = "https://github.com/lessuselesss/anki-ori_decks";
@@ -11608,6 +11659,8 @@ File: README.md
 ================
 # nixos-config
 NixOS, nix-darwin (macOS), Nix-on-Droid (Android), and qubesos-template (QubesOS) configuration using Flakes
+
+# *** README HAS NOT BEEN UPDATED, VISIT https://github.com/dustinlyons/nixos-config IF YOU'RE LOOKING FOR A NIX SYSTEM STARTER/REFERENCE TEMPLATE ***
 
 ## Prerequisites
 

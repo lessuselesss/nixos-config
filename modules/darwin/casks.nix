@@ -2,8 +2,7 @@ _: [
   # AI Tools
   "claude"
   "chatgpt"
-<<<<<<< HEAD
-  "mtsy"
+  "msty"
   "ollama"
 
   # Automation Tools
@@ -13,8 +12,6 @@ _: [
   # Document Tools
   # "adobe-acrobat-reader"
   # "anki"
-=======
->>>>>>> 6be6d77 (remove apps)
 
   # Development Tools
   "cursor"
@@ -36,18 +33,14 @@ _: [
   "ledger-live"
 
   # Utility Tools
-  "rclone"
+  # "rclone"
   "spacedrive"
   "bazecor"
   "homerow"
   "sdformatter"
   "hiddenbar"
-<<<<<<< HEAD
   "karabiner-elements"
   "keycastr"
-=======
-  # "karabiner-elements"
->>>>>>> 6be6d77 (remove apps)
   "disk-inventory-x"
   "raspberry-pi-imager"
 
@@ -80,4 +73,4 @@ _: [
   "tailscale" # pre-install/login required
   "wireshark"
   # "yabai"
-
+]

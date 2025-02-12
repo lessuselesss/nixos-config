@@ -24,8 +24,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-services.url = "github:homebrew/homebrew-services";
-    homebrew-services.flake = false;
+    homebrew-services = {
+      url = "github:homebrew/homebrew-services";
+      flake = false;
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +49,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     python-packages = {
-      url = "github:NixOS/nixpkgs";
       follows = "nixpkgs";
     };
   };
@@ -255,27 +256,63 @@
                             name = "[Meta]";
                             items = {
                               "00.00" = {
-                                name = "Nixos-config";
+                                name = "Nix Systems' Config";
                                 url = "https://github.com/lessuselesss/nixos-config";
                                 ref = "main";
                               };
                               "00.01" = {
+                                name = "Nix Secrets";
+                                url = "https://github.com/lessuselesss/nix-secrets";
+                                ref = "main";
+                              };
+                              "00.02" = {
+                                name = "Password Store";
+                                target = "/Users/${user}/.password-store";
+                              };
+                              "00.03" = {
+                                name = "System Services";
+                                target = "/System/Library/Services";
+                              };
+                              "00.04" = {
+                                name = "User Services";
+                                target = "/Users/${user}/Library/Services";
+                              };
+                              "00.05" = {
                                 name = "Logs";
                                 target = "/var/log";
                               };
-                              "00.02" = {
-                                name = "QubesOS-config";
-                                url = "https://github.com/lessuselesss/qubesos-config";
-                                ref = "main";
+                              "00.06" = {
+                                name = "System Services";
+                                target = "/System/Library/Services";
                               };
-                              "00.03" = {
-                                name = "Workflows";
+                              "00.07" = {
+                                name = "Nix-Ops";
+                                target = "/Users/${user}/.local/share/nix_ops";
                               };
-                              "00.04" = {
-                                name = "VMs";
+                              "00.08" = {
+                                name = "Virtual Environments";
+                                target = "/Users/${user}/.local/share/virtual_envs";
+                              };
+                              "00.09" = {
+                                name = "Virtual Machines";
+                                target = "/Users/${user}/.local/share/virtual_machines";
+                              };
+                              "00.10" = {
+                                name = "kube_configs";
+                                target = "/Users/${user}/.local/share/service_pods";
+                              };
+                              "00.11" = {
+                                name = "Containerfiles";
+                                url = "https://github.com/lessuseless/Containerfiles";
+                                ref = "master";
+                              };
+                              "00.12" = {
+                                name = "C2W Modules";
+                                target = "/Users/${user}/.local/share/c2w_modules";
                               };
                             };
                           };
+
                           "01" = {
                             name = "[Home]";
                             items = {
@@ -442,24 +479,19 @@
                                 url = "https://github.com/lessuselesss/characterfile.git";
                                 ref = "main";
                               };
-                              "12.06" = {
+                            };
+                          };
+                          "13" = {
+                            name = "[Testing]";
+                            items = {
+                              "13.01" = {
                                 name = "Fabric";
                                 url = "https://github.com/lessuselesss/fabric";
                                 ref = "main";
                               };
-                              "12.07" = {
+                              "13.02" = {
                                 name = "Whisper Diarization";
                                 url = "https://github.com/lessuselesss/whisper-diarization";
-                                ref = "main";
-                              };
-                            };
-                          };
-                          "13" = {
-                            name = "[Using]";
-                            items = {
-                              "13.01" = {
-                                name = "Bon-Jailbreaking";
-                                url = "https://github.com/jplhughes/bon-jailbreaking";
                                 ref = "main";
                               };
                             };
@@ -571,13 +603,22 @@
                             };
                           };
                           "92" = {
-                            name = "[Models]";
+                            name = "[Ai_Local-Models]";
                             items = {
                               "92.01" = {
                                 name = "Huggingface";
                               };
                               "92.02" = {
                                 name = "Ollama";
+                              };
+                              "92.03" = {
+                                name = "Github";
+                              };
+                              "92.04" = {
+                                name = "Mistral-rs";
+                              };
+                              "92.05" = {
+                                name = "llvm";
                               };
                             };
                           };

@@ -303,8 +303,8 @@
                               };
                               "00.11" = {
                                 name = "Containerfiles";
-                                url = "https://github.com/lessuseless/Containerfiles";
-                                ref = "master";
+                                url = "https://github.com/lessuselesss/Containerfiles";
+                                ref = "main";
                               };
                               "00.12" = {
                                 name = "C2W Modules";

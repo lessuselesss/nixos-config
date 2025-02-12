@@ -357,27 +357,27 @@
                                 target = "/Users/${user}/Templates";
                               };
                               "01.10" = {
-                                name = "Local Share";
+                                name = "dotlocal Share";
                                 target = "/Users/${user}/.local/share";
                               };
                               "01.11" = {
-                                name = "Local Bin";
+                                name = "dotlocal Bin";
                                 target = "/Users/${user}/.local/bin";
                               };
                               "01.12" = {
-                                name = "Local Lib";
+                                name = "dotlocal Lib";
                                 target = "/Users/${user}/.local/lib";
                               };
                               "01.13" = {
-                                name = "Local Include";
+                                name = "dotlocal Include";
                                 target = "/Users/${user}/.local/include";
                               };
                               "01.14" = {
-                                name = "Local State";
+                                name = "dotlocal State";
                                 target = "/Users/${user}/.local/state";
                               };
                               "01.15" = {
-                                name = "Local Cache";
+                                name = "dotlocal Cache";
                                 target = "/Users/${user}/.cache";
                               };
                             };

@@ -32,16 +32,13 @@ in {
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # Add direnv hook for the current shell
-        if [ -n "$BASH_VERSION" ]; then
-          eval "$(direnv hook bash)"
-        elif [ -n "$ZSH_VERSION" ]; then
-          eval "$(direnv hook zsh)"
-        elif [ -n "$FISH_VERSION" ]; then
-          eval (direnv hook fish)
-        fi
+      # Only source zshrc if we're not in a login shell and zsh exists
+      if [ -f ~/.zshrc ] && [ -x "$(command -v zsh)" ]; then
+        # Filter out Fish-specific lines when sourcing zshrc
+        grep -v 'direnv hook fish' ~/.zshrc | source /dev/stdin
+      fi
 
-      # Define variables for PATH directories
+      # Define variables for directories
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH #pipx

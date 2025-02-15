@@ -24,10 +24,8 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-services = {
-      url = "github:homebrew/homebrew-services";
-      flake = false;
-    };
+    homebrew-services.url = "github:homebrew/homebrew-services";
+    homebrew-services.flake = false;
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +47,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     python-packages = {
+      url = "github:NixOS/nixpkgs";
       follows = "nixpkgs";
     };
   };
@@ -238,16 +237,6 @@
                     johnny-mnemonix.homeManagerModules.default
                   ];
 
-                  # Add this section for bash configuration
-                  programs.bash = {
-                    enable = true;
-                    initExtra = ''
-                      if [ -f ~/.zshrc ]; then
-                        source ~/.zshrc
-                      fi
-                    '';
-                  };
-
                   johnny-mnemonix = {
                     enable = true;
                     baseDir = "/Users/${user}/Documents";
@@ -268,63 +257,27 @@
                             name = "[Meta]";
                             items = {
                               "00.00" = {
-                                name = "Nix Systems' Config";
+                                name = "Nixos-config";
                                 url = "https://github.com/lessuselesss/nixos-config";
                                 ref = "main";
                               };
                               "00.01" = {
-                                name = "Nix Secrets";
-                                url = "https://github.com/lessuselesss/nix-secrets";
-                                ref = "main";
-                              };
-                              "00.02" = {
-                                name = "Password Store";
-                                target = "/Users/${user}/.password-store";
-                              };
-                              "00.03" = {
-                                name = "System Services";
-                                target = "/System/Library/Services";
-                              };
-                              "00.04" = {
-                                name = "User Services";
-                                target = "/Users/${user}/Library/Services";
-                              };
-                              "00.05" = {
                                 name = "Logs";
                                 target = "/var/log";
                               };
-                              "00.06" = {
-                                name = "System Services";
-                                target = "/System/Library/Services";
-                              };
-                              "00.07" = {
-                                name = "Nix-Ops";
-                                target = "/Users/${user}/.local/share/nix_ops";
-                              };
-                              "00.08" = {
-                                name = "Virtual Environments";
-                                target = "/Users/${user}/.local/share/virtual_envs";
-                              };
-                              "00.09" = {
-                                name = "Virtual Machines";
-                                target = "/Users/${user}/.local/share/virtual_machines";
-                              };
-                              "00.10" = {
-                                name = "kube_configs";
-                                target = "/Users/${user}/.local/share/service_pods";
-                              };
-                              "00.11" = {
-                                name = "Containerfiles";
-                                url = "https://github.com/lessuselesss/Containerfiles";
+                              "00.02" = {
+                                name = "QubesOS-config";
+                                url = "https://github.com/lessuselesss/qubesos-config";
                                 ref = "main";
                               };
-                              "00.12" = {
-                                name = "C2W Modules";
-                                target = "/Users/${user}/.local/share/c2w_modules";
+                              "00.03" = {
+                                name = "Workflows";
+                              };
+                              "00.04" = {
+                                name = "VMs";
                               };
                             };
                           };
-
                           "01" = {
                             name = "[Home]";
                             items = {
@@ -369,27 +322,27 @@
                                 target = "/Users/${user}/Templates";
                               };
                               "01.10" = {
-                                name = "dotlocal Share";
+                                name = "Local Share";
                                 target = "/Users/${user}/.local/share";
                               };
                               "01.11" = {
-                                name = "dotlocal Bin";
+                                name = "Local Bin";
                                 target = "/Users/${user}/.local/bin";
                               };
                               "01.12" = {
-                                name = "dotlocal Lib";
+                                name = "Local Lib";
                                 target = "/Users/${user}/.local/lib";
                               };
                               "01.13" = {
-                                name = "dotlocal Include";
+                                name = "Local Include";
                                 target = "/Users/${user}/.local/include";
                               };
                               "01.14" = {
-                                name = "dotlocal State";
+                                name = "Local State";
                                 target = "/Users/${user}/.local/state";
                               };
                               "01.15" = {
-                                name = "dotlocal Cache";
+                                name = "Local Cache";
                                 target = "/Users/${user}/.cache";
                               };
                             };
@@ -491,19 +444,24 @@
                                 url = "https://github.com/lessuselesss/characterfile.git";
                                 ref = "main";
                               };
-                            };
-                          };
-                          "13" = {
-                            name = "[Testing]";
-                            items = {
-                              "13.01" = {
+                              "12.06" = {
                                 name = "Fabric";
                                 url = "https://github.com/lessuselesss/fabric";
                                 ref = "main";
                               };
-                              "13.02" = {
+                              "12.07" = {
                                 name = "Whisper Diarization";
                                 url = "https://github.com/lessuselesss/whisper-diarization";
+                                ref = "main";
+                              };
+                            };
+                          };
+                          "13" = {
+                            name = "[Using]";
+                            items = {
+                              "13.01" = {
+                                name = "Bon-Jailbreaking";
+                                url = "https://github.com/jplhughes/bon-jailbreaking";
                                 ref = "main";
                               };
                             };
@@ -615,22 +573,13 @@
                             };
                           };
                           "92" = {
-                            name = "[Ai_Local-Models]";
+                            name = "[Models]";
                             items = {
                               "92.01" = {
                                 name = "Huggingface";
                               };
                               "92.02" = {
                                 name = "Ollama";
-                              };
-                              "92.03" = {
-                                name = "Github";
-                              };
-                              "92.04" = {
-                                name = "Mistral-rs";
-                              };
-                              "92.05" = {
-                                name = "llvm";
                               };
                             };
                           };
@@ -694,16 +643,6 @@
                   imports = [
                     johnny-mnemonix.homeManagerModules.default
                   ];
-
-                  # Add this section for bash configuration
-                  programs.bash = {
-                    enable = true;
-                    initExtra = ''
-                      if [ -f ~/.zshrc ]; then
-                        source ~/.zshrc
-                      fi
-                    '';
-                  };
 
                   johnny-mnemonix = {
                     enable = true;

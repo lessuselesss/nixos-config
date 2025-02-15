@@ -9426,9 +9426,10 @@ in {
     enable = true;
     enableCompletion = true;
     initExtra = ''
-      # Source the .zshrc file if it exists
-      if [ -f ~/.zshrc ]; then
-          source ~/.zshrc
+      # Only source zshrc if we're not in a login shell and zsh exists
+      if [ -f ~/.zshrc ] && [ -x "$(command -v zsh)" ]; then
+        # Filter out Fish-specific lines when sourcing zshrc
+        grep -v 'direnv hook fish' ~/.zshrc | source /dev/stdin
       fi
     '';
   };

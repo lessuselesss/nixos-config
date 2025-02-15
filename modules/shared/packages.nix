@@ -141,4 +141,8 @@ with pkgs; [
   #    '';
   #  }
   ##############################################################
+
+  fzf
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 ]

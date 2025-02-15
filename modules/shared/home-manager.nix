@@ -14,22 +14,48 @@ in {
     autocd = false;
     enableCompletion = true;
     cdpath = ["~/.local/share/src"];
+
     plugins = [
       {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
       }
       {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./config;
-        file = "p10k.zsh";
+        name = "zsh-syntax-highlighting";
+        src = pkgs.zsh-syntax-highlighting;
+        file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
       }
     ];
+
     initExtraFirst = ''
+      # Set NULL_GLOB to handle missing files/directories
+      setopt NULL_GLOB
+
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
+      fi
+
+      # Auto-suggestion configuration
+      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+      ZSH_AUTOSUGGEST_USE_ASYNC=1
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080"
+
+      # Load fzf
+      if [ -n "''${commands[fzf-share]}" ]; then
+        source "$(fzf-share)/key-bindings.zsh"
+        source "$(fzf-share)/completion.zsh"
+      fi
+
+      # Safely source fabric patterns
+      if [ -d ~/.config/fabric/patterns ]; then
+        for file in ~/.config/fabric/patterns/*; do
+          if [ -f "$file" ]; then
+            source "$file"
+          fi
+        done
       fi
 
       # Add direnv hook for the current shell
@@ -96,16 +122,34 @@ in {
           fabric -y "$video_link" --transcript
       }
     '';
+
+    initExtra = ''
+      # Any additional zsh configuration...
+    '';
   };
 
   bash = {
     enable = true;
     enableCompletion = true;
     initExtra = ''
-      # Source the .zshrc file if it exists
-      if [ -f ~/.zshrc ]; then
-          source ~/.zshrc
-      fi
+      # Basic bash configuration
+      export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
+      export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
+      export PATH=$HOME/.local/share/bin:$PATH
+
+      # Aliases
+      alias ls='ls --color=auto'
+      alias search='rg -p --glob "!node_modules/*"'
+      alias diff='difft'
+      alias pn='pnpm'
+      alias px='pnpx'
+
+      # Editor configuration
+      export EDITOR="emacsclient -t"
+      export VISUAL="emacsclient -c -a emacs"
+      export ALTERNATE_EDITOR=""
+
+      # Don't source .zshrc anymore
     '';
   };
 
@@ -419,5 +463,11 @@ in {
   direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  # Add fzf for better completion
+  fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }

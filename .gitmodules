@@ -1,3 +1,6 @@
 [submodule "hosts/qubes-templatevm"]
 	path = hosts/qubes-templatevm
 	url = https://github.com/evq/qubes-nixos-template
+[submodule "secrets"]
+	path = secrets
+	url = git@github.com:lessuselesss/nix-secrets.git

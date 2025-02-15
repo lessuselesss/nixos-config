@@ -119,6 +119,8 @@
             git
             age
             age-plugin-yubikey
+            age-plugin-openpgp
+            age-plugin-ledger
             nodejs_23
             nodePackages.npm
           ];

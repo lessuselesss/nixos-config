@@ -1,0 +1,24 @@
+---
+description: Check nesting in context
+globs: *.nix
+---
+
+# Check nesting within the context of the file and references around code additions 
+
+- Reference the syntax in each file when making additions, be sure you aren't adding "{something}." (programs./services./pkgs. etc.) unnecessarily;
+
+e.g. if we are adding tmux, this would be wrong because alacritty and ssh do not have "programs." in front of them.
+
+```
+  alacritty = {
+  ...
+  };
+
+  ssh = {
+  ....
+  };
+
+  programs.tmux = { 
+  
+  };
+```

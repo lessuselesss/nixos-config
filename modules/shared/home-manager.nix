@@ -31,7 +31,7 @@ in {
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
-    
+
       # Add direnv hook for the current shell
         if [ -n "$BASH_VERSION" ]; then
           eval "$(direnv hook bash)"
@@ -116,9 +116,7 @@ in {
     ignores = ["*.swp"];
     userName = name;
     userEmail = email;
-    lfs = {
-      enable = true;
-    };
+    lfs.enable = true;
     extraConfig = {
       init.defaultBranch = "main";
       core = {
@@ -130,7 +128,6 @@ in {
       rebase.autoStash = true;
     };
   };
-  
 
   vim = {
     enable = true;

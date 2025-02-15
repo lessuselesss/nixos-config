@@ -126,8 +126,8 @@
           shellHook = ''
             ${mkPreCommitHook.pre-commit-check.shellHook}
             export EDITOR=vim
-            # Set the Git hooks path
-            git config --local core.hooksPath ${toString ./.githooks}
+            # Remove the problematic Git hooks path setting
+            git config --unset-all core.hooksPath || true
           '';
         };
     };

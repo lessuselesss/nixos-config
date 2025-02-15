@@ -9421,12 +9421,11 @@ in {
 
   bash = {
     enable = true;
-    enableCompletion = true;
     initExtra = ''
-      # Only source zshrc if we're not in a login shell and zsh exists
-      if [ -f ~/.zshrc ] && [ -x "$(command -v zsh)" ]; then
-        # Filter out Fish-specific lines when sourcing zshrc
-        grep -v 'direnv hook fish' ~/.zshrc | source /dev/stdin
+      # Source the .zshrc file if it exists, but only source bash-compatible lines
+      if [ -f ~/.zshrc ]; then
+        # Filter out zsh-specific syntax before sourcing
+        grep -v '^[[:space:]]*setopt\|^[[:space:]]*unsetopt\|^[[:space:]]*autoload\|direnv hook' ~/.zshrc | source /dev/stdin || true
       fi
     '';
   };

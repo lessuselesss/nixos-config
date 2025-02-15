@@ -16,6 +16,7 @@ with pkgs; [
   bun
   cmake
   cargo
+  deno
 
   coreutils
   killall
@@ -69,7 +70,7 @@ with pkgs; [
   aider-chat
   nurl
   uv
-
+  comma
   # Python Developement Tools
 
   (python312.withPackages (ps:
@@ -81,7 +82,7 @@ with pkgs; [
       #mlx
       pip
       # other Python packages...
-      # USE DEVENV FOR PROJECT-SPECIFIC ENVS
+      # USE DEVENV FOR PROJECT-SPECIaFIC ENVS
     ]))
 
   # Node.js Developement Tools

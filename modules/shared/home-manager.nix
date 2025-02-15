@@ -37,6 +37,9 @@ in {
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
+      # Set the SSH_AUTH_SOCK environment variable
+      export SSH_AUTH_SOCK=/Users/lessuseless/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+
       # Auto-suggestion configuration
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
       ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -124,7 +127,7 @@ in {
     '';
 
     initExtra = ''
-      # Any additional zsh configuration...
+      # Any additional zsh configuration...kc
     '';
   };
 

@@ -253,10 +253,10 @@
                     areas = {
                       # System - About the system.
                       "00-09" = {
-                        name = "_System_";
+                        name = "System";
                         categories = {
                           "00" = {
-                            name = "[Meta]";
+                            name = "Meta";
                             items = {
                               "00.00" = {
                                 name = "Nixos-config";
@@ -281,10 +281,10 @@
                             };
                           };
                           "01" = {
-                            name = "[Home]";
+                            name = "Home";
                             items = {
                               "01.00" = {
-                                name = "Dotfiles";
+                                name = "dotfiles";
                                 target = "/Users/${user}/.dotfiles";
                               };
                               "01.01" = {
@@ -324,33 +324,33 @@
                                 target = "/Users/${user}/Templates";
                               };
                               "01.10" = {
-                                name = "Local Share";
+                                name = "dotlocal_share";
                                 target = "/Users/${user}/.local/share";
                               };
                               "01.11" = {
-                                name = "Local Bin";
+                                name = "dotlocal_bin";
                                 target = "/Users/${user}/.local/bin";
                               };
                               "01.12" = {
-                                name = "Local Lib";
+                                name = "dotlocal_lib";
                                 target = "/Users/${user}/.local/lib";
                               };
                               "01.13" = {
-                                name = "Local Include";
+                                name = "dotlocal_include";
                                 target = "/Users/${user}/.local/include";
                               };
                               "01.14" = {
-                                name = "Local State";
+                                name = "dotlocal_state";
                                 target = "/Users/${user}/.local/state";
                               };
                               "01.15" = {
-                                name = "Local Cache";
+                                name = "dotlocal_cache";
                                 target = "/Users/${user}/.cache";
                               };
                             };
                           };
                           "02" = {
-                            name = "[Cloud]";
+                            name = "Cloud";
                             items = {
                               "02.00" = {
                                 name = "configs";
@@ -373,10 +373,10 @@
 
                       # Projects - Short-term efforts in your work or life that you're working on now.
                       "10-19" = {
-                        name = "_Projects_";
+                        name = "Projects";
                         categories = {
                           "11" = {
-                            name = "[Maintaining]";
+                            name = "Maintaining";
                             items = {
                               "11.01" = {
                                 name = "Johnny-Mnemonix";
@@ -419,7 +419,7 @@
                             };
                           };
                           "12" = {
-                            name = "[Contributing]";
+                            name = "Contributing";
                             items = {
                               "12.01" = {
                                 name = "Screenpipe";
@@ -459,11 +459,11 @@
                             };
                           };
                           "13" = {
-                            name = "[Using]";
+                            name = "Testing";
                             items = {
                               "13.01" = {
-                                name = "Bon-Jailbreaking";
-                                url = "https://github.com/jplhughes/bon-jailbreaking";
+                                name = "curxy";
+                                url = "https://github.com/ryoppippi/curxy";
                                 ref = "main";
                               };
                             };
@@ -473,10 +473,10 @@
 
                       # Areas - Long-term responsibilities you want to manage over time.
                       "20-29" = {
-                        name = "_Areas_";
+                        name = "Areas";
                         categories = {
                           "21" = {
-                            name = "[Personal]";
+                            name = "Personal";
                             items = {
                               "21.01" = {
                                 name = "Health";
@@ -490,7 +490,7 @@
                             };
                           };
                           "22" = {
-                            name = "[Professional]";
+                            name = "Professional";
                             items = {
                               "22.01" = {
                                 name = "Career";
@@ -506,10 +506,10 @@
 
                       # Topics or interests that may be useful in the future.
                       "30-39" = {
-                        name = "_Resources_";
+                        name = "Resources";
                         categories = {
                           "30" = {
-                            name = "[Devenv_Repos]";
+                            name = "Devenv_Repos";
                             items = {
                               "30.01" = {
                                 name = "RWKV-Runner";
@@ -524,7 +524,7 @@
                             };
                           };
                           "31" = {
-                            name = "[References]";
+                            name = "References";
                             items = {
                               "31.01" = {
                                 name = "Technical";
@@ -535,7 +535,7 @@
                             };
                           };
                           "32" = {
-                            name = "[Collections]";
+                            name = "Collections";
                             items = {
                               "32.01" = {
                                 name = "Templates";
@@ -550,10 +550,10 @@
 
                       # Archive - Completed projects, references, and other resources that you no longer need to manage actively.
                       "90-99" = {
-                        name = "_Archive_";
+                        name = "Archive";
                         categories = {
                           "90" = {
-                            name = "[Completed]";
+                            name = "Completed";
                             items = {
                               "90.01" = {
                                 name = "Projects";
@@ -564,7 +564,7 @@
                             };
                           };
                           "91" = {
-                            name = "[Deprecated]";
+                            name = "Deprecated";
                             items = {
                               "91.01" = {
                                 name = "Old Documents";
@@ -575,7 +575,7 @@
                             };
                           };
                           "92" = {
-                            name = "[Models]";
+                            name = "Models";
                             items = {
                               "92.01" = {
                                 name = "Huggingface";
@@ -586,7 +586,7 @@
                             };
                           };
                           "93" = {
-                            name = "[Datasets]";
+                            name = "Datasets";
                             items = {
                               "93.01" = {
                                 name = "Kaggle";
@@ -649,7 +649,7 @@
                   johnny-mnemonix = {
                     enable = true;
                     baseDir = "/home/${user}/Documents/"; # Darwin's user home directory = /Users/${user}/
-                    spacer = " ";
+                    spacer = "-";
 
                     xdg = {
                       stateHome = config.home.homeDirectory + "/.local/state";
@@ -660,10 +660,10 @@
                     areas = {
                       # System - About the system.
                       "00-09" = {
-                        name = "_System_";
+                        name = "System";
                         categories = {
                           "00" = {
-                            name = "[Meta]";
+                            name = "Meta";
                             items = {
                               "00.01" = {
                                 name = "Placeholder";
@@ -674,7 +674,7 @@
                             };
                           };
                           "01" = {
-                            name = "[Home]";
+                            name = "Home";
                             items = {
                               "01.00" = {
                                 name = "Dotfiles";
@@ -719,7 +719,7 @@
                             };
                           };
                           "02" = {
-                            name = "[Cloud]";
+                            name = "Cloud";
                             items = {
                               "02.01" = {
                                 name = "Dropbox";
@@ -734,10 +734,10 @@
 
                       # Projects - Short-term efforts in your work or life that you're working on now.
                       "10-19" = {
-                        name = "_Projects_";
+                        name = "Projects";
                         categories = {
                           "11" = {
-                            name = "[Maintaining]";
+                            name = "Maintaining";
                             items = {
                               "11.01" = {
                                 name = "Johnny-Mnemonix";
@@ -753,7 +753,7 @@
                             };
                           };
                           "12" = {
-                            name = "[Pending]";
+                            name = "Pending";
                             items = {
                               "12.01" = {
                                 name = "Waiting";
@@ -768,10 +768,10 @@
 
                       # Areas - Long-term responsibilities you want to manage over time.
                       "20-29" = {
-                        name = "_Areas_";
+                        name = "Areas";
                         categories = {
                           "21" = {
-                            name = "[Personal]";
+                            name = "Personal";
                             items = {
                               "21.01" = {
                                 name = "Health";
@@ -785,7 +785,7 @@
                             };
                           };
                           "22" = {
-                            name = "[Professional]";
+                            name = "Professional";
                             items = {
                               "22.01" = {
                                 name = "Career";
@@ -800,10 +800,10 @@
 
                       # Topics or interests that may be useful in the future.
                       "30-39" = {
-                        name = "_Resources_";
+                        name = "Resources";
                         categories = {
                           "31" = {
-                            name = "[References]";
+                            name = "References";
                             items = {
                               "31.01" = {
                                 name = "Technical";
@@ -814,7 +814,7 @@
                             };
                           };
                           "32" = {
-                            name = "[Collections]";
+                            name = "Collections";
                             items = {
                               "32.01" = {
                                 name = "Templates";
@@ -829,10 +829,10 @@
 
                       # Archive - Completed projects, references, and other resources that you no longer need to manage actively.
                       "90-99" = {
-                        name = "_Archive_";
+                        name = "Archive";
                         categories = {
                           "90" = {
-                            name = "[Completed]";
+                            name = "Completed";
                             items = {
                               "90.01" = {
                                 name = "Projects";
@@ -843,7 +843,7 @@
                             };
                           };
                           "91" = {
-                            name = "[Deprecated]";
+                            name = "Deprecated";
                             items = {
                               "91.01" = {
                                 name = "Old Documents";

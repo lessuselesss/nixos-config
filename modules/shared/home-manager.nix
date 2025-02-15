@@ -31,6 +31,15 @@ in {
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
+    
+      # Add direnv hook for the current shell
+        if [ -n "$BASH_VERSION" ]; then
+          eval "$(direnv hook bash)"
+        elif [ -n "$ZSH_VERSION" ]; then
+          eval "$(direnv hook zsh)"
+        elif [ -n "$FISH_VERSION" ]; then
+          eval (direnv hook fish)
+        fi
 
       # Define variables for PATH directories
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
@@ -95,6 +104,17 @@ in {
     '';
   };
 
+  bash = {
+    enable = true;
+    enableCompletion = true;
+    initExtra = ''
+      # Source the .zshrc file if it exists
+      if [ -f ~/.zshrc ]; then
+          source ~/.zshrc
+      fi
+    '';
+  };
+
   git = {
     enable = true;
     ignores = ["*.swp"];
@@ -114,6 +134,7 @@ in {
       rebase.autoStash = true;
     };
   };
+  
 
   vim = {
     enable = true;

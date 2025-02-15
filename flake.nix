@@ -237,16 +237,6 @@
                     johnny-mnemonix.homeManagerModules.default
                   ];
 
-                  # Add this section for bash configuration
-                  programs.bash = {
-                    enable = true;
-                    initExtra = ''
-                      if [ -f ~/.zshrc ]; then
-                        source ~/.zshrc
-                      fi
-                    '';
-                  };
-
                   johnny-mnemonix = {
                     enable = true;
                     baseDir = "/Users/${user}/Documents";
@@ -653,16 +643,6 @@
                   imports = [
                     johnny-mnemonix.homeManagerModules.default
                   ];
-
-                  # Add this section for bash configuration
-                  programs.bash = {
-                    enable = true;
-                    initExtra = ''
-                      if [ -f ~/.zshrc ]; then
-                        source ~/.zshrc
-                      fi
-                    '';
-                  };
 
                   johnny-mnemonix = {
                     enable = true;

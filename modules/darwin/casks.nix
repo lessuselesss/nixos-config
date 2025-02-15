@@ -20,7 +20,7 @@ _: [
   "talon"
   "qflipper"
   "warp"
-  "sonic-pi"
+  # "sonic-pi"
 
   # Communication Tools
   "discord"

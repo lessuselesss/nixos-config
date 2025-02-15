@@ -45,6 +45,9 @@ Additional Info:
 ================================================================
 Directory Structure
 ================================================================
+.cursor/
+  rules/
+    nix-flake-rules.mdc
 apps/
   aarch64-android/
     apply
@@ -118,11 +121,14 @@ modules/
         config.org
         init.el
       p10k.zsh
+    services/
+      ssh-agent-service.nix
     default.nix
     files.nix
     home-manager.nix
     packages.nix
     README.md
+    services.nix
   nextdns.nix
 overlays/
   10-feather-font.nix
@@ -140,6 +146,19 @@ setup_script.sh
 ================================================================
 Files
 ================================================================
+
+================
+File: .cursor/rules/nix-flake-rules.mdc
+================
+---
+description:
+globs:
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
 
 ================
 File: apps/aarch64-android/apply
@@ -3254,6 +3273,8 @@ _: [
   "tailscale" # pre-install/login required
   "wireshark"
   # "yabai"
+
+  "pinentry-mac"
 ]
 
 ================
@@ -4351,6 +4372,28 @@ File: modules/darwin/home-manager.nix
   '';
   sharedFiles = import ../shared/files.nix {inherit config pkgs;};
   additionalFiles = import ./files.nix {inherit user config pkgs;};
+  ledgerAgentInstaller = pkgs.writeScript "setup-ledger-agent" ''
+    #!${pkgs.bash}/bin/bash
+    set -euo pipefail
+
+    if ! command -v pipx >/dev/null 2>&1; then
+      echo "Error: pipx not found in PATH. Please check your configuration and the users .local/bin/."
+      exit 1
+    fi
+
+    echo "Checking if ledger-agent is already installed..."
+    if ! pipx list | grep -q "ledger-agent"; then
+      echo "Installing ledger-agent via pipx..."
+      pipx install ledger-agent
+      pipx inject ledger-agent trezor_agent
+    else
+      echo "ledger-agent is already installed, checking for updates..."
+      pipx upgrade ledger-agent
+      pipx inject ledger-agent trezor_agent
+    fi
+
+    echo "Setup complete!"
+  '';
 in {
   imports = [
     ./dock
@@ -4440,11 +4483,26 @@ in {
         stateVersion = "24.11";
       };
 
-      programs = {} // import ../shared/home-manager.nix {inherit config pkgs lib;};
+      programs = lib.mkMerge [
+        (import ../shared/home-manager.nix {inherit config pkgs lib;})
+      ];
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
       manual.manpages.enable = false;
+
+      services = {
+        gpg-agent = {
+          enable = true;
+          extraConfig = ''
+            pinentry-program /opt/homebrew/bin/pinentry-mac
+          '';
+        };
+      };
+
+      home.sessionVariables = {
+        SSH_AUTH_SOCK = "/tmp/ledger-ssh-agent.sock";
+      };
     };
   };
 
@@ -9240,6 +9298,39 @@ File: modules/shared/config/p10k.zsh
 'builtin' 'unset' 'p10k_config_opts'
 
 ================
+File: modules/shared/services/ssh-agent-service.nix
+================
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  options = {
+    services.ledger-ssh-agent = {
+      enable = lib.mkEnableOption "Enable ledger SSH agent service";
+      package = lib.mkPackageOption pkgs "openssh" {};
+      socketPath = lib.mkOption {
+        type = lib.types.str;
+        default = "/tmp/ledger-ssh-agent.sock";
+        description = "The SSH agent socket path";
+      };
+    };
+  };
+  config = let
+    cfg = config.services.ledger-ssh-agent;
+  in
+    lib.mkIf cfg.enable {
+      settings.processes.ledger-ssh-agent = {
+        command = "${lib.getExe cfg.package} -D -a ${cfg.socketPath}";
+        environment = {
+          SSH_AUTH_SOCK = cfg.socketPath;
+        };
+      };
+    };
+}
+
+================
 File: modules/shared/default.nix
 ================
 {
@@ -9393,7 +9484,26 @@ in {
 
       # ledger/trezor-agent (SSH)
 
-      key() { SSH_AUTH_SOCK="/tmp/ledger-ssh-agent.sock" GNUPGHOME=~/.gnupg/ledger/ "$@"; }
+      # Ledger/Trezor agent helpers
+      export SSH_AUTH_SOCK_LEDGER="/tmp/ledger-ssh-agent.sock"
+      export GNUPGHOME_LEDGER="$HOME/.gnupg/ledger/"
+
+      # Key command for using ledger SSH agent
+      key() {
+        SSH_AUTH_SOCK="$SSH_AUTH_SOCK_LEDGER" GNUPGHOME="$GNUPGHOME_LEDGER" "$@"
+      }
+
+      # Helper to add new SSH identities
+      ledger-add() {
+        local user_host="$1"
+        local port="$2"
+
+        if [ -n "$port" ]; then
+          key ssh-add -K -p "$port" "$user_host"
+        else
+          key ssh-add -K "$user_host"
+        fi
+      }
 
       #############
       # Fabric AI #
@@ -9418,10 +9528,12 @@ in {
   bash = {
     enable = true;
     initExtra = ''
-      # Source the .zshrc file if it exists, but only source bash-compatible lines
+      # Source only specific environment variables and basic aliases from zshrc
       if [ -f ~/.zshrc ]; then
-        # Filter out zsh-specific syntax before sourcing
-        grep -v '^[[:space:]]*setopt\|^[[:space:]]*unsetopt\|^[[:space:]]*autoload\|direnv hook' ~/.zshrc | source /dev/stdin || true
+        # Only grab export statements and basic aliases
+        grep '^[[:space:]]*export\|^[[:space:]]*alias [^-]' ~/.zshrc |
+        grep -v 'typeset\|NIX_PROFILES\|!node_modules\|--glob' |
+        source /dev/stdin
       fi
     '';
   };
@@ -9742,150 +9854,91 @@ in {
 ================
 File: modules/shared/packages.nix
 ================
-{pkgs}:
-with pkgs; [
-  # Automation
-  fabric-ai
-  #exo
+{pkgs, ...}: let
+  packages = with pkgs; [
+    # Automation
+    fabric-ai
+    #exo
 
-  # General packages for development and system management
-  alacritty
-  aspell
-  aspellDicts.en
-  bash-completion
-  bat
-  btop
+    # General packages for development and system management
+    alacritty
+    aspell
+    aspellDicts.en
+    bash-completion
+    bat
+    btop
 
-  pkg-config
-  bun
-  cmake
-  cargo
+    pkg-config
+    bun
+    cmake
+    cargo
 
-  coreutils
-  killall
-  neofetch
-  openssh
-  sqlite
-  wget
-  zip
-  nix-direnv
-  devenv
-  # warp-terminal
-  nil
+    coreutils
+    killall
+    neofetch
+    openssh
+    sqlite
+    wget
+    zip
+    nix-direnv
+    devenv
+    # warp-terminal
+    nil
 
-  # Encryption and security tools
-  age
-  age-plugin-yubikey
-  gnupg
-  libfido2
-  pass
+    # Encryption and security tools
+    age
+    age-plugin-yubikey
+    gnupg
+    libfido2
+    pass
 
-  # Cloud-related tools and SDKs
-  docker
-  docker-compose
+    # Cloud-related tools and SDKs
+    docker
+    docker-compose
 
-  # Media-related packages
-  emacs-all-the-icons-fonts
-  emacsPackages.exec-path-from-shell
-  dejavu_fonts
-  ffmpeg
-  fd
-  font-awesome
-  hack-font
-  noto-fonts
-  noto-fonts-emoji
-  meslo-lgs-nf
+    # Media-related packages
+    emacs-all-the-icons-fonts
+    emacsPackages.exec-path-from-shell
+    dejavu_fonts
+    ffmpeg
+    fd
+    font-awesome
+    hack-font
+    noto-fonts
+    noto-fonts-emoji
+    meslo-lgs-nf
 
-  # Text and terminal utilities
-  htop
-  hunspell
-  iftop
-  jetbrains-mono
-  jq
-  ripgrep
-  tree
-  tmux
-  unrar
-  unzip
-  zsh-powerlevel10k
-  micromamba
-  lazydocker
-  aider-chat
-  nurl
-  uv
+    # Text and terminal utilities
+    htop
+    hunspell
+    iftop
+    jetbrains-mono
+    jq
+    ripgrep
+    tree
+    tmux
+    unrar
+    unzip
+    zsh-powerlevel10k
+    micromamba
+    lazydocker
+    aider-chat
+    nurl
+    uv
 
-  # Python Developement Tools
+    # Python Development Tools
+    (python312.withPackages (ps:
+      with ps; [
+        time-machine
+        virtualenv
+        pip
+      ]))
 
-  (python312.withPackages (ps:
-    with ps; [
-      # conda
-      time-machine
-      virtualenv
-      #pyobjc
-      #mlx
-      pip
-      # other Python packages...
-      # USE DEVENV FOR PROJECT-SPECIFIC ENVS
-    ]))
-
-  # Node.js Developement Tools
-  # fzf
-  # nodePackages.live-server
-  # nodePackages.nodemon
-  # nodePackages.prettier
-  nodejs_23
-
-  # ...
-
-  # Python
-  ##############################################################
-  #   !!!! Use Devenv for project specific python shells !!!! ##
-  #  ###########################################################
-  #  # devenv.nix
-  #  { pkgs, lib, config, inputs, ... }:
-  #
-  #  {
-  #    languages.python = {
-  #      enable = true;
-  #      venv.enable = true;
-  #      venv.requirements = ''
-  #        pyside2
-  #      '';
-  #  };
-  #
-  #  enterShell = ''
-  #    python -c "import PySide2" && echo "No errors!"
-  #  '';
-  #  }
-  ##############################################################
-
-  # nodejs
-  ##############################################################
-  #   !!!! Use Devenv for project specific node shells !!!!   ##
-  #  ###########################################################
-  #  # devenv.nix
-  #  { pkgs, lib, config, inputs, ... }:
-  #
-  #  {
-  #    languages.nodejs = {
-  #      enable = true;
-  #      version = "20";  # Specify Node.js version
-  #      package = pkgs.nodejs_20;
-  #      # Add global npm packages
-  #      packages = {
-  #        typescript = "latest";
-  #        "@types/node" = "latest";
-  #        eslint = "latest";
-  #        prettier = "latest";
-  #      };
-  #    };
-  #
-  #    enterShell = ''
-  #      node --version && npm --version && echo "Node.js environment ready!"
-  #    '';
-  #  }
-  ##############################################################
-]
+    # Node.js Development Tools
+    nodejs_23
+  ];
+in
+  packages
 
 ================
 File: modules/shared/README.md
@@ -9906,6 +9959,27 @@ This configuration gets imported by both modules. Some configuration examples in
 ├── packages.nix       # List of packages to share
 
 ```
+
+================
+File: modules/shared/services.nix
+================
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: {
+  services = {
+    ledger-ssh-agent = {
+      name = "ledger-ssh-agent";
+      command = "${pkgs.openssh}/bin/ssh-agent -D -a /tmp/ledger-ssh-agent.sock";
+      properties = {
+        restartOn.failure = true;
+        keepAlive = true;
+      };
+    };
+  };
+}
 
 ================
 File: modules/nextdns.nix
@@ -10722,7 +10796,8 @@ File: flake.lock
         "python-packages": [
           "nixpkgs"
         ],
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "services-flake": "services-flake"
       }
     },
     "scss-reset": {
@@ -10756,6 +10831,21 @@ File: flake.lock
         "ref": "main",
         "type": "git",
         "url": "ssh://git@github.com/lessuselesss/nix-secrets.git"
+      }
+    },
+    "services-flake": {
+      "locked": {
+        "lastModified": 1739523640,
+        "narHash": "sha256-39g5YKEGNfQui84NLJWswewKg2I1mqikqJ2KHuwDWT8=",
+        "owner": "juspay",
+        "repo": "services-flake",
+        "rev": "c404d061cef100a6176313758a7f847c807a6f34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "juspay",
+        "repo": "services-flake",
+        "type": "github"
       }
     },
     "systems": {
@@ -10848,6 +10938,7 @@ File: flake.nix
       url = "github:NixOS/nixpkgs";
       follows = "nixpkgs";
     };
+    services-flake.url = "github:juspay/services-flake";
   };
   outputs = {
     self,
@@ -10867,6 +10958,7 @@ File: flake.nix
     nix-on-droid,
     johnny-mnemonix,
     python-packages,
+    services-flake,
   } @ inputs: let
     user = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux" "aarch64-android"];
@@ -11666,6 +11758,32 @@ File: flake.nix
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
       extraSpecialArgs = {
         inherit inputs;
+      };
+    };
+
+    flake-parts = inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = import inputs.systems;
+      imports = [
+        inputs.process-compose-flake.flakeModule
+      ];
+
+      perSystem = {
+        self',
+        pkgs,
+        lib,
+        ...
+      }: {
+        process-compose."default" = {config, ...}: {
+          imports = [
+            inputs.services-flake.processComposeModules.default
+            ./modules/shared/services/ssh-agent-service.nix
+          ];
+
+          services.ledger-ssh-agent = {
+            enable = true;
+            socketPath = "/tmp/ledger-ssh-agent.sock";
+          };
+        };
       };
     };
   };

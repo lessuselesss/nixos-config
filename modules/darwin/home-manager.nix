@@ -13,6 +13,28 @@
   '';
   sharedFiles = import ../shared/files.nix {inherit config pkgs;};
   additionalFiles = import ./files.nix {inherit user config pkgs;};
+  ledgerAgentInstaller = pkgs.writeScript "setup-ledger-agent" ''
+    #!${pkgs.bash}/bin/bash
+    set -euo pipefail
+
+    if ! command -v pipx >/dev/null 2>&1; then
+      echo "Error: pipx not found in PATH. Please check your configuration and the users .local/bin/."
+      exit 1
+    fi
+
+    echo "Checking if ledger-agent is already installed..."
+    if ! pipx list | grep -q "ledger-agent"; then
+      echo "Installing ledger-agent via pipx..."
+      pipx install ledger-agent
+      pipx inject ledger-agent trezor_agent
+    else
+      echo "ledger-agent is already installed, checking for updates..."
+      pipx upgrade ledger-agent
+      pipx inject ledger-agent trezor_agent
+    fi
+
+    echo "Setup complete!"
+  '';
 in {
   imports = [
     ./dock
@@ -102,11 +124,26 @@ in {
         stateVersion = "24.11";
       };
 
-      programs = {} // import ../shared/home-manager.nix {inherit config pkgs lib;};
+      programs = lib.mkMerge [
+        (import ../shared/home-manager.nix {inherit config pkgs lib;})
+      ];
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
       manual.manpages.enable = false;
+
+      services = {
+        gpg-agent = {
+          enable = true;
+          extraConfig = ''
+            pinentry-program /opt/homebrew/bin/pinentry-mac
+          '';
+        };
+      };
+
+      home.sessionVariables = {
+        SSH_AUTH_SOCK = "/tmp/ledger-ssh-agent.sock";
+      };
     };
   };
 

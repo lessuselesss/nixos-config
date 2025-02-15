@@ -50,6 +50,7 @@
       url = "github:NixOS/nixpkgs";
       follows = "nixpkgs";
     };
+    services-flake.url = "github:juspay/services-flake";
   };
   outputs = {
     self,
@@ -69,6 +70,7 @@
     nix-on-droid,
     johnny-mnemonix,
     python-packages,
+    services-flake,
   } @ inputs: let
     user = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux" "aarch64-android"];
@@ -868,6 +870,32 @@
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
       extraSpecialArgs = {
         inherit inputs;
+      };
+    };
+
+    flake-parts = inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = import inputs.systems;
+      imports = [
+        inputs.process-compose-flake.flakeModule
+      ];
+
+      perSystem = {
+        self',
+        pkgs,
+        lib,
+        ...
+      }: {
+        process-compose."default" = {config, ...}: {
+          imports = [
+            inputs.services-flake.processComposeModules.default
+            ./modules/shared/services/ssh-agent-service.nix
+          ];
+
+          services.ledger-ssh-agent = {
+            enable = true;
+            socketPath = "/tmp/ledger-ssh-agent.sock";
+          };
+        };
       };
     };
   };

@@ -73,4 +73,6 @@ _: [
   "tailscale" # pre-install/login required
   "wireshark"
   # "yabai"
+
+  "pinentry-mac"
 ]

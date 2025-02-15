@@ -647,7 +647,8 @@
         "python-packages": [
           "nixpkgs"
         ],
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "services-flake": "services-flake"
       }
     },
     "scss-reset": {
@@ -681,6 +682,21 @@
         "ref": "main",
         "type": "git",
         "url": "ssh://git@github.com/lessuselesss/nix-secrets.git"
+      }
+    },
+    "services-flake": {
+      "locked": {
+        "lastModified": 1739523640,
+        "narHash": "sha256-39g5YKEGNfQui84NLJWswewKg2I1mqikqJ2KHuwDWT8=",
+        "owner": "juspay",
+        "repo": "services-flake",
+        "rev": "c404d061cef100a6176313758a7f847c807a6f34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "juspay",
+        "repo": "services-flake",
+        "type": "github"
       }
     },
     "systems": {

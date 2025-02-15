@@ -75,7 +75,26 @@ in {
 
       # ledger/trezor-agent (SSH)
 
-      key() { SSH_AUTH_SOCK="/tmp/ledger-ssh-agent.sock" GNUPGHOME=~/.gnupg/ledger/ "$@"; }
+      # Ledger/Trezor agent helpers
+      export SSH_AUTH_SOCK_LEDGER="/tmp/ledger-ssh-agent.sock"
+      export GNUPGHOME_LEDGER="$HOME/.gnupg/ledger/"
+
+      # Key command for using ledger SSH agent
+      key() {
+        SSH_AUTH_SOCK="$SSH_AUTH_SOCK_LEDGER" GNUPGHOME="$GNUPGHOME_LEDGER" "$@"
+      }
+
+      # Helper to add new SSH identities
+      ledger-add() {
+        local user_host="$1"
+        local port="$2"
+
+        if [ -n "$port" ]; then
+          key ssh-add -K -p "$port" "$user_host"
+        else
+          key ssh-add -K "$user_host"
+        fi
+      }
 
       #############
       # Fabric AI #
@@ -100,10 +119,12 @@ in {
   bash = {
     enable = true;
     initExtra = ''
-      # Source the .zshrc file if it exists, but only source bash-compatible lines
+      # Source only specific environment variables and basic aliases from zshrc
       if [ -f ~/.zshrc ]; then
-        # Filter out zsh-specific syntax before sourcing
-        grep -v '^[[:space:]]*setopt\|^[[:space:]]*unsetopt\|^[[:space:]]*autoload\|direnv hook' ~/.zshrc | source /dev/stdin || true
+        # Only grab export statements and basic aliases
+        grep '^[[:space:]]*export\|^[[:space:]]*alias [^-]' ~/.zshrc |
+        grep -v 'typeset\|NIX_PROFILES\|!node_modules\|--glob' |
+        source /dev/stdin
       fi
     '';
   };

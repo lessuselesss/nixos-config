@@ -1,144 +1,85 @@
-{pkgs}:
-with pkgs; [
-  # Automation
-  fabric-ai
-  #exo
+{pkgs, ...}: let
+  packages = with pkgs; [
+    # Automation
+    fabric-ai
+    #exo
 
-  # General packages for development and system management
-  alacritty
-  aspell
-  aspellDicts.en
-  bash-completion
-  bat
-  btop
+    # General packages for development and system management
+    alacritty
+    aspell
+    aspellDicts.en
+    bash-completion
+    bat
+    btop
 
-  pkg-config
-  bun
-  cmake
-  cargo
+    pkg-config
+    bun
+    cmake
+    cargo
 
-  coreutils
-  killall
-  neofetch
-  openssh
-  sqlite
-  wget
-  zip
-  nix-direnv
-  devenv
-  # warp-terminal
-  nil
+    coreutils
+    killall
+    neofetch
+    openssh
+    sqlite
+    wget
+    zip
+    nix-direnv
+    devenv
+    # warp-terminal
+    nil
 
-  # Encryption and security tools
-  age
-  age-plugin-yubikey
-  gnupg
-  libfido2
-  pass
+    # Encryption and security tools
+    age
+    age-plugin-yubikey
+    gnupg
+    libfido2
+    pass
 
-  # Cloud-related tools and SDKs
-  docker
-  docker-compose
+    # Cloud-related tools and SDKs
+    docker
+    docker-compose
 
-  # Media-related packages
-  emacs-all-the-icons-fonts
-  emacsPackages.exec-path-from-shell
-  dejavu_fonts
-  ffmpeg
-  fd
-  font-awesome
-  hack-font
-  noto-fonts
-  noto-fonts-emoji
-  meslo-lgs-nf
+    # Media-related packages
+    emacs-all-the-icons-fonts
+    emacsPackages.exec-path-from-shell
+    dejavu_fonts
+    ffmpeg
+    fd
+    font-awesome
+    hack-font
+    noto-fonts
+    noto-fonts-emoji
+    meslo-lgs-nf
 
-  # Text and terminal utilities
-  htop
-  hunspell
-  iftop
-  jetbrains-mono
-  jq
-  ripgrep
-  tree
-  tmux
-  unrar
-  unzip
-  zsh-powerlevel10k
-  micromamba
-  lazydocker
-  aider-chat
-  nurl
-  uv
+    # Text and terminal utilities
+    htop
+    hunspell
+    iftop
+    jetbrains-mono
+    jq
+    ripgrep
+    tree
+    tmux
+    unrar
+    unzip
+    zsh-powerlevel10k
+    micromamba
+    lazydocker
+    aider-chat
+    nurl
+    uv
 
-  # Python Developement Tools
+    # Python Development Tools
+    (python312.withPackages (ps:
+      with ps; [
+        time-machine
+        virtualenv
+        pip
+      ]))
 
-  (python312.withPackages (ps:
-    with ps; [
-      # conda
-      time-machine
-      virtualenv
-      #pyobjc
-      #mlx
-      pip
-      # other Python packages...
-      # USE DEVENV FOR PROJECT-SPECIFIC ENVS
-    ]))
-
-  # Node.js Developement Tools
-  # fzf
-  # nodePackages.live-server
-  # nodePackages.nodemon
-  # nodePackages.prettier
-  nodejs_23
-
-  # ...
-
-  # Python
-  ##############################################################
-  #   !!!! Use Devenv for project specific python shells !!!! ##
-  #  ###########################################################
-  #  # devenv.nix
-  #  { pkgs, lib, config, inputs, ... }:
-  #
-  #  {
-  #    languages.python = {
-  #      enable = true;
-  #      venv.enable = true;
-  #      venv.requirements = ''
-  #        pyside2
-  #      '';
-  #  };
-  #
-  #  enterShell = ''
-  #    python -c "import PySide2" && echo "No errors!"
-  #  '';
-  #  }
-  ##############################################################
-
-  # nodejs
-  ##############################################################
-  #   !!!! Use Devenv for project specific node shells !!!!   ##
-  #  ###########################################################
-  #  # devenv.nix
-  #  { pkgs, lib, config, inputs, ... }:
-  #
-  #  {
-  #    languages.nodejs = {
-  #      enable = true;
-  #      version = "20";  # Specify Node.js version
-  #      package = pkgs.nodejs_20;
-  #      # Add global npm packages
-  #      packages = {
-  #        typescript = "latest";
-  #        "@types/node" = "latest";
-  #        eslint = "latest";
-  #        prettier = "latest";
-  #      };
-  #    };
-  #
-  #    enterShell = ''
-  #      node --version && npm --version && echo "Node.js environment ready!"
-  #    '';
-  #  }
-  ##############################################################
-]
+    # Node.js Development Tools
+    nodejs_23
+  ];
+in
+  packages

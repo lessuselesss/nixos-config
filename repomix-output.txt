@@ -128,7 +128,6 @@ modules/
     home-manager.nix
     packages.nix
     README.md
-    services.nix
   nextdns.nix
 overlays/
   10-feather-font.nix
@@ -3272,9 +3271,6 @@ _: [
   # Networking
   "tailscale" # pre-install/login required
   "wireshark"
-  # "yabai"
-
-  "pinentry-mac"
 ]
 
 ================
@@ -9959,27 +9955,6 @@ This configuration gets imported by both modules. Some configuration examples in
 ├── packages.nix       # List of packages to share
 
 ```
-
-================
-File: modules/shared/services.nix
-================
-{
-  inputs,
-  pkgs,
-  lib,
-  ...
-}: {
-  services = {
-    ledger-ssh-agent = {
-      name = "ledger-ssh-agent";
-      command = "${pkgs.openssh}/bin/ssh-agent -D -a /tmp/ledger-ssh-agent.sock";
-      properties = {
-        restartOn.failure = true;
-        keepAlive = true;
-      };
-    };
-  };
-}
 
 ================
 File: modules/nextdns.nix

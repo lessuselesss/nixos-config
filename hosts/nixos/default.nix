@@ -309,7 +309,7 @@ in {
   };
 
   fonts.packages = with pkgs; [
-    dejavu_fonts
+    #dejavu_fonts
     emacs-all-the-icons-fonts
     feather-font # from overlay
     jetbrains-mono

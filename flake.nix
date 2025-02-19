@@ -3,15 +3,23 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    apple-silicon-support = {
+      url = "github:tpwrules/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
+
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -53,17 +61,19 @@
   };
   outputs = {
     self,
+    nixpkgs,
+    nixpkgs-stable,
+    nixpkgs-unstable,
+    apple-silicon-support,
+    agenix,
+    home-manager,
     darwin,
     nix-homebrew,
     homebrew-bundle,
     homebrew-core,
     homebrew-cask,
     homebrew-services,
-    home-manager,
-    nixpkgs,
-    nixpkgs-stable,
     disko,
-    agenix,
     secrets,
     pre-commit-hooks,
     nix-on-droid,
@@ -119,7 +129,6 @@
             git
             age
             age-plugin-yubikey
-            age-plugin-openpgp
             age-plugin-ledger
             nodejs_23
             nodePackages.npm
@@ -222,6 +231,7 @@
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
+            agenix.darwinModules.default
             {
               home-manager = {
                 useGlobalPkgs = true;
@@ -239,6 +249,11 @@
                     johnny-mnemonix.homeManagerModules.default
                   ];
 
+                  # NOTE: The johnny-mnemonix configuration structure is critical for proper syntax.
+                  # Errors in the structure (missing braces, incorrect nesting) can cause cryptic
+                  # error messages in seemingly unrelated parts of the configuration (like module imports).
+                  # If you encounter syntax errors about missing semicolons or INHERIT statements,
+                  # check this configuration first.
                   johnny-mnemonix = {
                     enable = true;
                     baseDir = "/Users/${user}/Documents";
@@ -386,11 +401,11 @@
                               "11.02" = {
                                 name = "Forks";
                               };
-                              # "11.03" = {
-                              #   name = "Anki Sociology";
-                              #   url = "https://github.com/lessuselesss/anki-sociology100";
-                              #   ref = "main";
-                              # };
+                              "11.03" = {
+                                name = "Anki Sociology";
+                                url = "https://github.com/lessuselesss/anki-sociology100";
+                                ref = "main";
+                              };
                               "11.04" = {
                                 name = "Anki Ori's Decks";
                                 url = "https://github.com/lessuselesss/anki-ori_decks";
@@ -465,6 +480,14 @@
                                 name = "curxy";
                                 url = "https://github.com/ryoppippi/curxy";
                                 ref = "main";
+                              };
+                            };
+                          };
+                          "14" = {
+                            name = "Pending";
+                            items = {
+                              "14.01" = {
+                                name = "Waiting";
                               };
                             };
                           };
@@ -629,7 +652,13 @@
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
+            inputs.apple-silicon-support.nixosModules.default
+            ./hosts/asahi
             {
+              # Enable Asahi support
+              hardware.asahi.enable = true;
+              # Optional: if you're cross-building from x86
+              hardware.asahi.pkgsSystem = system;
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -646,6 +675,10 @@
                     johnny-mnemonix.homeManagerModules.default
                   ];
 
+                  # NOTE: This configuration includes Apple Silicon (Asahi) support.
+                  # The hardware.asahi module provides the necessary drivers and configurations
+                  # for running NixOS on Apple Silicon hardware. This is only relevant for
+                  # aarch64-linux systems running on Apple Silicon machines.
                   johnny-mnemonix = {
                     enable = true;
                     baseDir = "/home/${user}/Documents/"; # Darwin's user home directory = /Users/${user}/

@@ -652,11 +652,8 @@
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager
-            # NOTE: This configuration includes Apple Silicon (Asahi) support.
-            # The hardware.asahi module provides the necessary drivers and configurations
-            # for running NixOS on Apple Silicon hardware. This is only relevant for
-            # aarch64-linux systems running on Apple Silicon machines.
             inputs.apple-silicon-support.nixosModules.default
+            ./hosts/asahi
             {
               # Enable Asahi support
               hardware.asahi.enable = true;

@@ -44,11 +44,17 @@ in {
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #:
-    masApps = {
-      #  "1password" = 1333542190;
-      #  "hidden-bar" = 1452453066;
-      #  "wireguard" = 1451685025;
-      "gordian seed tool" = 1545088229;
+masApps = {
+    "Gordian Seed Tool" = 1545088229;
+    "duckDuckGo" = 663592361;  
+    "Pure Paste" = 1611378436;  
+    "Shareful" = 1522267256;  
+    "Command X" = 6448461551;  
+    "One Thing" = 1604176982; 
+    "Folder Peek" = 1615988943; 
+    "Seed Tool" = 1545088229; 
+    "Today" = 6443714928;  
+    "Refined GitHub" = 1519867270;  
     };
   };
 

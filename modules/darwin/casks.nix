@@ -39,7 +39,6 @@ _: [
   "bazecor"
   "homerow"
   "sdformatter"
-  "hiddenbar"
   "karabiner-elements"
   "keycastr"
   "disk-inventory-x"
@@ -51,6 +50,7 @@ _: [
 
   # Productivity Tools
   "raycast"
+  "jordanbaird-ice"a
   "obsidian"
 
   # Browsers

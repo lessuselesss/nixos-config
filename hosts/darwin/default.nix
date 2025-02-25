@@ -16,7 +16,7 @@ in {
 
   # Auto upgrade nix package and the daemon service.
   services = {
-    nix-daemon.enable = true;
+#    nix-daemon.enable = true;
     sketchybar = {
       enable = true;
       extraPackages = with pkgs; [
@@ -63,16 +63,16 @@ in {
       ];
     };
 
-    gc = {
-      user = "root";
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
+#    gc = {
+#      user = "root";
+#      automatic = true;
+#      interval = {
+#       Weekday = 0;
+#       Hour = 2;
+#       Minute = 0;
+#      };
+#      options = "--delete-older-than 30d";
+#    };
 
     extraOptions = ''
       experimental-features = nix-command flakes

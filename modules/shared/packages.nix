@@ -43,7 +43,7 @@ with pkgs; [
 
   # Media-related packages
   emacs-all-the-icons-fonts
-  emacsPackages.exec-path-from-shell
+  (emacsPackagesFor emacs.exec-path-from-shell
   dejavu_fonts
   ffmpeg
   fd

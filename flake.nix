@@ -3,10 +3,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable = { 
-      url = "github:nixos/nixpkgs/nixos-unstable";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-    };
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     apple-silicon-support = {
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -438,7 +438,7 @@
                             items = {
                               "12.01" = {
                                 name = "Screenpipe";
-       a                         url = "https://github.com/lessuselesss/screenpipe";
+                                 url = "https://github.com/lessuselesss/screenpipe";
                                 ref = "main";
                               };
                               "12.02" = {

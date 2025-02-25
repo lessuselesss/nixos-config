@@ -235,7 +235,8 @@
             {
 
               nix.enable = false; #prevents nix-darwin from managing nix, necessary when using the determinate nix installer as it delegates the management of the nix installation to determinate instead of nix-darwin, avoiding conflics.
-              home-manager = {
+              nix.gc.automatic = false; #if nix.enable is false, automatic garbage collection needs to be disabled, a cron job should be setup in this case.
+                home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = {

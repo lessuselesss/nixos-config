@@ -1,8 +1,9 @@
 {pkgs}:
 with pkgs; [
-  # Automation
+  # Automation/AI
   fabric-ai
   #exo
+  aider
 
   # General packages for development and system management
   alacritty
@@ -43,7 +44,7 @@ with pkgs; [
 
   # Media-related packages
   emacs-all-the-icons-fonts
-  #emacsPackages.exec-path-from-shell
+  # emacsPackages.exec-path-from-shell
   dejavu_fonts
   ffmpeg
   fd
@@ -52,7 +53,7 @@ with pkgs; [
   noto-fonts
   noto-fonts-emoji
   meslo-lgs-nf
-
+  
   # Text and terminal utilities
   htop
   hunspell
@@ -71,6 +72,8 @@ with pkgs; [
   nurl
   uv
   comma
+  
+
   # Python Developement Tools
 
   (python312.withPackages (ps:

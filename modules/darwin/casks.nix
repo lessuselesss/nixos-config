@@ -4,7 +4,6 @@ _: [
   "chatgpt"
   "msty"
   "ollama"
-  "aider"
 
   # Automation Tools
   # "hammerspoon"

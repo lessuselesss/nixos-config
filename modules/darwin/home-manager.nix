@@ -53,7 +53,7 @@ masApps = {
     "One Thing" = 1604176982; 
     "Folder Peek" = 1615988943; 
     "Seed Tool" = 1545088229; 
-    "Today" = 6443714928;  
+    # "Today" = 6443714928;  
     "Refined GitHub" = 1519867270;  
     };
   };

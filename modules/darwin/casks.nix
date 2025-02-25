@@ -50,7 +50,7 @@ _: [
 
   # Productivity Tools
   "raycast"
-  "jordanbaird-ice"a
+  "jordanbaird-ice"
   "obsidian"
 
   # Browsers

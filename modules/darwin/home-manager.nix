@@ -46,7 +46,7 @@ in {
     #:
 masApps = {
     "Gordian Seed Tool" = 1545088229;
-    "duckDuckGo" = 663592361;  
+    "DuckDuckGo" = 663592361;  
     "Pure Paste" = 1611378436;  
     "Shareful" = 1522267256;  
     "Command X" = 6448461551;  

@@ -233,6 +233,8 @@
             nix-homebrew.darwinModules.nix-homebrew
             agenix.darwinModules.default
             {
+
+              nix.enable = false; #prevents nix-darwin from managing nix, necessary when using the determinate nix installer as it delegates the management of the nix installation to determinate instead of nix-darwin, avoiding conflics.
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;

@@ -16,7 +16,7 @@ in {
 
   # Auto upgrade nix package and the daemon service.
   services = {
-    nix-daemon.enable = true;
+#    nix-daemon.enable = true;
     sketchybar = {
       enable = true;
       extraPackages = with pkgs; [

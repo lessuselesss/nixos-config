@@ -8,3 +8,4 @@
 .pre-commit-config.yaml
 secrets/
 /nix-secrets*
+nix-shell

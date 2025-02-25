@@ -403,7 +403,7 @@
                               };
                               "11.03" = {
                                 name = "Anki Sociology";
-                                url = "https://github.com/lessuselesss/anki-sociology100";
+                                url = "https://github.com/lessuselesss/anki_sociology100";
                                 ref = "main";
                               };
                               "11.04" = {

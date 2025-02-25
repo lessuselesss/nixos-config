@@ -486,6 +486,11 @@
                                 url = "https://github.com/langgenius/dify";
                                 ref = "main";
                               };
+                              "13.03" = {
+                                name = "browser-use";
+                                url = "https://github.com/browser-use/browser-use";
+                                ref = "main";
+                              };
                             };
                           };
                           "14" = {

@@ -438,7 +438,7 @@
                             items = {
                               "12.01" = {
                                 name = "Screenpipe";
-                                url = "https://github.com/lessuselesss/screenpipe";
+       a                         url = "https://github.com/lessuselesss/screenpipe";
                                 ref = "main";
                               };
                               "12.02" = {
@@ -479,6 +479,11 @@
                               "13.01" = {
                                 name = "curxy";
                                 url = "https://github.com/ryoppippi/curxy";
+                                ref = "main";
+                              };
+                              "13.02" = {
+                                name = "dify";
+                                url = "https://github.com/langgenius/dify";
                                 ref = "main";
                               };
                             };

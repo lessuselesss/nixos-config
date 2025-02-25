@@ -474,7 +474,7 @@
                             };
                           };
                           "13" = {
-                            name = "Testing";
+                            name = "Testing_ai";
                             items = {
                               "13.01" = {
                                 name = "curxy";
@@ -489,6 +489,11 @@
                               "13.03" = {
                                 name = "browser-use";
                                 url = "https://github.com/browser-use/browser-use";
+                                ref = "main";
+                              };
+                               "13.02" = {
+                                name = "OmniParser";
+                                url = "https://github.com/microsoft/OmniParser";
                                 ref = "main";
                               };
                             };

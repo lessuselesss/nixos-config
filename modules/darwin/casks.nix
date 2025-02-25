@@ -80,7 +80,7 @@ _: [
   "processmonitor"
   "filemonitor"
   "dnsmonitor"
-a
+
   # Virtualization
   "utm"
   "crystalfetch"

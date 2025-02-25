@@ -58,12 +58,12 @@ masApps = {
     };
   };
 
-  networking.knownNetworkServices = [
-    "Wi-Fi"
-    "USB 10/100/1000 LAN"
-    "Bluetooth PAN"
-    "Thunderbolt Bridge"
-  ];
+#  networking.knownNetworkServices = [
+#    "Wi-Fi"
+#    "USB 10/100/1000 LAN"
+#    "Bluetooth PAN"
+#     "Thunderbolt Bridge"
+#  ];
 
   # Enable home-manager
   home-manager = {

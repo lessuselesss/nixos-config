@@ -3,7 +3,7 @@ with pkgs; [
   # Automation/AI
   fabric-ai
   #exo
-  aider
+  aider-chat
 
   # General packages for development and system management
   alacritty

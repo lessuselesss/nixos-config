@@ -13,8 +13,8 @@
     agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      url = "github:LnL7/nix-darwin/master";     # unstable, change to "github:LnL7/nix-darwin/nix-darwin-24.11" for stable
+      inputs.nixpkgs.follows = "nixpkgs"; # unstable, change to "nixpkgs-stable" for stable
     };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";

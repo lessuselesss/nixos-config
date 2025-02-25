@@ -15,8 +15,7 @@ _: [
 
   # Development Tools
   "cursor"
-
-  "orbstack" # pre-install/login required
+  "orbstack" 
   "talon"
   "qflipper"
   "warp"
@@ -29,8 +28,9 @@ _: [
   #"telegram"
   "beeper" # pre-install/login required
 
-  # Crypto Tools
+  # Cryptography
   "ledger-live"
+  "secretive"
 
   # Utility Tools
   # "rclone"
@@ -61,10 +61,30 @@ _: [
   "google-chrome"
   "orion"
 
-  # Security Tools
+  # Suites
+
+  # Eclectic Light Company
   "silentknight"
   "xprocheck"
-  "secretive"
+  "mints"
+  "ulbow"
+  "cirrus"
+  "xattred"
+  "signet"
+
+  # Objective-See
+  "whatsyoursign"
+  "lulu"
+  "kextviewr"
+  "netiquette"
+  "knockknock"
+  "taskExplorer"
+  "reikey"
+  "blockblock"
+  "dhs" # dylib hijack scanner
+  "processmonitor"
+  "filemonitor"
+  "dnsmonitor"
 
   # Virtualization
   "utm"

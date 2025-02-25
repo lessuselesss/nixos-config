@@ -66,6 +66,11 @@ _: [
   # Eclectic Light Company
   "silentknight"
   "xprocheck"
+  "mints"
+  "ulbow"
+  "cirrus"
+  "xattred"
+  "signet"
 
   # Objective-See
   "whatsyoursign"

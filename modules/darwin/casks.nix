@@ -4,6 +4,7 @@ _: [
   "chatgpt"
   "msty"
   "ollama"
+  "aider"
 
   # Automation Tools
   # "hammerspoon"
@@ -54,7 +55,6 @@ _: [
 
   # Browsers
   "finicky" 
-  
   "brave-browser"
   "duckduckgo"
   "firefox"

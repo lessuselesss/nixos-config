@@ -85,20 +85,20 @@
     "darwin_2": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1739553546,
-        "narHash": "sha256-L4ou3xfOr17EAe836djRoQ7auVkYOREMtiQa82wVGqU=",
+        "lastModified": 1740452771,
+        "narHash": "sha256-/tI1vFJ7/dXJqUmI+s0EV1F0DPe6dZvT444mrLUkrlU=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "353846417f985e74fdc060555f17939e4472ea2c",
+        "rev": "42be12b510253d750138ec90c66decc282298b44",
         "type": "github"
       },
       "original": {
         "owner": "LnL7",
-        "ref": "nix-darwin-24.11",
+        "ref": "master",
         "repo": "nix-darwin",
         "type": "github"
       }

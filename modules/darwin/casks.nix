@@ -53,6 +53,8 @@ _: [
   "obsidian"
 
   # Browsers
+  "finicky" 
+  
   "brave-browser"
   "duckduckgo"
   "firefox"

@@ -44,26 +44,26 @@ in {
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #:
-masApps = {
-    "Gordian Seed Tool" = 1545088229;
-    "DuckDuckGo" = 663592361;  
-    "Pure Paste" = 1611378436;  
-    "Shareful" = 1522267256;  
-    "Command X" = 6448461551;  
-    "One Thing" = 1604176982; 
-    "Folder Peek" = 1615988943; 
-    "Seed Tool" = 1545088229; 
-    # "Today" = 6443714928;  
-    "Refined GitHub" = 1519867270;  
+    masApps = {
+      "Gordian Seed Tool" = 1545088229;
+      "DuckDuckGo" = 663592361;
+      "Pure Paste" = 1611378436;
+      "Shareful" = 1522267256;
+      "Command X" = 6448461551;
+      "One Thing" = 1604176982;
+      "Folder Peek" = 1615988943;
+      "Seed Tool" = 1545088229;
+      # "Today" = 6443714928;
+      "Refined GitHub" = 1519867270;
     };
   };
 
-#  networking.knownNetworkServices = [
-#    "Wi-Fi"
-#    "USB 10/100/1000 LAN"
-#    "Bluetooth PAN"
-#     "Thunderbolt Bridge"
-#  ];
+  #  networking.knownNetworkServices = [
+  #    "Wi-Fi"
+  #    "USB 10/100/1000 LAN"
+  #    "Bluetooth PAN"
+  #     "Thunderbolt Bridge"
+  #  ];
 
   # Enable home-manager
   home-manager = {

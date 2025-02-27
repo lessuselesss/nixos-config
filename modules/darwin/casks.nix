@@ -15,7 +15,7 @@ _: [
 
   # Development Tools
   "cursor"
-  "orbstack" 
+  "orbstack"
   "talon"
   "qflipper"
   "warp"
@@ -53,7 +53,7 @@ _: [
   "obsidian"
 
   # Browsers
-  "finicky" 
+  "finicky"
   "brave-browser"
   "duckduckgo"
   "firefox"

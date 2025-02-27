@@ -53,7 +53,7 @@ with pkgs; [
   noto-fonts
   noto-fonts-emoji
   meslo-lgs-nf
-  
+
   # Text and terminal utilities
   htop
   hunspell
@@ -72,7 +72,6 @@ with pkgs; [
   nurl
   uv
   comma
-  
 
   # Python Developement Tools
 

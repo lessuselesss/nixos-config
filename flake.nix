@@ -2,6 +2,7 @@
   description = "Starter Configuration with secrets for MacOS and NixOS";
 
   inputs = {
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -58,8 +59,9 @@
 
   outputs = {
     self,
-    nixpkgs,
+    determinate,
     nixpkgs-stable,
+    nixpkgs,
     nixpkgs-unstable,
     apple-silicon-support,
     agenix,
@@ -77,7 +79,7 @@
     python-packages,
   }: let
     user = "lessuseless";
-    linuxSystems = ["x86_64-linux" "aarch64-linux" "aarch64-android"];
+    linuxSystems = ["x86_64-linux" "aarch64-linux"];
     darwinSystems = ["aarch64-darwin" "x86_64-darwin"];
     mobileSystems = ["aarch64-linux"];
     forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems ++ mobileSystems) f;
@@ -221,6 +223,7 @@
         inherit system;
         specialArgs = allInputs;
         modules = [
+          determinate.nixosModules.default
           home-manager.darwinModules.home-manager
           nix-homebrew.darwinModules.nix-homebrew
           agenix.darwinModules.default
@@ -265,6 +268,7 @@
         inherit system;
         specialArgs = allInputs;
         modules = [
+          determinate.nixosModules.default
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           ./modules/shared/johnny-mnemonix.nix

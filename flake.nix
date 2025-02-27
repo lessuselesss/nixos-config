@@ -51,17 +51,18 @@
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    python-packages = {
-      url = "github:NixOS/nixpkgs";
-      follows = "nixpkgs";
+    johnny-mnemonix = {
+      url = "github:lessuselesss/johnny-mnemonix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     self,
     determinate,
-    nixpkgs-stable,
     nixpkgs,
+    nixpkgs-stable,
+    nixpkgs-unstable,
     nixpkgs-unstable,
     apple-silicon-support,
     agenix,
@@ -76,8 +77,8 @@
     secrets,
     pre-commit-hooks,
     nix-on-droid,
-    python-packages,
-  }: let
+    johnny-mnemonix,
+  } @ inputs: let
     user = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux"];
     darwinSystems = ["aarch64-darwin" "x86_64-darwin"];
@@ -112,7 +113,7 @@
               name = "build-check";
               entry = "${pkgs.writeShellScript "verify-build" ''
                 echo "Verifying build..."
-                nix run .#build-switch  # Changed to build-switch
+                nix run .#build  # Changed to build-switch
               ''}";
               files = ".*";
               pass_filenames = false;
@@ -145,7 +146,12 @@
         #!/usr/bin/env bash
         PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
         echo "Running ${scriptName} for ${system}"
-        echo "${scriptName} executed successfully"  # Placeholder implementation
+        # Detect if we're on Android
+        if [[ -n "$TERMUX_VERSION" ]]; then
+          exec ${self}/apps/aarch64-android/${scriptName}
+        else
+          exec ${self}/apps/${system}/${scriptName}
+        fi
       '')}/bin/${scriptName}";
     };
 
@@ -176,7 +182,7 @@
       rollback = mkApp "rollback" system;
     };
 
-    allInputs = {inherit nixpkgs nixpkgs-stable nixpkgs-unstable apple-silicon-support agenix home-manager darwin nix-homebrew homebrew-bundle homebrew-core homebrew-cask homebrew-services disko secrets pre-commit-hooks nix-on-droid python-packages;};
+    # allInputs = {inherit nixpkgs nixpkgs-stable nixpkgs-unstable apple-silicon-support agenix home-manager darwin nix-homebrew homebrew-bundle homebrew-core homebrew-cask homebrew-services disko secrets pre-commit-hooks nix-on-droid python-packages;};
   in {
     devShells = forAllSystems devShell;
     apps = (nixpkgs.lib.genAttrs linuxSystems mkLinuxApps) // (nixpkgs.lib.genAttrs darwinSystems mkDarwinApps);
@@ -226,8 +232,8 @@
           determinate.nixosModules.default
           home-manager.darwinModules.home-manager
           nix-homebrew.darwinModules.nix-homebrew
+          johnny-mnemonix.darwinModules.johnny-mnemonix
           agenix.darwinModules.default
-          ./modules/shared/johnny-mnemonix.nix
           {
             johnny-mnemonix.enable = true;
             nix.enable = false;
@@ -236,13 +242,16 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = allInputs;
+              extraSpecialArgs = {
+                inherit (inputs) home-managers; #allInputs;
+              };
               users.${user} = {
                 config,
                 pkgs,
                 ...
               }: {
-                home.stateVersion = "24.05";
+                _module.args.homeManagerLib = home-manager.lib;
+                imports = [johnny-mnemonix.homeManagerModules.default];
               };
             };
 
@@ -280,17 +289,27 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = allInputs;
+              extraSpecialArgs = {
+                inherit (inputs) home-managers; #allInputs;
+              };
               users.${user} = {
                 config,
                 pkgs,
                 ...
               }: {
-                home.stateVersion = "24.05";
+                _module.args.homeManagerLib = home-manager.lib;
+                imports = [johnny-mnemonix.homeManagerModules.default];
               };
             };
           }
+          ./hosts/nixos
         ];
       });
+
+      nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      modules = [./hosts/nix-on-droid/default.nix];
+      pkgs = nixpkgs.legacyPackages.aarch64-linux;
+      extraSpecialArgs = {inherit inputs;};
+    };
   };
 }

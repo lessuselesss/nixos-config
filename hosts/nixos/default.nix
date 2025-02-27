@@ -242,7 +242,7 @@ in {
     # Emacs runs as a daemon
     emacs = {
       enable = true;
-      package = pkgs.emacs-unstable;
+      package = pkgs.emacs;
     };
   };
 
@@ -280,7 +280,7 @@ in {
     ${user} = {
       isNormalUser = true;
       extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
+        "wheel" # Enable 'sudo' for the user.
         "docker"
       ];
       shell = pkgs.zsh;

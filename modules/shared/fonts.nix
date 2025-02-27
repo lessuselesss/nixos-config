@@ -17,7 +17,7 @@ in {
         font-awesome
         noto-fonts
         noto-fonts-emoji
-        feather-font # from overlay
+        feather-font
       ];
     }
 

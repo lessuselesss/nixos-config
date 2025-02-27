@@ -86,7 +86,8 @@
     nix-on-droid,
     johnny-mnemonix,
   } @ inputs: let
-    user = "lessuseless";
+    adminUser = "admin";
+    standardUser = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux"];
     darwinSystems = ["aarch64-darwin" "x86_64-darwin"];
     mobileSystems = ["aarch64-linux"];
@@ -188,8 +189,6 @@
       "check-keys" = mkApp "check-keys" system;
       rollback = mkApp "rollback" system;
     };
-
-    # allInputs = {inherit nixpkgs nixpkgs-stable nixpkgs-unstable apple-silicon-support agenix home-manager darwin nix-homebrew homebrew-bundle homebrew-core homebrew-cask homebrew-services disko secrets pre-commit-hooks nix-on-droid python-packages;};
   in {
     devShells = forAllSystems devShell;
     apps = (nixpkgs.lib.genAttrs linuxSystems mkLinuxApps) // (nixpkgs.lib.genAttrs darwinSystems mkDarwinApps);
@@ -231,41 +230,70 @@
       };
     });
 
-    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+          allowInsecure = false;
+          allowUnsupportedSystem = true;
+        };
+        overlays = let
+          path = ./overlays;
+        in
+          with builtins;
+            map (n: import (path + ("/" + n)))
+            (filter (n:
+              match ".*\\.nix" n
+              != null
+              || pathExists (path + ("/" + n + "/default.nix")))
+            (attrNames (readDir path)));
+      };
+    in
       darwin.lib.darwinSystem {
         inherit system;
-        specialArgs = inputs;
+        specialArgs = inputs // {inherit pkgs;};
         modules = [
           home-manager.darwinModules.home-manager
           nix-homebrew.darwinModules.nix-homebrew
           ./modules/shared/johnny-mnemonix.nix
           agenix.darwinModules.default
           {
+            _module.args.pkgs = pkgs;
             johnny-mnemonix.enable = true;
-            nix.enable = false; #prevents nix-darwin from managing nix, necessary when using the determinate nix installer as it delegates the management of the nix installation to determinate instead of nix-darwin, avoiding conflics.
-            nix.gc.automatic = false; #if nix.enable is false, automatic garbage collection needs to be disable
+            nix.enable = false;
+            nix.gc.automatic = false;
 
+            # Configure admin user with sudo privileges
+            users.users.${adminUser} = {
+              home = "/Users/${adminUser}";
+              shell = pkgs.zsh;
+              # Add to admin group for sudo privileges
+              gid = 80; # 80 is the admin group on macOS
+            };
+
+            # Configure standard user without sudo privileges
+            users.users.${standardUser} = {
+              home = "/Users/${standardUser}";
+              shell = pkgs.zsh;
+            };
+
+            # Configure home-manager for both users
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = {
-                inherit (inputs) home-managers; #allInputs;
-              };
-              users.${user} = {
-                config,
-                pkgs,
-                ...
-              }: {
-                _module.args.homeManagerLib = home-manager.lib;
-                imports = [
-                  ./modules/shared/johnny-mnemonix.nix 
-                ];
+              extraSpecialArgs = inputs // {inherit pkgs;};
+              users = {
+                ${adminUser} = import ./users/admin.nix;
+                ${standardUser} = import ./users/lessuseless.nix;
               };
             };
 
+            # Configure Homebrew to be owned by admin user
             nix-homebrew = {
-              inherit user;
               enable = true;
+              user = adminUser;
               taps = {
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
@@ -275,6 +303,9 @@
               mutableTaps = false;
               autoMigrate = true;
             };
+
+            # System-wide security settings
+            security.pam.services.sudo_local.touchIdAuth = true;
           }
           ./hosts/darwin
         ];
@@ -297,19 +328,10 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = {
-                inherit (inputs) home-managers; #allInputs;
-              };
-              users.${user} = {
-                config,
-                pkgs,
-                ...
-              }: {
-                _module.args.homeManagerLib = home-manager.lib;
-                imports = [
-                  johnny-mnemonix.homeManagerModules.default 
-                  ./modules/shared/johnny-mnemonix.nix 
-                  ];
+              extraSpecialArgs = inputs;
+              users = {
+                ${adminUser} = import ./users/admin.nix;
+                ${standardUser} = import ./users/lessuseless.nix;
               };
             };
           }
@@ -317,7 +339,7 @@
         ];
       });
 
-      nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
       modules = [./hosts/nix-on-droid/default.nix];
       pkgs = nixpkgs.legacyPackages.aarch64-linux;
       extraSpecialArgs = {inherit inputs;};

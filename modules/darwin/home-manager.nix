@@ -23,7 +23,6 @@ in {
     name = "${user}";
     home = "/Users/${user}";
     isHidden = false;
-    shell = pkgs.zsh;
   };
 
   homebrew = {
@@ -83,35 +82,21 @@ in {
           {
             "emacs-launcher.command".source = myEmacsLauncher;
           }
-          # Comment out the previous implementation
-          # (let
-          #   mkNumberedDirs = {
-          #     basePath,
-          #     prefix ? "",
-          #     padWidth ? 2,
-          #     start ? 0,
-          #     end ? 90,
-          #     step ? 10,
-          #   }: let
-          #     ... previous implementation ...
-          #   };
-          # in
-          #   mkNumberedDirs {
-          #     basePath = ".local/share/documents";
-          #     prefix = "Area";
-          #     start = 0;
-          #     end = 90;
-          #     step = 10;
-          #   })
         ];
-
         stateVersion = "24.11";
       };
 
-      programs = {} // import ../shared/home-manager.nix {inherit config pkgs lib;};
+      programs = {
+        zsh = (import ../shared/home-manager.nix {inherit config pkgs lib;}).zsh;
+        bash = (import ../shared/home-manager.nix {inherit config pkgs lib;}).bash;
+        git = (import ../shared/home-manager.nix {inherit config pkgs lib;}).git;
+        alacritty = (import ../shared/home-manager.nix {inherit config pkgs lib;}).alacritty;
+        ssh = (import ../shared/home-manager.nix {inherit config pkgs lib;}).ssh;
+        tmux = (import ../shared/home-manager.nix {inherit config pkgs lib;}).tmux;
+        direnv = (import ../shared/home-manager.nix {inherit config pkgs lib;}).direnv;
+        fzf = (import ../shared/home-manager.nix {inherit config pkgs lib;}).fzf;
+      };
 
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
       manual.manpages.enable = false;
     };
   };

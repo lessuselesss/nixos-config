@@ -140,6 +140,9 @@ overlays/
   10-feather-font.nix
   nodejs-overlay.nix
   README.md
+users/
+  admin.nix
+  lessuseless.nix
 .cursorignore
 .envrc
 .gitignore
@@ -2081,7 +2084,7 @@ in {
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs;
     [
-      emacs-unstable
+      emacs
       agenix.packages."${pkgs.system}".default
     ]
     ++ (import ../../modules/shared/packages.nix {inherit pkgs;});
@@ -2583,7 +2586,7 @@ in {
     # Emacs runs as a daemon
     emacs = {
       enable = true;
-      package = pkgs.emacs-unstable;
+      package = pkgs.emacs;
     };
   };
 
@@ -2621,7 +2624,7 @@ in {
     ${user} = {
       isNormalUser = true;
       extraGroups = [
-        "wheel" # Enable ‘sudo’ for the user.
+        "wheel" # Enable 'sudo' for the user.
         "docker"
       ];
       shell = pkgs.zsh;
@@ -4896,7 +4899,6 @@ in {
     name = "${user}";
     home = "/Users/${user}";
     isHidden = false;
-    shell = pkgs.zsh;
   };
 
   homebrew = {
@@ -4956,35 +4958,21 @@ in {
           {
             "emacs-launcher.command".source = myEmacsLauncher;
           }
-          # Comment out the previous implementation
-          # (let
-          #   mkNumberedDirs = {
-          #     basePath,
-          #     prefix ? "",
-          #     padWidth ? 2,
-          #     start ? 0,
-          #     end ? 90,
-          #     step ? 10,
-          #   }: let
-          #     ... previous implementation ...
-          #   };
-          # in
-          #   mkNumberedDirs {
-          #     basePath = ".local/share/documents";
-          #     prefix = "Area";
-          #     start = 0;
-          #     end = 90;
-          #     step = 10;
-          #   })
         ];
-
         stateVersion = "24.11";
       };
 
-      programs = {} // import ../shared/home-manager.nix {inherit config pkgs lib;};
+      programs = {
+        zsh = (import ../shared/home-manager.nix {inherit config pkgs lib;}).zsh;
+        bash = (import ../shared/home-manager.nix {inherit config pkgs lib;}).bash;
+        git = (import ../shared/home-manager.nix {inherit config pkgs lib;}).git;
+        alacritty = (import ../shared/home-manager.nix {inherit config pkgs lib;}).alacritty;
+        ssh = (import ../shared/home-manager.nix {inherit config pkgs lib;}).ssh;
+        tmux = (import ../shared/home-manager.nix {inherit config pkgs lib;}).tmux;
+        direnv = (import ../shared/home-manager.nix {inherit config pkgs lib;}).direnv;
+        fzf = (import ../shared/home-manager.nix {inherit config pkgs lib;}).fzf;
+      };
 
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
       manual.manpages.enable = false;
     };
   };
@@ -5036,39 +5024,35 @@ in {
 File: modules/darwin/packages.nix
 ================
 {pkgs}:
-with pkgs; let
-  shared-packages = import ../shared/packages.nix {inherit pkgs;};
-in
-  shared-packages
-  ++ [
-    dockutil
-    gh
-    pinentry_mac
-    yabai
-    mods
-    mas
-    iina
-    alejandra
+with pkgs; [
+  dockutil
+  gh
+  pinentry_mac
+  yabai
+  mods
+  mas
+  iina
+  alejandra
 
-    # trezor-agent
-    # ledger-agent
-    # python312Packages.ledgerwallet
-    # python312Packages.bleak
-    # heimdall
-    # heimdall-gui
+  # trezor-agent
+  # ledger-agent
+  # python312Packages.ledgerwallet
+  # python312Packages.bleak
+  # heimdall
+  # heimdall-gui
 
-    # Make sure SSH agent socket directory exists
-    (pkgs.writeScriptBin "setup-ledger-ssh" ''
-        #!${pkgs.stdenv.shell}
-        mkdir -p ~/.ssh
-        touch ~/.ssh/config
-        if ! grep -q "IdentityAgent.*ledger-agent.sock" ~/.ssh/config; then
-          echo "Host *
-      PreferredAuthentications publickey
-      IdentityAgent ~/.ssh/ledger-agent.sock" >> ~/.ssh/config
-        fi
-    '')
-  ]
+  # Make sure SSH agent socket directory exists
+  (pkgs.writeScriptBin "setup-ledger-ssh" ''
+      #!${pkgs.stdenv.shell}
+      mkdir -p ~/.ssh
+      touch ~/.ssh/config
+      if ! grep -q "IdentityAgent.*ledger-agent.sock" ~/.ssh/config; then
+        echo "Host *
+    PreferredAuthentications publickey
+    IdentityAgent ~/.ssh/ledger-agent.sock" >> ~/.ssh/config
+      fi
+  '')
+]
 
 ================
 File: modules/darwin/README.md
@@ -9877,7 +9861,7 @@ in {
         font-awesome
         noto-fonts
         noto-fonts-emoji
-        feather-font # from overlay
+        feather-font
       ];
     }
 
@@ -10076,7 +10060,7 @@ in {
     };
   };
 
-  vim = {
+  vim = lib.mkIf (!config.programs.vim.enable) {
     enable = true;
     plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes vim-startify vim-tmux-navigator];
     settings = {ignorecase = true;};
@@ -10405,16 +10389,14 @@ in {
       default = "_";
       description = "Spacer character for directory names";
     };
+    areas = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "Areas configuration for Johnny Mnemonix";
+    };
   };
 
   config = lib.mkIf config.johnny-mnemonix.enable {
-    # XDG Base Directory settings
-    xdg = {
-      stateHome = "${config.home.homeDirectory}/.local/state";
-      cacheHome = "${config.home.homeDirectory}/.cache";
-      configHome = "${config.home.homeDirectory}/.config";
-    };
-
     # Johnny Mnemonix specific configuration
     johnny-mnemonix = {
       areas = {
@@ -11029,6 +11011,300 @@ Files in this directory run automatically as part of each build. Some common way
 * Workarounds and stuff I need to run temporarily
 
 ================
+File: users/admin.nix
+================
+{pkgs, ...}: {
+  home = {
+    # Basic admin packages
+    packages = with pkgs; [
+      # System monitoring and management
+      htop
+      btop
+      iftop
+      tree
+      wget
+      curl
+      ripgrep
+      fd
+      jq
+
+      # Security tools
+      gnupg
+      age
+      age-plugin-yubikey
+      pass
+
+      # Basic development tools
+      git
+    ];
+
+    stateVersion = "24.11";
+  };
+
+  # Basic shell configuration for admin
+  programs = {
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      initExtra = ''
+        # Admin-specific shell configuration
+        export EDITOR="vim"
+
+        # Useful aliases for system administration
+        alias ll='ls -la'
+        alias df='df -h'
+        alias du='du -h'
+        alias free='free -m'
+        alias top='htop'
+
+        # Homebrew sudo wrapper
+        brew() {
+          if [[ $1 == "install" || $1 == "uninstall" || $1 == "upgrade" ]]; then
+            echo "Running Homebrew with sudo..."
+            sudo /opt/homebrew/bin/brew "$@"
+          else
+            /opt/homebrew/bin/brew "$@"
+          fi
+        }
+      '';
+    };
+
+    # Git configuration
+    git = {
+      enable = true;
+      userName = "Admin User";
+      userEmail = "admin@localhost";
+      extraConfig = {
+        init.defaultBranch = "main";
+        core = {
+          editor = "vim";
+          autocrlf = "input";
+        };
+      };
+    };
+
+    # Basic vim configuration
+    vim = {
+      enable = true;
+      extraConfig = ''
+        set number
+        set relativenumber
+        set expandtab
+        set tabstop=2
+        set shiftwidth=2
+        syntax on
+      '';
+    };
+  };
+}
+
+================
+File: users/lessuseless.nix
+================
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    # Development tools
+    alacritty
+    bun
+    cargo
+    cmake
+    deno
+    devenv
+    docker
+    docker-compose
+    emacs-all-the-icons-fonts
+    fabric-ai
+    fd
+    font-awesome
+    hack-font
+    jetbrains-mono
+    lazydocker
+    meslo-lgs-nf
+    micromamba
+    nix-direnv
+    nodejs_23
+    noto-fonts
+    noto-fonts-emoji
+    nurl
+    pkg-config
+    python312
+    ripgrep
+    sqlite
+    tmux
+    tree
+    uv
+    wget
+    zip
+
+    # Security tools
+    age
+    age-plugin-yubikey
+    gnupg
+    libfido2
+    pass
+
+    # Shell utilities
+    bat
+    btop
+    fzf
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+  ];
+
+  home.stateVersion = "24.11";
+
+  programs = {
+    # Import shared configurations
+    alacritty.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    git = {
+      enable = true;
+      userName = "Ashley Barr";
+      userEmail = "lessuseless@duck.com";
+      lfs.enable = true;
+      extraConfig = {
+        init.defaultBranch = "main";
+        core = {
+          editor = "vim";
+          autocrlf = "input";
+        };
+        commit.gpgsign = true;
+        pull.rebase = true;
+        rebase.autoStash = true;
+      };
+    };
+
+    # Shell configuration
+    zsh = {
+      enable = true;
+      autocd = false;
+      enableCompletion = true;
+      cdpath = ["~/.local/share/src"];
+
+      plugins = [
+        {
+          name = "zsh-autosuggestions";
+          src = pkgs.zsh-autosuggestions;
+          file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
+        }
+        {
+          name = "zsh-syntax-highlighting";
+          src = pkgs.zsh-syntax-highlighting;
+          file = "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
+        }
+      ];
+
+      initExtraFirst = ''
+        if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+          . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
+        fi
+
+        # Set the SSH_AUTH_SOCK environment variable
+        export SSH_AUTH_SOCK=/Users/lessuseless/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+
+        # Auto-suggestion configuration
+        ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+        ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+        ZSH_AUTOSUGGEST_USE_ASYNC=1
+        ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080"
+
+        # Load fzf
+        if [ -n "''${commands[fzf-share]}" ]; then
+          source "$(fzf-share)/key-bindings.zsh"
+          source "$(fzf-share)/completion.zsh"
+        fi
+
+        # Define variables for directories
+        export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
+        export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
+        export PATH=$HOME/.local/share/bin:$PATH
+
+        # Remove history data we don't want to see
+        export HISTIGNORE="pwd:ls:cd"
+
+        # Emacs is my editor
+        export ALTERNATE_EDITOR=""
+        export EDITOR="emacsclient -t"
+        export VISUAL="emacsclient -c -a emacs"
+
+        # Aliases
+        alias e='emacsclient -t'
+        alias pn=pnpm
+        alias px=pnpx
+        alias diff=difft
+        alias ls='ls --color=auto'
+        alias search='rg -p --glob "!node_modules/*"'
+      '';
+    };
+
+    tmux = {
+      enable = true;
+      plugins = with pkgs.tmuxPlugins; [
+        vim-tmux-navigator
+        sensible
+        yank
+        prefix-highlight
+        {
+          plugin = power-theme;
+          extraConfig = ''
+            set -g @tmux_power_theme 'gold'
+          '';
+        }
+        {
+          plugin = resurrect;
+          extraConfig = ''
+            set -g @resurrect-dir '$HOME/.cache/tmux/resurrect'
+            set -g @resurrect-capture-pane-contents 'on'
+            set -g @resurrect-pane-contents-area 'visible'
+          '';
+        }
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            set -g @continuum-save-interval '5'
+          '';
+        }
+      ];
+      terminal = "screen-256color";
+      prefix = "C-x";
+      escapeTime = 10;
+      historyLimit = 50000;
+      extraConfig = ''
+        set -g focus-events on
+        set -g mouse on
+
+        # Unbind default keys
+        unbind C-b
+        unbind '"'
+        unbind %
+
+        # Split panes
+        bind-key x split-window -v
+        bind-key v split-window -h
+
+        # Move around panes with vim-like bindings
+        bind-key -n M-k select-pane -U
+        bind-key -n M-h select-pane -L
+        bind-key -n M-j select-pane -D
+        bind-key -n M-l select-pane -R
+      '';
+    };
+  };
+}
+
+================
 File: .cursorignore
 ================
 # Add directories or file patterns to ignore during indexing (e.g. foo/ or *.csv)
@@ -11182,11 +11458,11 @@ File: flake.lock
         ]
       },
       "locked": {
-        "lastModified": 1740452771,
-        "narHash": "sha256-/tI1vFJ7/dXJqUmI+s0EV1F0DPe6dZvT444mrLUkrlU=",
+        "lastModified": 1740636552,
+        "narHash": "sha256-vBtVB8uU4Bxbyz43MhldAGX91i15j4LJI1Ss3mCCO7s=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "42be12b510253d750138ec90c66decc282298b44",
+        "rev": "665cc04a60eb8ba47d41eadbe6264ca8a71943e8",
         "type": "github"
       },
       "original": {
@@ -11206,7 +11482,9 @@ File: flake.lock
         ],
         "determinate-nixd-x86_64-linux": "determinate-nixd-x86_64-linux",
         "nix": "nix",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1740621356,
@@ -11264,17 +11542,57 @@ File: flake.lock
         ]
       },
       "locked": {
-        "lastModified": 1739841949,
-        "narHash": "sha256-lSOXdgW/1zi/SSu7xp71v+55D5Egz8ACv0STkj7fhbs=",
+        "lastModified": 1740485968,
+        "narHash": "sha256-WK+PZHbfDjLyveXAxpnrfagiFgZWaTJglewBWniTn2Y=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "15dbf8cebd8e2655a883b74547108e089f051bf0",
+        "rev": "19c1140419c4f1cdf88ad4c1cfb6605597628940",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "disko",
         "type": "github"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "fh",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1735713283,
+        "narHash": "sha256-xC6X49L55xo7AV+pAYclOj5UNWtBo/xx5aB5IehJD0M=",
+        "rev": "bfba822a4220b0e2c4dc7f36a35e4c8450cd9a9c",
+        "revCount": 2125,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/nix-community/fenix/0.1.2125%2Brev-bfba822a4220b0e2c4dc7f36a35e4c8450cd9a9c/019420f1-c64f-7176-bdf5-3f4f4fe2bac6/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/nix-community/fenix/0.1.1584.tar.gz"
+      }
+    },
+    "fh": {
+      "inputs": {
+        "fenix": "fenix",
+        "naersk": "naersk",
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1740069727,
+        "narHash": "sha256-yOqXcn/OMfC97t002V8yzZn1PhuV8lIp5szPA7eys1Q=",
+        "rev": "ed73c2dd1d4ccc6d1588809078ebb2f38431dddc",
+        "revCount": 683,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/fh/0.1.22/0195244a-b1c2-7264-b779-0e1e34d9735f/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/DeterminateSystems/fh/%2A"
       }
     },
     "flake-compat": {
@@ -11433,11 +11751,11 @@ File: flake.lock
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1739992710,
-        "narHash": "sha256-9kEscmGnXHjSgcqyJR4TzzHhska4yz1inSQs6HuO9qU=",
+        "lastModified": 1740624780,
+        "narHash": "sha256-8TP61AI3QBQsjzVUQFIV8NoB5nbYfJB3iHczhBikDkU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1c189f011447810af939a886ba7bee33532bb1f9",
+        "rev": "b8869e4ead721bbd4f0d6b927e8395705d4f16e6",
         "type": "github"
       },
       "original": {
@@ -11447,6 +11765,27 @@ File: flake.lock
       }
     },
     "home-manager_3": {
+      "inputs": {
+        "nixpkgs": [
+          "johnny-mnemonix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733484277,
+        "narHash": "sha256-i5ay20XsvpW91N4URET/nOc0VQWOAd4c4vbqYtcH8Rc=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "d00c6f6d0ad16d598bf7e2956f52c1d9d5de3c3a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_4": {
       "inputs": {
         "nixpkgs": [
           "nix-on-droid",
@@ -11470,11 +11809,11 @@ File: flake.lock
     "homebrew-bundle": {
       "flake": false,
       "locked": {
-        "lastModified": 1739896634,
-        "narHash": "sha256-48IENfETLxTwISxm09uqzVIlinlG2TA2qovVOf4WplI=",
+        "lastModified": 1740617752,
+        "narHash": "sha256-oM242nqlYxJRwSKt2IHrCVY7J/fx3+YFEELisGs0nB0=",
         "owner": "homebrew",
         "repo": "homebrew-bundle",
-        "rev": "7085d74e0a5456f74355d56c5f3b4ecc714271b0",
+        "rev": "4e73a05b89c77317f34dc7a1125d70dc1da91a0a",
         "type": "github"
       },
       "original": {
@@ -11486,11 +11825,11 @@ File: flake.lock
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1740001552,
-        "narHash": "sha256-27LviTsHkKEVZvSmv28hQNmCNo6ormlkpucVgoNkpPo=",
+        "lastModified": 1740651051,
+        "narHash": "sha256-D0polZYEItlpnFn9pyZpfyM2hhQlMclM1MRPjUttIhE=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "ad7d7b36278c3bd6f1f64cd523b51d761c468699",
+        "rev": "2311443152648f0f7d9698a77d2f33a4806e2182",
         "type": "github"
       },
       "original": {
@@ -11502,11 +11841,11 @@ File: flake.lock
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1740001064,
-        "narHash": "sha256-Pu2ssQo/RXc18puubtQIokGHp5hYFKdh5MtydY8Jla0=",
+        "lastModified": 1740650860,
+        "narHash": "sha256-SuxIoToqYbGRPl2DmqTp1Zr7USx7mMJPhGPqnmruODo=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "3d13047b02e3dfa55e39e4758b2579e16bd1b545",
+        "rev": "f5e8c5cd0b52d6e1f49a3f215acd894bf048d0c0",
         "type": "github"
       },
       "original": {
@@ -11518,17 +11857,58 @@ File: flake.lock
     "homebrew-services": {
       "flake": false,
       "locked": {
-        "lastModified": 1739780678,
-        "narHash": "sha256-V3PgiXo07FIUQ1Ki4CZG4d1tvjUwevnqbVziZOub/X0=",
+        "lastModified": 1740648400,
+        "narHash": "sha256-hgBOqK2j7rKXLtWuCY0GcElYX6Lq7+20hgidAAx36tU=",
         "owner": "homebrew",
         "repo": "homebrew-services",
-        "rev": "60b06eeff84a8df5166e72b7c79ce4a5394aeae8",
+        "rev": "01e5830581815033ca85f048e099d6f0b85496f8",
         "type": "github"
       },
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-services",
         "type": "github"
+      }
+    },
+    "johnny-mnemonix": {
+      "inputs": {
+        "home-manager": "home-manager_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733803864,
+        "narHash": "sha256-xtwzUjkec1qIHjQeFedEY69ai6r64URHr1298K32MOg=",
+        "owner": "lessuselesss",
+        "repo": "johnny-mnemonix",
+        "rev": "6a07934b982e7d251a48fe3683153cc469a24d66",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lessuselesss",
+        "repo": "johnny-mnemonix",
+        "type": "github"
+      }
+    },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "fh",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1736429049,
+        "narHash": "sha256-np2K6lbTOq7yugwS0IsEmy+02vxTAF62bp8APnBHsE4=",
+        "rev": "5891bae1b7fbd8d3a138773fd751e7a532f914aa",
+        "revCount": 352,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/nix-community/naersk/0.1.352%2Brev-5891bae1b7fbd8d3a138773fd751e7a532f914aa/01944b3d-93aa-7d30-8c2b-bd5902521c73/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/nix-community/naersk/0.1.345.tar.gz"
       }
     },
     "nix": {
@@ -11612,7 +11992,7 @@ File: flake.lock
     },
     "nix-on-droid": {
       "inputs": {
-        "home-manager": "home-manager_3",
+        "home-manager": "home-manager_4",
         "nix-formatter-pack": "nix-formatter-pack",
         "nixpkgs": [
           "nixpkgs"
@@ -11740,34 +12120,30 @@ File: flake.lock
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1739888266,
-        "narHash": "sha256-LdZ0o2MQEKQGTwfIOlHuGuMUItv7HK3P3qxtULkYwqQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "340311d2296cc6034405c0d72c964988f2d5931a",
-        "type": "github"
+        "lastModified": 1740463929,
+        "narHash": "sha256-4Xhu/3aUdCKeLfdteEHMegx5ooKQvwPHNkOgNCXQrvc=",
+        "rev": "5d7db4668d7a0c6cc5fc8cf6ef33b008b2b1ed8b",
+        "revCount": 714876,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2411.714876%2Brev-5d7db4668d7a0c6cc5fc8cf6ef33b008b2b1ed8b/019540b4-9ad7-70d5-9fdb-febb44800214/source.tar.gz"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.11",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/%2A"
       }
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1739866667,
-        "narHash": "sha256-EO1ygNKZlsAC9avfcwHkKGMsmipUk1Uc0TbrEZpkn64=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "73cf49b8ad837ade2de76f87eb53fc85ed5d4680",
-        "type": "github"
+        "lastModified": 1740367490,
+        "narHash": "sha256-WGaHVAjcrv+Cun7zPlI41SerRtfknGQap281+AakSAw=",
+        "rev": "0196c0175e9191c474c26ab5548db27ef5d34b05",
+        "revCount": 758135,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.1.758135%2Brev-0196c0175e9191c474c26ab5548db27ef5d34b05/01953839-1448-7ac9-964f-d8908c675395/source.tar.gz"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/0.1"
       }
     },
     "nixpkgs_2": {
@@ -11802,25 +12178,25 @@ File: flake.lock
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1740396192,
-        "narHash": "sha256-ATMHHrg3sG1KgpQA5x8I+zcYpp5Sf17FaFj/fN+8OoQ=",
-        "rev": "d9b69c3ec2a2e2e971c534065bdd53374bd68b97",
-        "revCount": 758283,
+        "lastModified": 1739758141,
+        "narHash": "sha256-uq6A2L7o1/tR6VfmYhZWoVAwb3gTy7j4Jx30MIrH0rE=",
+        "rev": "c618e28f70257593de75a7044438efc1c1fc0791",
+        "revCount": 714614,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/nixpkgs-weekly/0.1.758283%2Brev-d9b69c3ec2a2e2e971c534065bdd53374bd68b97/01953b9b-6f3b-763c-a995-a868de575ca7/source.tar.gz"
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.2411.714614%2Brev-c618e28f70257593de75a7044438efc1c1fc0791/0195155d-20df-7b25-ad70-45871483b8d2/source.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1.tar.gz"
+        "url": "https://flakehub.com/f/NixOS/nixpkgs/0.2411.%2A.tar.gz"
       }
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1740367490,
-        "narHash": "sha256-WGaHVAjcrv+Cun7zPlI41SerRtfknGQap281+AakSAw=",
+        "lastModified": 1739736696,
+        "narHash": "sha256-zON2GNBkzsIyALlOCFiEBcIjI4w38GYOb+P+R4S8Jsw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0196c0175e9191c474c26ab5548db27ef5d34b05",
+        "rev": "d74a2335ac9c133d6bbec9fc98d91a77f1604c1f",
         "type": "github"
       },
       "original": {
@@ -11845,11 +12221,11 @@ File: flake.lock
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1740367490,
-        "narHash": "sha256-WGaHVAjcrv+Cun7zPlI41SerRtfknGQap281+AakSAw=",
+        "lastModified": 1716330097,
+        "narHash": "sha256-8BO3B7e3BiyIDsaKA0tY8O88rClYRTjvAp66y+VBUeU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0196c0175e9191c474c26ab5548db27ef5d34b05",
+        "rev": "5710852ba686cc1fd0d3b8e22b3117d43ba374c2",
         "type": "github"
       },
       "original": {
@@ -11861,16 +12237,16 @@ File: flake.lock
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1740367490,
-        "narHash": "sha256-WGaHVAjcrv+Cun7zPlI41SerRtfknGQap281+AakSAw=",
+        "lastModified": 1740547748,
+        "narHash": "sha256-Ly2fBL1LscV+KyCqPRufUBuiw+zmWrlJzpWOWbahplg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0196c0175e9191c474c26ab5548db27ef5d34b05",
+        "rev": "3a05eebede89661660945da1f151959900903b6a",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -11958,21 +12334,37 @@ File: flake.lock
         "darwin": "darwin_2",
         "determinate": "determinate",
         "disko": "disko",
+        "fh": "fh",
         "home-manager": "home-manager_2",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "homebrew-services": "homebrew-services",
+        "johnny-mnemonix": "johnny-mnemonix",
         "nix-homebrew": "nix-homebrew",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pre-commit-hooks": "pre-commit-hooks",
-        "python-packages": [
-          "nixpkgs"
-        ],
         "secrets": "secrets"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1735659655,
+        "narHash": "sha256-DQgwi3pwaasWWDfNtXIX0lW5KvxQ+qVhxO1J7l68Qcc=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "085ad107943996c344633d58f26467b05f8e2ff0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "rust-overlay": {
@@ -12051,10 +12443,17 @@ File: flake.nix
   description = "Starter Configuration with secrets for MacOS and NixOS";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Use flakehub for nixpkgs for better performance and versioning
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    # Use Determinate systems for experimental features
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fh.url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+    # TODO: Add apple-silicon-support to flakehub
     apple-silicon-support = {
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12100,17 +12499,18 @@ File: flake.nix
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    python-packages = {
-      url = "github:NixOS/nixpkgs";
-      follows = "nixpkgs";
+    johnny-mnemonix = {
+      url = "github:lessuselesss/johnny-mnemonix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     self,
     determinate,
-    nixpkgs-stable,
+    fh,
     nixpkgs,
+    nixpkgs-stable,
     nixpkgs-unstable,
     apple-silicon-support,
     agenix,
@@ -12125,9 +12525,10 @@ File: flake.nix
     secrets,
     pre-commit-hooks,
     nix-on-droid,
-    python-packages,
-  }: let
-    user = "lessuseless";
+    johnny-mnemonix,
+  } @ inputs: let
+    adminUser = "admin";
+    standardUser = "lessuseless";
     linuxSystems = ["x86_64-linux" "aarch64-linux"];
     darwinSystems = ["aarch64-darwin" "x86_64-darwin"];
     mobileSystems = ["aarch64-linux"];
@@ -12161,7 +12562,7 @@ File: flake.nix
               name = "build-check";
               entry = "${pkgs.writeShellScript "verify-build" ''
                 echo "Verifying build..."
-                nix run .#build-switch  # Changed to build-switch
+                nix run .#build  # Changed to build-switch
               ''}";
               files = ".*";
               pass_filenames = false;
@@ -12194,7 +12595,12 @@ File: flake.nix
         #!/usr/bin/env bash
         PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
         echo "Running ${scriptName} for ${system}"
-        echo "${scriptName} executed successfully"  # Placeholder implementation
+        # Detect if we're on Android
+        if [[ -n "$TERMUX_VERSION" ]]; then
+          exec ${self}/apps/aarch64-android/${scriptName}
+        else
+          exec ${self}/apps/${system}/${scriptName}
+        fi
       '')}/bin/${scriptName}";
     };
 
@@ -12224,8 +12630,6 @@ File: flake.nix
       "check-keys" = mkApp "check-keys" system;
       rollback = mkApp "rollback" system;
     };
-
-    allInputs = {inherit nixpkgs nixpkgs-stable nixpkgs-unstable apple-silicon-support agenix home-manager darwin nix-homebrew homebrew-bundle homebrew-core homebrew-cask homebrew-services disko secrets pre-commit-hooks nix-on-droid python-packages;};
   in {
     devShells = forAllSystems devShell;
     apps = (nixpkgs.lib.genAttrs linuxSystems mkLinuxApps) // (nixpkgs.lib.genAttrs darwinSystems mkDarwinApps);
@@ -12267,37 +12671,70 @@ File: flake.nix
       };
     });
 
-    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+          allowInsecure = false;
+          allowUnsupportedSystem = true;
+        };
+        overlays = let
+          path = ./overlays;
+        in
+          with builtins;
+            map (n: import (path + ("/" + n)))
+            (filter (n:
+              match ".*\\.nix" n
+              != null
+              || pathExists (path + ("/" + n + "/default.nix")))
+            (attrNames (readDir path)));
+      };
+    in
       darwin.lib.darwinSystem {
         inherit system;
-        specialArgs = allInputs;
+        specialArgs = inputs // {inherit pkgs;};
         modules = [
-          determinate.nixosModules.default
           home-manager.darwinModules.home-manager
           nix-homebrew.darwinModules.nix-homebrew
-          agenix.darwinModules.default
           ./modules/shared/johnny-mnemonix.nix
+          agenix.darwinModules.default
           {
+            _module.args.pkgs = pkgs;
             johnny-mnemonix.enable = true;
             nix.enable = false;
             nix.gc.automatic = false;
 
+            # Configure admin user with sudo privileges
+            users.users.${adminUser} = {
+              home = "/Users/${adminUser}";
+              shell = pkgs.zsh;
+              # Add to admin group for sudo privileges
+              gid = 80; # 80 is the admin group on macOS
+            };
+
+            # Configure standard user without sudo privileges
+            users.users.${standardUser} = {
+              home = "/Users/${standardUser}";
+              shell = pkgs.zsh;
+            };
+
+            # Configure home-manager for both users
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = allInputs;
-              users.${user} = {
-                config,
-                pkgs,
-                ...
-              }: {
-                home.stateVersion = "24.05";
+              extraSpecialArgs = inputs // {inherit pkgs;};
+              users = {
+                ${adminUser} = import ./users/admin.nix;
+                ${standardUser} = import ./users/lessuseless.nix;
               };
             };
 
+            # Configure Homebrew to be owned by admin user
             nix-homebrew = {
-              inherit user;
               enable = true;
+              user = adminUser;
               taps = {
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
@@ -12307,6 +12744,9 @@ File: flake.nix
               mutableTaps = false;
               autoMigrate = true;
             };
+
+            # System-wide security settings
+            security.pam.services.sudo_local.touchIdAuth = true;
           }
           ./hosts/darwin
         ];
@@ -12315,12 +12755,12 @@ File: flake.nix
     nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = allInputs;
+        specialArgs = inputs;
         modules = [
           determinate.nixosModules.default
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
-          ./modules/shared/johnny-mnemonix.nix
+          johnny-mnemonix.nixosModules.default
           {
             johnny-mnemonix.enable = true;
             hardware.asahi.enable = system == "aarch64-linux";
@@ -12329,18 +12769,22 @@ File: flake.nix
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = allInputs;
-              users.${user} = {
-                config,
-                pkgs,
-                ...
-              }: {
-                home.stateVersion = "24.05";
+              extraSpecialArgs = inputs;
+              users = {
+                ${adminUser} = import ./users/admin.nix;
+                ${standardUser} = import ./users/lessuseless.nix;
               };
             };
           }
+          ./hosts/nixos
         ];
       });
+
+    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+      modules = [./hosts/nix-on-droid/default.nix];
+      pkgs = nixpkgs.legacyPackages.aarch64-linux;
+      extraSpecialArgs = {inherit inputs;};
+    };
   };
 }
 

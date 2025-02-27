@@ -23,16 +23,14 @@ in {
       default = "_";
       description = "Spacer character for directory names";
     };
+    areas = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "Areas configuration for Johnny Mnemonix";
+    };
   };
 
   config = lib.mkIf config.johnny-mnemonix.enable {
-    # XDG Base Directory settings
-    xdg = {
-      stateHome = "${config.home.homeDirectory}/.local/state";
-      cacheHome = "${config.home.homeDirectory}/.cache";
-      configHome = "${config.home.homeDirectory}/.config";
-    };
-
     # Johnny Mnemonix specific configuration
     johnny-mnemonix = {
       areas = {

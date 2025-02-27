@@ -2,10 +2,17 @@
   description = "Starter Configuration with secrets for MacOS and NixOS";
 
   inputs = {
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Use flakehub for nixpkgs for better performance and versioning
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    # Use Determinate systems for experimental features
+    determinate = {
+      url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    fh.url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+    # TODO: Add apple-silicon-support to flakehub
     apple-silicon-support = {
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -60,9 +67,9 @@
   outputs = {
     self,
     determinate,
+    fh,
     nixpkgs,
     nixpkgs-stable,
-    nixpkgs-unstable,
     nixpkgs-unstable,
     apple-silicon-support,
     agenix,
@@ -227,17 +234,16 @@
     darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
       darwin.lib.darwinSystem {
         inherit system;
-        specialArgs = allInputs;
+        specialArgs = inputs;
         modules = [
-          determinate.nixosModules.default
           home-manager.darwinModules.home-manager
           nix-homebrew.darwinModules.nix-homebrew
-          johnny-mnemonix.darwinModules.johnny-mnemonix
+          ./modules/shared/johnny-mnemonix.nix
           agenix.darwinModules.default
           {
             johnny-mnemonix.enable = true;
-            nix.enable = false;
-            nix.gc.automatic = false;
+            nix.enable = false; #prevents nix-darwin from managing nix, necessary when using the determinate nix installer as it delegates the management of the nix installation to determinate instead of nix-darwin, avoiding conflics.
+            nix.gc.automatic = false; #if nix.enable is false, automatic garbage collection needs to be disable
 
             home-manager = {
               useGlobalPkgs = true;
@@ -251,7 +257,9 @@
                 ...
               }: {
                 _module.args.homeManagerLib = home-manager.lib;
-                imports = [johnny-mnemonix.homeManagerModules.default];
+                imports = [
+                  ./modules/shared/johnny-mnemonix.nix 
+                ];
               };
             };
 
@@ -275,12 +283,12 @@
     nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system:
       nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = allInputs;
+        specialArgs = inputs;
         modules = [
           determinate.nixosModules.default
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
-          ./modules/shared/johnny-mnemonix.nix
+          johnny-mnemonix.nixosModules.default
           {
             johnny-mnemonix.enable = true;
             hardware.asahi.enable = system == "aarch64-linux";
@@ -298,7 +306,10 @@
                 ...
               }: {
                 _module.args.homeManagerLib = home-manager.lib;
-                imports = [johnny-mnemonix.homeManagerModules.default];
+                imports = [
+                  johnny-mnemonix.homeManagerModules.default 
+                  ./modules/shared/johnny-mnemonix.nix 
+                  ];
               };
             };
           }
